@@ -307,6 +307,12 @@ kbd{background:var(--card2);border:1px solid var(--line);border-radius:6px;paddi
 .ob-left b{font-size:28px;color:var(--org2)}
 .panel .row{padding:2px 0}
 .tile-b.fixed{background:linear-gradient(160deg,var(--card),color-mix(in srgb,var(--navy) 5%,var(--card)));border:1.5px solid color-mix(in srgb,var(--navy) 14%,transparent)}
+.skip-b{display:inline-block;margin-inline-start:8px;color:var(--link);font-weight:700;font-size:12px;padding:2px 8px;border-radius:99px;background:var(--org-soft)}
+.item.off .skip-b{opacity:1}
+.item.off{opacity:1}.item.off .t,.item.off .amt{opacity:.45;text-decoration:line-through}
+.auto-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:16px;background:var(--card2);margin-bottom:8px}
+.auto-row b{display:block;font-size:15px}.auto-row small{font-size:12.5px;color:var(--muted)}
+.inp:disabled{opacity:.75;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -382,10 +388,10 @@ const KEY = 'e3anati.v1';
 const MODES = {
   student:{label:'طالب جامعي', icon:'cap', inc:'الإعانة', next:'الإعانة القادمة', incAsk:'الإعانة الشهرية', has:'لدي إعانة شهرية', ask:'كم إعانتك الشهرية؟', presets:[200, 350],
     commits:[['tuition','cap','أقساط الجامعة أو المعهد'],['subs','gym','الاشتراكات (نادي، تطبيقات)'],['net','wifi','الإنترنت والمكالمات'],['autosave','safe','الادخار الشهري','save']],
-    cats:[['food','food','مطاعم وقهوة'],['fun','star','طلعات ووناسة'],['car','car','السيارة']]},
+    cats:[['food','food','مطاعم وقهوة',40],['fun','star','طلعات ووناسة',25],['car','car','السيارة',35]]},
   school:{label:'طالب مدرسة', icon:'school', inc:'المصروف', next:'المصروف القادم', incAsk:'مصروفك الشهري من أهلك', has:'مصروف من أهلي', ask:'كم يعطيك أهلك في الشهر؟', presets:[20, 30, 50],
     commits:[['autosave','safe','الادخار الشهري','save']],
-    cats:[['food','food','المطاعم'],['fun','star','طلعات ووناسة'],['basics','bag','احتياجات أساسية']]}
+    cats:[['food','food','المطاعم',40],['fun','star','طلعات ووناسة',35],['basics','bag','احتياجات أساسية',25]]}
 };
 const PALETTE = ['#ff7a1a','#2f6fe0','#14a38b','#e2483d','#8a5cf6','#c98a12','#0ea5c6','#d9468f','#5b6b8c'];
 const BOX_ICONS = ['food','coffee','star','car','bag','game','book','gift','phone','shirt','heart','tool','home','plane','cash','box'];
@@ -421,19 +427,27 @@ function monthsWord(n){ if (n === 1) return 'شهر واحد'; if (n === 2) retu
 const vib = (ms = 8) => { try { navigator.vibrate && navigator.vibrate(ms); } catch(e){} };
 
 /* ============ الحالة ============ */
-function buildCats(mode){ return MODES[mode].cats.map(([id, icon, name], i) => ({id, icon, name, color:PALETTE[i % PALETTE.length], limit:0})); }
+function buildCats(mode){ return MODES[mode].cats.map(([id, icon, name, w], i) => ({id, icon, name, w:w || 1, color:PALETTE[i % PALETTE.length], limit:0})); }
+// توزيع تلقائي حسب الأوزان، بأنصاف الدنانير، والفرق للخانة الأكبر
+function autoSplit(cats, avail){
+  const out = {}; if (!cats.length) return out; avail = Math.max(0, r3(avail));
+  const W = sum(cats.map(c => c.w || 1)) || 1; let acc = 0;
+  cats.forEach(c => { const v = Math.floor(avail * (c.w || 1) / W * 2) / 2; out[c.id] = v; acc += v; });
+  const big = cats.reduce((a, b) => (b.w || 1) > (a.w || 1) ? b : a); out[big.id] = r3(out[big.id] + avail - acc);
+  return out;
+}
 function defaultState(){
   const t = today();
   return {v:3, onboarded:false, mode:'student', theme:'light', profile:{name:'', tier:'custom', allowance:0, extra:0},
-    nextPayday:addMonths(t, 1), commitments:[], cats:buildCats('student'),
-    cycle:{id:uid(), start:t, paid:{}}, cycles:[], expenses:[], incomes:[], vault:[], goals:[]};
+    nextPayday:addMonths(t, 1), commitments:[], cats:buildCats('student'), autoSplit:true,
+    cycle:{id:uid(), start:t, paid:{}, skip:{}}, cycles:[], expenses:[], incomes:[], vault:[], goals:[]};
 }
 function normalize(s){
   const d = defaultState();
   if (!s || typeof s !== 'object') return d;
   const o = Object.assign({}, d, s);
   o.profile = Object.assign({}, d.profile, s.profile || {});
-  o.cycle = Object.assign({}, d.cycle, s.cycle || {}); o.cycle.paid = o.cycle.paid || {};
+  o.cycle = Object.assign({}, d.cycle, s.cycle || {}); o.cycle.paid = o.cycle.paid || {}; o.cycle.skip = o.cycle.skip || {}; o.cats.forEach(c => { if (!c.w) c.w = 1; }); if (s.autoSplit === undefined) o.autoSplit = false;
   for (const k of ['commitments','cycles','expenses','incomes','vault','goals']) if (!Array.isArray(o[k])) o[k] = d[k];
   if (!MODES[o.mode]) o.mode = 'student';
   if (!Array.isArray(s.cats) || !s.cats.length){ const inc = parseNum(o.profile.allowance) + parseNum(o.profile.extra); o.cats = buildCats(o.mode); }
@@ -456,7 +470,7 @@ function calc(){
   const incs = S.incomes.filter(x => x.cycle === c), received = sum(incs.map(x => x.amount));
   const bonus = {}; incs.forEach(x => { if (x.to && x.to !== 'free' && x.to !== 'save') bonus[x.to] = r3((bonus[x.to] || 0) + x.amount); });
   const allowance = parseNum(S.profile.allowance), extra = parseNum(S.profile.extra), income = r3(allowance + extra + received);
-  const act = S.commitments.filter(x => x.active);
+  const act = S.commitments.filter(x => x.active && !S.cycle.skip[x.id]);
   const commitTotal = sum(act.map(x => x.amount));
   const commitSave = sum(act.filter(x => x.type === 'save').map(x => x.amount));
   const exps = S.expenses.filter(e => e.cycle === c);
@@ -472,7 +486,8 @@ function calc(){
   const ratio = spendable > 0 ? expTotal / spendable : (expTotal > 0 ? 1 : 0);
   const totalSavings = sum(S.vault.map(v => v.amount));
   const spentBy = {}; exps.forEach(e => spentBy[e.cat] = r3((spentBy[e.cat] || 0) + e.amount));
-  const boxes = S.cats.map(b => { const spent = spentBy[b.id] || 0, limit = r3(parseNum(b.limit) + (bonus[b.id] || 0)); return Object.assign({}, b, {spent, limit, left:r3(limit - spent), ratio: limit > 0 ? spent / limit : 0}); });
+  const autoLim = S.autoSplit ? autoSplit(S.cats, income - sum(Object.values(bonus)) - commitTotal - manualSave) : null;
+  const boxes = S.cats.map(b => { const spent = spentBy[b.id] || 0, limit = r3((autoLim ? autoLim[b.id] : parseNum(b.limit)) + (bonus[b.id] || 0)); return Object.assign({}, b, {spent, limit, left:r3(limit - spent), ratio: limit > 0 ? spent / limit : 0}); });
   const limitsTotal = sum(boxes.map(b => b.limit));
   const over = boxes.filter(b => b.limit > 0 && b.spent > b.limit + 0.0005);
   let status;
@@ -529,7 +544,7 @@ function render(){
 }
 
 function commitTile(k){
-  const S = state, act = S.commitments.filter(x => x.active), paid = act.filter(x => S.cycle.paid[x.id]);
+  const S = state, act = S.commitments.filter(x => x.active && !S.cycle.skip[x.id]), paid = act.filter(x => S.cycle.paid[x.id]);
   const due = r3(k.commitTotal - sum(paid.map(x => x.amount))), pct = act.length ? paid.length / act.length * 100 : 0;
   return `<button class="tile-b fixed" data-a="commitments">
     <span class="em" style="background:color-mix(in srgb,var(--navy) 12%,transparent)">${Ico('cal', 'var(--navy)')}</span>
@@ -649,14 +664,15 @@ function allocText(k){
   return `المتاح للخانات: <b class="num">${fmt(k.spendable)}</b> · الموزَّع: <b class="num">${fmt(k.limitsTotal)}</b>${k.unalloc > 0.0005 ? `<div class="hint">غير موزَّع: ${KDt(k.unalloc)}</div>` : ''}`;
 }
 function sheetBoxesEdit(){
-  const k = calc();
-  openSheet(head('تعديل الخانات') + `<div class="hint" style="margin:-6px 0 6px">الاسم والحد الشهري لكل خانة. اضغط الأيقونة لتغييرها.</div>
+  const k = calc(), auto = !!state.autoSplit, lim = {}; k.boxes.forEach(b => lim[b.id] = b.limit);
+  openSheet(head('تعديل الخانات') + `
+    <div class="auto-row"><div class="grow"><b>توزيع تلقائي</b><small>${auto ? 'نوزّع المتبقي على خاناتك تلقائيًا، ويتعدّل وحده إذا تغيّر دخلك' : 'أنت تحدد حد كل خانة بنفسك'}</small></div><button class="sw ${auto ? 'on' : ''}" data-a="autoT" aria-label="توزيع تلقائي"></button></div>
     ${state.cats.map(b => `<div class="box-edit"><button class="ic" data-a="boxIcon" data-id="${b.id}" style="background:color-mix(in srgb,${b.color} 14%,transparent)">${Ico(b.icon, b.color)}</button>
       <input class="inp nm" data-box-name="${b.id}" value="${esc(b.name)}" maxlength="24" aria-label="الاسم">
-      <input class="inp lim" data-box-limit="${b.id}" value="${b.limit || ''}" placeholder="0" inputmode="decimal" aria-label="الحد">
+      <input class="inp lim" data-box-limit="${b.id}" value="${auto ? fmt(lim[b.id]) : (b.limit || '')}" placeholder="0" inputmode="decimal" aria-label="الحد" ${auto ? 'disabled' : ''}>
       <button class="del" data-a="boxDel" data-id="${b.id}" aria-label="حذف">${I('trash')}</button></div>`).join('')}
-    <div class="btns" style="margin-top:12px"><button class="btn soft sm" data-a="boxAdd">${I('plus')} خانة</button><button class="btn ghost sm" data-a="boxFit">توزيع المتاح</button></div>
-    <div class="alloc" id="allocBox">${allocText(k)}</div>
+    <button class="btn soft sm block" style="margin-top:12px" data-a="boxAdd">${I('plus')} خانة جديدة</button>
+    ${auto ? '' : `<div class="alloc" id="allocBox">${allocText(k)}</div>`}
     <button class="btn block" style="margin-top:12px" data-a="boxesDone">حفظ</button>`);
 }
 function boxIconSheet(id){
@@ -670,10 +686,11 @@ function sheetCommitments(){
   S.commitments.forEach(c => c.active = true);
   openSheet(head('الالتزامات الثابتة') + `
     <div class="panel row"><div class="grow"><div class="small muted">المجموع الشهري</div><div class="bigv" style="font-size:28px"><span class="num">${fmt(k.commitTotal)}</span> <small>د.ك</small></div></div><div class="small muted">${Math.round(k.income ? k.commitTotal / k.income * 100 : 0)}% من دخلك</div></div>
-    <div class="hint" style="margin-bottom:6px">كل البنود اختيارية: أضف ما يخصك واحذف ما لا تحتاجه. اضغط الدائرة عندما تدفع.</div>
-    ${S.commitments.length ? `<div class="list">${S.commitments.map(it => { const paid = !!S.cycle.paid[it.id];
-      return `<div class="item"><button class="check ${paid ? 'on' : ''}" data-a="paid" data-id="${it.id}" aria-label="تم الدفع">${I('check')}</button>
-        <div class="grow"><div class="t">${Ico(it.icon, 'var(--org)', 'sm')} ${esc(it.name)}</div><div class="s">${paid ? 'مدفوع' : 'غير مدفوع'}${it.type === 'save' ? ' · يُضاف إلى ادخارك' : ''}</div></div>
+    <div class="hint" style="margin-bottom:6px">كل البنود اختيارية. اضغط الدائرة عندما تدفع، و«ليس هذا الشهر» إذا لم يكن عليك هذا البند هذه المرة.</div>
+    ${S.commitments.length ? `<div class="list">${S.commitments.map(it => { const paid = !!S.cycle.paid[it.id], skip = !!S.cycle.skip[it.id];
+      return `<div class="item ${skip ? 'off' : ''}"><button class="check ${paid ? 'on' : ''}" data-a="paid" data-id="${it.id}" ${skip ? 'disabled' : ''} aria-label="تم الدفع">${I('check')}</button>
+        <div class="grow"><div class="t">${Ico(it.icon, 'var(--org)', 'sm')} ${esc(it.name)}</div><div class="s">${skip ? 'لا يوجد هذا الشهر' : paid ? 'مدفوع' : 'غير مدفوع'}${it.type === 'save' && !skip ? ' · يُضاف إلى ادخارك' : ''}
+          ${paid ? '' : `<button class="skip-b" data-a="skipC" data-id="${it.id}">${skip ? 'أرجعه هذا الشهر' : 'ليس هذا الشهر'}</button>`}</div></div>
         <div class="amt">${KD(it.amount)}</div><button class="del" data-a="editCommit" data-id="${it.id}" aria-label="تعديل">${I('edit')}</button></div>`; }).join('')}</div>`
       : '<div class="empty">لا توجد بنود ثابتة. أضف بندًا إذا كان عندك مبلغ تدفعه كل شهر.</div>'}
     <div class="btns" style="margin-top:12px"><button class="btn soft" data-a="editCommit">${I('plus')} بند جديد</button><button class="btn navy" data-a="newCycle">شهر جديد</button></div>`);
@@ -712,7 +729,7 @@ function doNewCycle(){
   if ($('#ncCarry') && $('#ncCarry').checked && k.free > 0){ carry = k.free; state.vault.push({id:uid(), amount:carry, date:today(), ts:Date.now().toString(36), goal:null, src:'manual', cycle:old.id, note:'متبقي الشهر'}); }
   state.cycles.push({id:old.id, start:old.start, end:today(), income:k.income, commitTotal:k.commitTotal, expTotal:k.expTotal, saved:r3(k.savedThisCycle + carry), left:r3(k.free - carry)});
   state.profile.allowance = parseNum($('#ncAl').value); state.profile.extra = parseNum($('#ncEx').value);
-  state.cycle = {id:uid(), start:today(), paid:{}}; state.nextPayday = pd;
+  state.cycle = {id:uid(), start:today(), paid:{}, skip:{}}; state.nextPayday = pd;
   closeSheet(); lastRender = 0; commit(); toast('بداية موفقة');
 }
 
@@ -838,7 +855,7 @@ function obInit(mode){
   const m = MODES[mode];
   Object.assign(ob, {mode, inc:'', payday:addMonths(today(), 1),
     commits:m.commits.map(([id, icon, name, type]) => ({id, icon, name, type:type || 'normal', on:false, amount:''})),
-    cats:m.cats.map(([id, icon, name], i) => ({id, icon, name, color:PALETTE[i % PALETTE.length], limit:''}))});
+    cats:m.cats.map(([id, icon, name, w], i) => ({id, icon, name, w:w || 1, color:PALETTE[i % PALETTE.length], limit:''})), manual:false});
 }
 const obIncome = () => parseNum(ob.inc);
 const obFixed = () => sum(ob.commits.filter(c => c.on).map(c => parseNum(c.amount)));
@@ -870,12 +887,13 @@ function renderOnboarding(){
         <button class="link" style="margin-top:10px" data-a="obAddC">${I('plus')} بند آخر</button></div>
       <div class="panel" id="obSum">${obSumHTML()}</div>${nav('obNext3', 'التالي')}`;
   } else {
-    body = `<h1>وزّع الباقي على خاناتك</h1><p class="lead">اكتب حدًا شهريًا لكل خانة.</p>
+    if (!ob.manual){ const a = autoSplit(ob.cats, r3(obIncome() - obFixed())); ob.cats.forEach(c => c.limit = String(a[c.id])); }
+    body = `<h1>خاناتك</h1><p class="lead">${ob.manual ? 'عدّل حد كل خانة كما تريد.' : 'وزّعنا المتبقي على خاناتك تلقائيًا. يمكنك تعديل أي رقم، أو البدء مباشرة.'}</p>
       <div class="ob-left" id="obLeft">${obLeftHTML()}</div>
       <div class="card">${ob.cats.map((c, i) => `<div class="box-edit"><span class="ic" style="background:color-mix(in srgb,${c.color} 14%,transparent)">${Ico(c.icon, c.color)}</span>
         ${c.custom ? `<input class="inp nm" data-ob-kn="${i}" value="${esc(c.name)}" placeholder="اسم الخانة">` : `<b class="grow">${c.name}</b>`}
         <input class="inp lim" data-ob-k="${i}" value="${c.limit}" placeholder="0" inputmode="decimal"><button class="del" data-a="obDelK" data-i="${i}" aria-label="حذف">${I('x')}</button></div>`).join('')}
-        <div class="btns" style="margin-top:12px"><button class="btn soft sm" data-a="obAddK">${I('plus')} خانة أخرى</button><button class="btn ghost sm" data-a="obEven">وزّع بالتساوي</button></div></div>${nav('obDone', 'ابدأ')}`;
+        <div class="btns" style="margin-top:12px"><button class="btn soft sm" data-a="obAddK">${I('plus')} خانة أخرى</button>${ob.manual ? '<button class="btn ghost sm" data-a="obEven">رجّع التوزيع التلقائي</button>' : ''}</div></div>${nav('obDone', 'ابدأ')}`;
   }
   $('#onb').innerHTML = `<div class="onb"><div class="onb-in"><div class="dots">${[0,1,2,3,4].map(i => `<i class="${st === i ? 'on' : ''}"></i>`).join('')}</div>${body}<div class="foot">تم تصميم الموقع من قبل <b>المهندس بو عمر</b></div></div></div>`;
 }
@@ -900,15 +918,17 @@ const ACT = {
     toast('تم الحذف', 'تراجع', () => { state.expenses.push(ex); save(); render(); reopen(); }); },
   boxesEdit: sheetBoxesEdit,
   boxesDone: () => { state.cats = state.cats.filter(c => c.name.trim()); closeSheet(); commit(); toast('تم الحفظ'); },
-  boxAdd: () => { state.cats.push({id:uid(), icon:'box', name:'خانة جديدة', color:PALETTE[state.cats.length % PALETTE.length], limit:0}); save(); render(); sheetBoxesEdit(); setTimeout(() => { const ins = document.querySelectorAll('[data-box-name]'); const l = ins[ins.length - 1]; if (l){ l.focus(); l.select(); } }, 60); },
+  boxAdd: () => { state.cats.push({id:uid(), w:Math.max(1, Math.round(sum(state.cats.map(c => c.w || 1)) / Math.max(1, state.cats.length))), icon:'box', name:'خانة جديدة', color:PALETTE[state.cats.length % PALETTE.length], limit:0}); save(); render(); sheetBoxesEdit(); setTimeout(() => { const ins = document.querySelectorAll('[data-box-name]'); const l = ins[ins.length - 1]; if (l){ l.focus(); l.select(); } }, 60); },
   boxDel: d => { const i = state.cats.findIndex(c => c.id === d.id), b = state.cats[i]; state.cats.splice(i, 1); save(); render(); sheetBoxesEdit(); toast('تم حذف الخانة', 'تراجع', () => { state.cats.splice(i, 0, b); save(); render(); sheetBoxesEdit(); }); },
   boxIcon: d => boxIconSheet(d.id),
   setBoxIcon: d => { state.cats.find(c => c.id === d.id).icon = d.e; save(); render(); sheetBoxesEdit(); },
+  autoT: () => { const k = calc(); if (state.autoSplit){ k.boxes.forEach(b => { const c = state.cats.find(x => x.id === b.id); if (c) c.limit = r3(b.limit - 0); }); state.autoSplit = false; } else state.autoSplit = true; save(); render(); sheetBoxesEdit(); },
   boxFit: () => { const k = calc(), n = state.cats.length; if (k.spendable <= 0 || !n){ toast('لا يوجد مبلغ متاح'); return; } const tot = k.limitsTotal;
     state.cats.forEach(c => c.limit = tot > 0 ? r05(parseNum(c.limit) / tot * k.spendable) : r05(k.spendable / n));
     const big = state.cats.reduce((a, b) => parseNum(b.limit) > parseNum(a.limit) ? b : a); big.limit = r3(Math.max(0, parseNum(big.limit) + k.spendable - sum(state.cats.map(c => c.limit))));
     save(); render(); sheetBoxesEdit(); },
   commitments: sheetCommitments,
+  skipC: d => { const sk = state.cycle.skip; if (sk[d.id]) delete sk[d.id]; else sk[d.id] = true; save(); render(); sheetCommitments(); },
   paid: d => { const it = state.commitments.find(x => x.id === d.id); if (!it || !it.active) return; if (state.cycle.paid[it.id]){ if (!unpay(it)) return; } else { pay(it); vib(12); } save(); render(); sheetCommitments(); },
   toggleActive: d => { const it = state.commitments.find(x => x.id === d.id); if (it.active && state.cycle.paid[it.id] && !unpay(it)) return; it.active = !it.active; save(); render(); sheetCommitments(); },
   editCommit: d => sheetCommit(d.id),
@@ -950,18 +970,17 @@ const ACT = {
   obToggle: d => { const c = ob.commits[+d.i]; c.on = !c.on; render(); if (c.on) setTimeout(() => { const i = document.querySelector(`[data-ob-c="${d.i}"]`); i && i.focus(); }, 30); },
   obAddC: () => { ob.commits.push({id:uid(), icon:'box', name:'', type:'normal', on:true, amount:'', custom:true}); render(); setTimeout(() => { const ins = document.querySelectorAll('[data-ob-cn]'); ins.length && ins[ins.length - 1].focus(); }, 30); },
   obNext3: () => { const bad = ob.commits.find(c => c.on && (!c.name.trim() || !(parseNum(c.amount) > 0))); if (bad){ toast('اكتب اسم ومبلغ كل بند مختار، أو ألغِ اختياره'); return; } if (obFixed() > obIncome()){ toast('البنود الثابتة أكثر من دخلك'); return; } ob.step = 4; render(); },
-  obAddK: () => { ob.cats.push({id:uid(), icon:'box', name:'', color:PALETTE[ob.cats.length % PALETTE.length], limit:'', custom:true}); render(); setTimeout(() => { const ins = document.querySelectorAll('[data-ob-kn]'); ins.length && ins[ins.length - 1].focus(); }, 30); },
+  obAddK: () => { ob.cats.push({id:uid(), w:30, icon:'box', name:'', color:PALETTE[ob.cats.length % PALETTE.length], limit:'', custom:true}); render(); setTimeout(() => { const ins = document.querySelectorAll('[data-ob-kn]'); ins.length && ins[ins.length - 1].focus(); }, 30); },
   obDelK: d => { ob.cats.splice(+d.i, 1); render(); },
-  obEven: () => { const n = ob.cats.length; if (!n) return; const avail = r3(obIncome() - obFixed()); if (avail <= 0){ toast('لا يوجد مبلغ متبقٍ'); return; }
-    const per = Math.floor(avail / n * 2) / 2; ob.cats.forEach(c => c.limit = per); ob.cats[0].limit = r3(per + avail - per * n); render(); },
+  obEven: () => { ob.manual = false; render(); },
   obDone: () => {
     if (obLeft() < -0.0005){ toast('وزّعت أكثر من المتاح'); return; }
-    const cats = ob.cats.filter(c => c.name.trim()).map(c => ({id:c.id, icon:c.icon, name:c.name.trim(), color:c.color, limit:parseNum(c.limit)}));
+    const cats = ob.cats.filter(c => c.name.trim()).map(c => ({id:c.id, icon:c.icon, name:c.name.trim(), w:c.w || 1, color:c.color, limit:parseNum(c.limit)}));
     if (!cats.length){ toast('أضف خانة واحدة على الأقل'); return; }
     const commitments = ob.commits.filter(c => c.on && c.name.trim()).map(c => ({id:c.id, icon:c.icon, name:c.name.trim(), type:c.type, amount:parseNum(c.amount), active:true, goal:null}));
-    Object.assign(state, {mode:ob.mode, nextPayday:ob.payday, commitments, cats, onboarded:true});
+    Object.assign(state, {mode:ob.mode, nextPayday:ob.payday, commitments, cats, autoSplit:!ob.manual, onboarded:true});
     Object.assign(state.profile, {tier:'custom', allowance:obIncome(), extra:0});
-    state.cycle = {id:state.cycle.id, start:today(), paid:{}}; lastRender = 0; commit();
+    state.cycle = {id:state.cycle.id, start:today(), paid:{}, skip:{}}; lastRender = 0; commit();
   }
 };
 document.addEventListener('click', e => {
@@ -974,7 +993,7 @@ document.addEventListener('input', e => {
   if (t.dataset.boxName){ const b = state.cats.find(c => c.id === t.dataset.boxName); if (b){ b.name = t.value; save(); } }
   if (t.dataset.obC != null){ ob.commits[+t.dataset.obC].amount = t.value; $('#obSum').innerHTML = obSumHTML(); }
   if (t.dataset.obCn != null){ ob.commits[+t.dataset.obCn].name = t.value; }
-  if (t.dataset.obK != null){ ob.cats[+t.dataset.obK].limit = t.value; $('#obLeft').innerHTML = obLeftHTML(); }
+  if (t.dataset.obK != null){ ob.cats[+t.dataset.obK].limit = t.value; ob.manual = true; $('#obLeft').innerHTML = obLeftHTML(); }
   if (t.dataset.obKn != null){ ob.cats[+t.dataset.obKn].name = t.value; }
   if (t.id === 'obPd'){ ob.payday = t.value; const d = daysBetween(today(), t.value); $('#obDaysTxt').textContent = d > 0 ? `${fmtDate(t.value, {weekday:'long', day:'numeric', month:'long'})} · بعد ${daysWord(d)}` : 'اختر تاريخًا بعد اليوم'; document.querySelectorAll('.ob-opts button').forEach(b => b.classList.remove('on')); }
   if (t.dataset.in === 'gplan') gPlan(true);
