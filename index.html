@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>إعانتي — رتّب فلوسك</title>
-<meta name="description" content="إعانتي: تطبيق مجاني للطلبة والموظفين الشباب لتوزيع الإعانة أو الراتب على خانات واضحة بالدينار الكويتي. بياناتك تبقى في جهازك.">
+<title>الإدارة المالية — رتّب فلوسك</title>
+<meta name="description" content="الإدارة المالية: تطبيق مجاني للطلبة والموظفين الشباب لتوزيع الإعانة أو الراتب على خانات واضحة بالدينار الكويتي. بياناتك تبقى في جهازك.">
 <meta name="theme-color" content="#12275a">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="إعانتي">
+<meta name="apple-mobile-web-app-title" content="الإدارة المالية">
 <link rel="manifest" href="manifest.webmanifest?v=3">
 <link rel="icon" href="icon.svg?v=3" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon-180.png?v=3">
@@ -275,7 +275,7 @@ kbd{background:var(--card2);border:1px solid var(--line);border-radius:6px;paddi
 </style>
 </head>
 <body>
-<div id="splash" role="presentation"><div class="sp-logo" id="spLogo"></div><div class="sp-name">إعانتي<span>.</span></div><div class="sp-tag">فلوسك… بخطة تكفيك لآخر الشهر</div><div class="sp-foot">تم تصميم الموقع من قبل المهندس بو عمر</div></div>
+<div id="splash" role="presentation"><div class="sp-logo" id="spLogo"></div><div class="sp-name">الإدارة المالية<span>.</span></div><div class="sp-tag">فلوسك… بخطة تكفيك لآخر الشهر</div><div class="sp-foot">تم تصميم الموقع من قبل المهندس بو عمر</div></div>
 <div class="app" id="app"></div>
 <div class="tabbar"><nav id="tabs"></nav></div>
 <button class="fab" id="fab" data-a="addExp" aria-label="مصروف جديد"></button>
@@ -808,7 +808,7 @@ function download(name, content, type){
 }
 const csvCell = v => { const s = String(v ?? ''); return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
 function exportCSV(){
-  const k = calc(), rows = [['تقرير إعانتي', `${state.cycle.start} إلى ${state.nextPayday}`], [], ['الملخص', 'د.ك'],
+  const k = calc(), rows = [['تقرير الإدارة المالية', `${state.cycle.start} إلى ${state.nextPayday}`], [], ['الملخص', 'د.ك'],
     ['الدخل', k.income], ['الالتزامات الثابتة', k.commitTotal], ['المصروفات', k.expTotal], ['ادخار هالشهر', k.savedThisCycle], ['الرصيد الحر', k.free], ['مجموع الادخار', k.totalSavings], [],
     ['الخانة', 'الحد', 'صرفت', 'الباقي']];
   k.boxes.forEach(b => rows.push([b.name, b.limit, b.spent, b.left]));
@@ -832,7 +832,7 @@ let deferredPrompt = null;
 window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredPrompt = e; });
 const isStandalone = () => (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
 function sheetInstall(){
-  openSheet(sheetHead('📲 ثبّت «إعانتي» على شاشتك') + `
+  openSheet(sheetHead('📲 ثبّت «الإدارة المالية» على شاشتك') + `
     ${isStandalone() ? '<div class="alert green"><span class="dot"></span>التطبيق مثبّت عندك ✅</div>' : ''}
     ${deferredPrompt ? `<button class="btn block" data-a="promptInstall" style="margin-bottom:14px">ثبّت الحين</button>` : ''}
     <div class="card" style="box-shadow:none;border:1px solid var(--line)"><h2>🍎 آيفون (Safari)</h2><ol class="install-steps small"><li>افتح الموقع من <b>Safari</b>.</li><li>اضغط زر المشاركة <kbd>⬆️</kbd>.</li><li>اختر <b>«إضافة إلى الشاشة الرئيسية»</b> ثم <b>«إضافة»</b>.</li></ol></div>
