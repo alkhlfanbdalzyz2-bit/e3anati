@@ -176,7 +176,7 @@ button{cursor:pointer;border:0;background:none;padding:0}
 .hint{font-size:12px;color:var(--muted);margin-top:4px}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .emojis{display:flex;flex-wrap:wrap;gap:6px}
-.emojis button{width:44px;height:44px;border-radius:12px;border:1.5px solid var(--line);background:var(--card2);font-size:21px}
+.emojis button{width:46px;height:46px;border-radius:13px;border:1.5px solid var(--line);background:var(--card2);display:grid;place-items:center}
 .emojis button.on{border-color:var(--org);background:var(--org-soft)}
 .checkline{display:flex;gap:10px;align-items:flex-start;padding:12px;border-radius:14px;background:var(--card2);border:1px solid var(--line);font-size:14px;cursor:pointer}
 .checkline input{width:20px;height:20px;accent-color:var(--org);flex:none;margin-top:2px}
@@ -254,6 +254,17 @@ kbd{background:var(--card2);border:1px solid var(--line);border-radius:6px;paddi
 .enter > *{animation:rise .5s cubic-bezier(.2,.8,.2,1) both}
 .enter > *:nth-child(2){animation-delay:.06s}.enter > *:nth-child(3){animation-delay:.12s}.enter > *:nth-child(4){animation-delay:.18s}.enter > *:nth-child(n+5){animation-delay:.24s}
 @media (prefers-reduced-motion:reduce){*,*::before{animation:none!important;transition:none!important}}
+/* أيقونات مرسومة */
+.ico{display:inline-grid;place-items:center;vertical-align:middle}
+.ico svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.ico.sm svg{width:19px;height:19px}
+.bcard .em .ico svg{width:26px;height:26px}
+.pick button .em .ico svg{width:28px;height:28px}
+.who button .em .ico svg{width:46px;height:46px;stroke-width:1.6}
+.goal .em .ico svg{width:30px;height:30px}
+.sheet h3 .ico svg{width:22px;height:22px}
+.item .t .ico{margin-inline-end:4px}
+.who button .em{width:76px;height:76px;border-radius:24px;background:var(--org-soft);display:grid;place-items:center}
 </style>
 </head>
 <body>
@@ -291,31 +302,56 @@ const ICON = {
   del:'<path d="M20 6H9l-5 6 5 6h11a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1z"/><path d="M12 10l4 4M16 10l-4 4"/>'
 };
 const I = n => `<span class="i"><svg viewBox="0 0 24 24">${ICON[n]}</svg></span>`;
+const ICO = {
+  food:'<path d="M6 3v7a2 2 0 0 0 2 2v9M4 3v5a2 2 0 0 0 2 2M8 3v5"/><path d="M17 21V3c-2.2 0-3.5 2.5-3.5 6s1.3 4 3.5 4"/>',
+  coffee:'<path d="M4 9h12v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5z"/><path d="M16 11h1.5a2.5 2.5 0 0 1 0 5H16M8 3.5v2.5M12 3.5v2.5"/>',
+  star:'<path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/>',
+  car:'<path d="M5 13l1.8-5.2A2 2 0 0 1 8.7 6.5h6.6a2 2 0 0 1 1.9 1.3L19 13"/><rect x="3" y="13" width="18" height="5" rx="2"/><path d="M6 18v2M18 18v2"/><circle cx="7.5" cy="15.5" r=".6"/><circle cx="16.5" cy="15.5" r=".6"/>',
+  bag:'<path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/>',
+  cap:'<path d="M2 9.5 12 5l10 4.5L12 14z"/><path d="M6 11.5V16c0 1.4 2.7 3 6 3s6-1.6 6-3v-4.5M22 9.5V15"/>',
+  wifi:'<path d="M2.5 9a14 14 0 0 1 19 0M5.5 12.5a9.5 9.5 0 0 1 13 0M8.8 16a4.8 4.8 0 0 1 6.4 0"/><circle cx="12" cy="19" r=".8"/>',
+  gym:'<path d="M6.5 7v10M17.5 7v10M3.5 9.5v5M20.5 9.5v5M6.5 12h11"/>',
+  safe:'<rect x="3" y="4" width="18" height="15" rx="3"/><circle cx="12" cy="11.5" r="3.5"/><path d="M12 8v1M15.5 11.5h-1M7 19v1.5M17 19v1.5"/>',
+  school:'<path d="M4 20l1.2-4.6L15.5 5.1a2.1 2.1 0 0 1 3 0l.4.4a2.1 2.1 0 0 1 0 3L8.6 18.8z"/><path d="M13.5 7l3.5 3.5M4 20h16"/>',
+  game:'<rect x="2.5" y="7" width="19" height="11" rx="5.5"/><path d="M7.5 10.5v4M5.5 12.5h4"/><circle cx="15.5" cy="11.5" r=".7"/><circle cx="17.5" cy="13.5" r=".7"/>',
+  book:'<path d="M5 4.5A1.5 1.5 0 0 1 6.5 3H19v15H6.5A1.5 1.5 0 0 0 5 19.5z"/><path d="M5 19.5A1.5 1.5 0 0 0 6.5 21H19v-3"/>',
+  gift:'<rect x="3" y="8" width="18" height="4" rx="1"/><path d="M5 12v8h14v-8M12 8v12M12 8c-1.5-3-5-4-5-1.5S9 8 12 8zM12 8c1.5-3 5-4 5-1.5S15 8 12 8z"/>',
+  phone:'<rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><path d="M11 18.5h2"/>',
+  shirt:'<path d="M8.5 3.5 3 6.5l2 4 2-1V20h10V9.5l2 1 2-4-5.5-3a3.5 3.5 0 0 1-7 0z"/>',
+  heart:'<path d="M12 20s-7.5-4.6-7.5-10.2A4.2 4.2 0 0 1 12 7.3a4.2 4.2 0 0 1 7.5 2.5C19.5 15.4 12 20 12 20z"/>',
+  tool:'<path d="M14.5 6.5a4 4 0 0 0 5 5l-8.5 8.5a2.1 2.1 0 0 1-3-3z"/><path d="M14.5 6.5 17 4l3 3-2.5 2.5"/>',
+  home:'<path d="M3.5 10.5 12 3.5l8.5 7V20a1 1 0 0 1-1 1h-15a1 1 0 0 1-1-1z"/><path d="M9.5 21v-6h5v6"/>',
+  plane:'<path d="M21 3 3 10.5l7 2.5 2.5 7z"/><path d="M10 13l4-4"/>',
+  cash:'<rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.8"/><path d="M6 9.5v5M18 9.5v5"/>',
+  laptop:'<rect x="4.5" y="5" width="15" height="10.5" rx="1.5"/><path d="M2.5 19h19"/>',
+  shield:'<path d="M12 3l7.5 3v5.5c0 4.8-3.3 8-7.5 9.5-4.2-1.5-7.5-4.7-7.5-9.5V6z"/>',
+  target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.3"/>',
+  edit:'<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/>',
+  box:'<path d="M3.5 7.5 12 3.5l8.5 4v9L12 20.5l-8.5-4z"/><path d="M3.5 7.5 12 11.5l8.5-4M12 11.5v9"/>'
+};
+const EMOJI_MAP = {'☕':'coffee','🍔':'food','🍽️':'food','🍫':'food','📚':'book','⚽':'star','🚗':'car','⛽':'car','🚌':'car','🛍️':'bag','🧴':'bag','🎁':'gift','🏠':'home','📱':'phone','🎮':'game','🧳':'plane','🎓':'cap','🎒':'school','📶':'wifi','💻':'laptop','🤲':'heart','💊':'heart','👕':'shirt','🐷':'safe','🔧':'tool','🏋️':'gym','🛟':'shield','🎯':'target'};
+const icoKey = k => ICO[k] ? k : (EMOJI_MAP[k] || 'box');
+const Ico = (k, color, cls) => `<span class="ico ${cls || ''}" style="color:${color || 'var(--navy)'}"><svg viewBox="0 0 24 24">${ICO[icoKey(k)]}</svg></span>`;
 
 /* ============ ثوابت ============ */
 const KEY = 'e3anati.v1';
 const MODES = {
-  student:{label:'طالب جامعي', icon:'🎓', inc:'الإعانة', next:'الإعانة القادمة', incAsk:'الإعانة الشهرية', has:'لدي إعانة شهرية', ask:'كم إعانتك؟',
+  student:{label:'طالب جامعي', icon:'cap', inc:'الإعانة', next:'الإعانة القادمة', incAsk:'الإعانة الشهرية', has:'لدي إعانة شهرية', ask:'كم إعانتك؟',
     commit:{tuition:30, subs:5, net:5, autosave:10},
-    cats:[['food','🍔','مطاعم وقهوة',35],['fun','⚽','طلعات ووناسة',25],['car','🚗','السيارة',40]]},
-  school:{label:'طالب مدرسة', icon:'🎒', inc:'المصروف', next:'المصروف القادم', incAsk:'مصروفك الشهري من أهلك', has:'مصروف من أهلي', ask:'كم يعطيك أهلك في الشهر؟',
+    cats:[['food','food','مطاعم وقهوة',35],['fun','star','طلعات ووناسة',25],['car','car','السيارة',40]]},
+  school:{label:'طالب مدرسة', icon:'school', inc:'المصروف', next:'المصروف القادم', incAsk:'مصروفك الشهري من أهلك', has:'مصروف من أهلي', ask:'كم يعطيك أهلك في الشهر؟',
     commit:{autosave:20},
-    cats:[['food','🍔','المطاعم',40],['fun','⚽','طلعات ووناسة',35],['basics','🧴','احتياجات أساسية',25]]},
-  employee:{label:'موظف', icon:'💼', inc:'الراتب', next:'الراتب القادم', incAsk:'الراتب الشهري', has:'لدي راتب شهري', ask:'كم راتبك؟',
-    commit:{fuel:6, net:3, subs:2, sadaqa:2, care:4, family:10, autosave:20},
-    cats:[['coffee','☕','القهوة',10],['food','🍔','المطاعم',25],['fun','⚽','الطلعات',20],['car','🚗','السيارة',10],['shop','🛍️','المشتريات',20],['gifts','🎁','الهدايا والمناسبات',15]]}
+    cats:[['food','food','المطاعم',40],['fun','star','طلعات ووناسة',35],['basics','bag','احتياجات أساسية',25]]}
 };
 const BASE_ITEMS = {
-  tuition:{icon:'🎓', name:'أقساط الجامعة'},
-  fuel:{icon:'⛽', name:'البنزين والمواصلات'}, net:{icon:'📶', name:'الإنترنت والمكالمات'}, subs:{icon:'🏋️', name:'الاشتراكات (نادي…)'},
-  sadaqa:{icon:'🤲', name:'الصدقة الشهرية'}, care:{icon:'👕', name:'الملابس والعناية'}, family:{icon:'🏠', name:'مصروف البيت'},
-  autosave:{icon:'🐷', name:'الادخار الشهري', type:'save'}
+  tuition:{icon:'cap', name:'أقساط الجامعة'}, subs:{icon:'gym', name:'الاشتراكات (نادي…)'}, net:{icon:'wifi', name:'الإنترنت والمكالمات'},
+  autosave:{icon:'safe', name:'الادخار الشهري', type:'save'}
 };
 const PALETTE = ['#ff7a1a','#2f6fe0','#14a38b','#e2483d','#8a5cf6','#c98a12','#0ea5c6','#d9468f','#5b6b8c'];
-const BOX_ICONS = ['🧴','🍫','🎒','☕','🍔','📚','⚽','🚗','🛍️','🎁','🏠','⛽','📱','💊','🎮','✂️','🧳','🍬','🐈','📦','🎓','💼','🧾'];
-const C_ICONS = ['⛽','📶','💻','🤲','👕','🏠','🐷','🔧','📱','🎓','🍽️','🚌','💊','🏋️','📦'];
-const GOAL_PRESETS = [{emoji:'💻', name:'حاسوب', target:300}, {emoji:'🧳', name:'عمرة أو سفر', target:400}, {emoji:'🛟', name:'صندوق الطوارئ', target:150}, {emoji:'🚗', name:'سيارة', target:1500}];
-const GOAL_EMOJIS = ['🎯','💻','📱','🎓','🧳','🛟','🚗','⌚','📷','🏠','📚','🏋️','🎁','💼'];
+const BOX_ICONS = ['food','coffee','star','car','bag','game','book','gift','phone','shirt','heart','tool','home','plane','cash','box'];
+const C_ICONS = ['cap','wifi','gym','safe','phone','car','home','heart','book','shirt','tool','box'];
+const GOAL_PRESETS = [{emoji:'laptop', name:'حاسوب', target:300}, {emoji:'plane', name:'عمرة أو سفر', target:400}, {emoji:'shield', name:'صندوق الطوارئ', target:150}, {emoji:'car', name:'سيارة', target:1500}];
+const GOAL_EMOJIS = ['target','laptop','phone','plane','shield','car','cap','home','gift','game','book','box'];
 
 /* ============ أدوات ============ */
 const $ = s => document.querySelector(s);
@@ -368,6 +404,7 @@ function normalize(s){
   if (!MODES[o.mode]) o.mode = 'student';
   if (!Array.isArray(s.cats) || !s.cats.length){ const inc = parseNum(o.profile.allowance) + parseNum(o.profile.extra); o.cats = buildCats(o.mode, inc - sum(o.commitments.filter(c => c.active).map(c => c.amount))); }
   if (s.v !== 3 && o.theme !== 'dark') o.theme = 'light';
+  o.cats.forEach(c => c.icon = icoKey(c.icon)); o.commitments.forEach(c => c.icon = icoKey(c.icon)); o.goals.forEach(g => g.emoji = icoKey(g.emoji));
   o.v = 3; return o;
 }
 function load(){ try { const raw = localStorage.getItem(KEY); return raw ? normalize(JSON.parse(raw)) : defaultState(); } catch(e){ return defaultState(); } }
@@ -376,7 +413,7 @@ let storageOK = true;
 function save(){ try { localStorage.setItem(KEY, JSON.stringify(state)); storageOK = true; } catch(e){ if (storageOK) toast('تعذّر الحفظ في المتصفح — صدّر نسخة احتياطية'); storageOK = false; } }
 function commit(){ save(); render(); }
 const M = () => MODES[state.mode] || MODES.student;
-const catOf = id => state.cats.find(c => c.id === id) || {id, icon:'📦', name:'خانة محذوفة', color:'#8a94ad', limit:0};
+const catOf = id => state.cats.find(c => c.id === id) || {id, icon:'box', name:'خانة محذوفة', color:'#8a94ad', limit:0};
 
 /* ============ الحسابات ============ */
 function bucketBal(goalId){ return sum(state.vault.filter(v => (v.goal || null) === (goalId || null)).map(v => v.amount)); }
@@ -429,7 +466,7 @@ function render(){
     const pct = b.limit > 0 ? clamp(b.ratio) * 100 : 0;
     const col = b.limit > 0 && b.ratio > 1 ? 'var(--red)' : b.limit > 0 && b.ratio >= .75 ? 'var(--yel)' : b.color;
     return `<button class="bcard" data-a="boxOpen" data-id="${b.id}">
-      <div class="h"><span class="em" style="background:color-mix(in srgb,${b.color} 15%,transparent)">${b.icon}</span><span class="nm">${esc(b.name)}</span></div>
+      <div class="h"><span class="em" style="background:color-mix(in srgb,${b.color} 15%,transparent)">${Ico(b.icon, b.color)}</span><span class="nm">${esc(b.name)}</span></div>
       <div class="v ${b.limit > 0 && b.left < 0 ? 'neg' : ''}"><span class="num">${fmt(b.limit > 0 ? b.left : b.spent)}</span> <small>د.ك</small></div>
       <div class="cap">${b.limit > 0 ? (b.left >= 0 ? 'المتبقي' : 'تجاوزت الحد') : 'المصروف (بلا حد)'}</div>
       <div class="ln"><i style="width:${pct}%;background:${col}"></i></div></button>`;
@@ -490,7 +527,7 @@ function sheetAdd(pre){
     <div class="amt-disp empty" id="amtDisp"><b>0</b> <span>د.ك</span></div>
     <div class="keypad">${['1','2','3','4','5','6','7','8','9','.','0','⌫'].map(x => `<button data-a="key" data-k="${x}" aria-label="${x === '⌫' ? 'مسح' : x}">${x === '⌫' ? I('del') : x}</button>`).join('')}</div>
     <div class="pick-wrap" id="pickWrap"><div class="pick-h" id="pickH">أدخل المبلغ، ثم اختر الخانة</div>
-    <div class="pick off" id="pick">${k.boxes.map(b => `<button class="${b.id === expPre ? 'pre' : ''}" data-a="saveTo" data-id="${b.id}"><span class="em">${b.icon}</span>${esc(b.name)}${b.limit > 0 ? `<small>متبقٍ ${fmt(b.left)}</small>` : ''}</button>`).join('')}</div></div>
+    <div class="pick off" id="pick">${k.boxes.map(b => `<button class="${b.id === expPre ? 'pre' : ''}" data-a="saveTo" data-id="${b.id}"><span class="em">${Ico(b.icon, b.color)}</span>${esc(b.name)}${b.limit > 0 ? `<small>متبقٍ ${fmt(b.left)}</small>` : ''}</button>`).join('')}</div></div>
     <button class="note-t" data-a="noteToggle" id="noteT">+ ملاحظة أو تاريخ آخر</button>
     <div id="noteBox" hidden><div class="two" style="margin-top:10px"><div class="field"><label>ملاحظة</label><input class="inp" id="exNote" maxlength="60"></div>
       <div class="field"><label>التاريخ</label><input class="inp" id="exDate" type="date" value="${today()}" max="${addDays(today(), 1)}"></div></div></div>`);
@@ -503,8 +540,8 @@ function sheetIncome(){
     <div class="amt-disp empty" id="amtDisp"><b>0</b> <span>د.ك</span></div>
     <div class="keypad">${['1','2','3','4','5','6','7','8','9','.','0','⌫'].map(x => `<button data-a="key" data-k="${x}" aria-label="${x === '⌫' ? 'مسح' : x}">${x === '⌫' ? I('del') : x}</button>`).join('')}</div>
     <div class="pick-wrap" id="pickWrap"><div class="pick-h" id="pickH">أدخل المبلغ، ثم اختر أين يذهب</div>
-    <div class="pick off" id="pick"><button class="dest" data-a="incTo" data-to="free"><span class="em">💵</span>رصيدي العام</button><button class="dest" data-a="incTo" data-to="save"><span class="em">🐷</span>الادخار</button>
-      ${k.boxes.map(b => `<button data-a="incTo" data-to="${b.id}"><span class="em">${b.icon}</span>${esc(b.name)}</button>`).join('')}</div></div>
+    <div class="pick off" id="pick"><button class="dest" data-a="incTo" data-to="free"><span class="em">${Ico('cash', 'var(--grn)')}</span>رصيدي العام</button><button class="dest" data-a="incTo" data-to="save"><span class="em">${Ico('safe', 'var(--grn)')}</span>الادخار</button>
+      ${k.boxes.map(b => `<button data-a="incTo" data-to="${b.id}"><span class="em">${Ico(b.icon, b.color)}</span>${esc(b.name)}</button>`).join('')}</div></div>
     <div class="field" style="margin-top:12px"><input class="inp" id="incNote" placeholder="مصدر المبلغ (اختياري)" maxlength="40"></div>`);
 }
 function incTo(to){
@@ -552,7 +589,7 @@ function saveTo(catId){
 function sheetBox(id){
   const b = calc().boxes.find(x => x.id === id); if (!b) return;
   const list = state.expenses.filter(e => e.cycle === state.cycle.id && e.cat === id).sort((a, c) => (c.date + c.ts) > (a.date + a.ts) ? 1 : -1);
-  openSheet(head(`${b.icon} ${esc(b.name)}`) + `
+  openSheet(head(`${Ico(b.icon, b.color)} ${esc(b.name)}`) + `
     <div class="panel" style="text-align:center"><div class="small muted">${b.limit > 0 ? (b.left >= 0 ? 'المتبقي' : 'تجاوزت الحد بمقدار') : 'المصروف هذا الشهر'}</div>
       <div class="bigv ${b.left < 0 && b.limit > 0 ? 'neg' : ''}"><span class="num">${fmt(b.limit > 0 ? Math.abs(b.left) : b.spent)}</span> <small>د.ك</small></div>
       ${b.limit > 0 ? `<div class="prog" style="margin:10px 0 6px"><i style="width:${clamp(b.ratio) * 100}%"></i></div><div class="small muted">صُرف ${KD(b.spent)} من ${KD(b.limit)}</div>` : ''}</div>
@@ -561,7 +598,7 @@ function sheetBox(id){
 }
 function expRow(e){
   const c = catOf(e.cat);
-  return `<div class="item"><div class="ic" style="background:color-mix(in srgb,${c.color} 14%,transparent)">${c.icon}</div>
+  return `<div class="item"><div class="ic" style="background:color-mix(in srgb,${c.color} 14%,transparent)">${Ico(c.icon, c.color)}</div>
     <div class="grow"><div class="t">${esc(e.note) || esc(c.name)}</div><div class="s">${fmtDate(e.date, {weekday:'short', day:'numeric', month:'short'})}</div></div>
     <div class="amt">${KD(e.amount)}</div><button class="del" data-a="delExp" data-id="${e.id}" aria-label="حذف">${I('trash')}</button></div>`;
 }
@@ -574,7 +611,7 @@ function allocText(k){
 function sheetBoxesEdit(){
   const k = calc();
   openSheet(head('تعديل الخانات') + `<div class="hint" style="margin:-6px 0 6px">الاسم والحد الشهري لكل خانة. اضغط الأيقونة لتغييرها.</div>
-    ${state.cats.map(b => `<div class="box-edit"><button class="ic" data-a="boxIcon" data-id="${b.id}" style="background:color-mix(in srgb,${b.color} 14%,transparent)">${b.icon}</button>
+    ${state.cats.map(b => `<div class="box-edit"><button class="ic" data-a="boxIcon" data-id="${b.id}" style="background:color-mix(in srgb,${b.color} 14%,transparent)">${Ico(b.icon, b.color)}</button>
       <input class="inp nm" data-box-name="${b.id}" value="${esc(b.name)}" maxlength="24" aria-label="الاسم">
       <input class="inp lim" data-box-limit="${b.id}" value="${b.limit || ''}" placeholder="0" inputmode="decimal" aria-label="الحد">
       <button class="del" data-a="boxDel" data-id="${b.id}" aria-label="حذف">${I('trash')}</button></div>`).join('')}
@@ -584,7 +621,7 @@ function sheetBoxesEdit(){
 }
 function boxIconSheet(id){
   const b = state.cats.find(c => c.id === id);
-  openSheet(head('اختر أيقونة', 'boxesEdit') + `<div class="emojis">${BOX_ICONS.map(e => `<button class="${e === b.icon ? 'on' : ''}" data-a="setBoxIcon" data-id="${id}" data-e="${e}">${e}</button>`).join('')}</div>`);
+  openSheet(head('اختر أيقونة', 'boxesEdit') + `<div class="emojis">${BOX_ICONS.map(e => `<button class="${e === b.icon ? 'on' : ''}" data-a="setBoxIcon" data-id="${id}" data-e="${e}">${Ico(e, b.color)}</button>`).join('')}</div>`);
 }
 
 /* ---- الالتزامات ---- */
@@ -592,18 +629,18 @@ function sheetCommitments(){
   const k = calc(), S = state;
   openSheet(head('الالتزامات الشهرية') + `
     <div class="panel row"><div class="grow"><div class="small muted">المجموع</div><div class="bigv" style="font-size:28px"><span class="num">${fmt(k.commitTotal)}</span> <small>د.ك</small></div></div><div class="small muted">${Math.round(k.income ? k.commitTotal / k.income * 100 : 0)}% من دخلك</div></div>
-    <div class="hint" style="margin-bottom:4px">اضغط ✓ عند الدفع. «الادخار الشهري» يُضاف إلى ادخارك تلقائيًا.</div>
+    <div class="hint" style="margin-bottom:4px">اضغط علامة الصح عند الدفع. «الادخار الشهري» يُضاف إلى ادخارك تلقائيًا.</div>
     <div class="list">${S.commitments.map(it => { const paid = !!S.cycle.paid[it.id];
       return `<div class="item ${it.active ? '' : 'off'}"><button class="check ${paid ? 'on' : ''}" data-a="paid" data-id="${it.id}" ${it.active ? '' : 'disabled'} aria-label="تم الدفع">${I('check')}</button>
-        <div class="grow" data-a="editCommit" data-id="${it.id}" style="cursor:pointer"><div class="t">${it.icon} ${esc(it.name)}</div><div class="s">${paid ? 'مدفوع' : it.active ? 'غير مدفوع' : 'متوقف'}</div></div>
+        <div class="grow" data-a="editCommit" data-id="${it.id}" style="cursor:pointer"><div class="t">${Ico(it.icon, 'var(--org)', 'sm')} ${esc(it.name)}</div><div class="s">${paid ? 'مدفوع' : it.active ? 'غير مدفوع' : 'متوقف'}</div></div>
         <div class="amt">${KD(it.amount)}</div><button class="sw ${it.active ? 'on' : ''}" data-a="toggleActive" data-id="${it.id}" aria-label="تشغيل"></button></div>`; }).join('')}</div>
     <div class="btns" style="margin-top:12px"><button class="btn soft" data-a="editCommit">${I('plus')} بند جديد</button><button class="btn navy" data-a="newCycle">شهر جديد</button></div>`);
 }
-let editIcon = '📌';
+let editIcon = 'box';
 function sheetCommit(id){
-  const it = id ? state.commitments.find(x => x.id === id) : null; editIcon = it ? it.icon : '📌';
+  const it = id ? state.commitments.find(x => x.id === id) : null; editIcon = it ? it.icon : 'box';
   openSheet(head(it ? 'تعديل البند' : 'بند جديد', 'commitments') + `
-    <div class="field"><div class="emojis" id="icPick">${C_ICONS.map(e => `<button class="${e === editIcon ? 'on' : ''}" data-a="pickIcon" data-e="${e}">${e}</button>`).join('')}</div></div>
+    <div class="field"><div class="emojis" id="icPick">${C_ICONS.map(e => `<button class="${e === editIcon ? 'on' : ''}" data-a="pickIcon" data-e="${e}">${Ico(e)}</button>`).join('')}</div></div>
     <div class="field"><label>الاسم</label><input class="inp" id="cmName" value="${esc(it ? it.name : '')}" maxlength="40"></div>
     <div class="field"><label>المبلغ الشهري (د.ك)</label><input class="inp" id="cmAmt" inputmode="decimal" value="${it ? it.amount : ''}" placeholder="0"></div>
     <label class="checkline" style="margin-bottom:12px"><input type="checkbox" id="cmSave" ${it && it.type === 'save' ? 'checked' : ''}><span>بند ادخار (يُضاف إلى ادخارك عند الدفع)</span></label>
@@ -634,7 +671,7 @@ function doNewCycle(){
   state.cycles.push({id:old.id, start:old.start, end:today(), income:k.income, commitTotal:k.commitTotal, expTotal:k.expTotal, saved:r3(k.savedThisCycle + carry), left:r3(k.free - carry)});
   state.profile.allowance = parseNum($('#ncAl').value); state.profile.extra = parseNum($('#ncEx').value);
   state.cycle = {id:uid(), start:today(), paid:{}}; state.nextPayday = pd;
-  closeSheet(); lastRender = 0; commit(); toast('بداية موفقة 🎉');
+  closeSheet(); lastRender = 0; commit(); toast('بداية موفقة');
 }
 
 /* ---- الادخار ---- */
@@ -645,18 +682,18 @@ function sheetSavings(){
       <div class="btns" style="margin-top:10px"><button class="btn sm" data-a="vaultOp" data-op="manual">${I('plus')} إيداع</button><button class="btn sm ghost" data-a="vaultOp" data-op="withdraw">سحب للطوارئ</button></div></div>
     <div class="row" style="margin:16px 2px 10px"><b style="font-family:var(--fd)" class="grow">الأهداف</b><button class="link" data-a="editGoal">${I('plus')} هدف</button></div>
     ${S.goals.length ? S.goals.map(g => { const saved = bucketBal(g.id), target = parseNum(g.target), rem = r3(Math.max(0, target - saved)), pct = target ? clamp(saved / target) * 100 : 0, mo = parseNum(g.monthly);
-      const eta = rem <= 0 ? 'تحقق الهدف 🎉' : mo > 0 ? `تصل إليه بعد ${monthsWord(Math.ceil(rem / mo - 1e-9))} تقريبًا` : 'حدّد مبلغًا شهريًا';
-      return `<div class="goal"><div class="head"><span class="em">${g.emoji}</span><div class="grow"><b>${esc(g.name)}</b><div class="small muted">${KD(saved)} من ${KD(target)}</div></div><span class="pct num">${Math.floor(pct)}%</span></div>
+      const eta = rem <= 0 ? 'تحقق الهدف' : mo > 0 ? `تصل إليه بعد ${monthsWord(Math.ceil(rem / mo - 1e-9))} تقريبًا` : 'حدّد مبلغًا شهريًا';
+      return `<div class="goal"><div class="head"><span class="em">${Ico(g.emoji, 'var(--org)')}</span><div class="grow"><b>${esc(g.name)}</b><div class="small muted">${KD(saved)} من ${KD(target)}</div></div><span class="pct num">${Math.floor(pct)}%</span></div>
         <div class="prog"><i style="width:${pct}%"></i></div><div class="small muted" style="margin:8px 0 10px">${eta}</div>
         <div class="btns"><button class="btn sm soft" data-a="vaultOp" data-op="manual" data-goal="${g.id}">${I('plus')} إيداع</button><button class="btn sm ghost" data-a="editGoal" data-id="${g.id}">تعديل</button></div></div>`; }).join('')
-    : `<div class="chips" style="flex-wrap:wrap">${GOAL_PRESETS.map((p, i) => `<button class="chip" data-a="editGoal" data-preset="${i}">${p.emoji} ${p.name}</button>`).join('')}</div>`}`);
+    : `<div class="chips" style="flex-wrap:wrap">${GOAL_PRESETS.map((p, i) => `<button class="chip" data-a="editGoal" data-preset="${i}">${p.name}</button>`).join('')}</div>`}`);
 }
 function sheetVault(op, goalId){
   const k = calc();
   openSheet(head(op === 'withdraw' ? 'سحب للطوارئ' : 'إيداع', 'savings') + `
     <p class="small muted" style="margin-top:0">${op === 'withdraw' ? 'يعود المبلغ إلى رصيدك هذا الشهر.' : `يُخصم من رصيدك (المتاح ${KD(Math.max(0, k.free))}).`}</p>
     <div class="field"><input class="inp big" id="vaAmt" inputmode="decimal" placeholder="0"></div>
-    <div class="field"><label>${op === 'withdraw' ? 'من' : 'إلى'}</label><select class="inp" id="vaGoal"><option value="">الادخار العام (${KDt(bucketBal(null))})</option>${state.goals.map(g => `<option value="${g.id}" ${goalId === g.id ? 'selected' : ''}>${g.emoji} ${esc(g.name)} (${KDt(bucketBal(g.id))})</option>`).join('')}</select></div>
+    <div class="field"><label>${op === 'withdraw' ? 'من' : 'إلى'}</label><select class="inp" id="vaGoal"><option value="">الادخار العام (${KDt(bucketBal(null))})</option>${state.goals.map(g => `<option value="${g.id}" ${goalId === g.id ? 'selected' : ''}>${esc(g.name)} (${KDt(bucketBal(g.id))})</option>`).join('')}</select></div>
     <button class="btn block" data-a="doVault" data-op="${op}">تأكيد</button>`);
 }
 function doVault(op){
@@ -666,12 +703,12 @@ function doVault(op){
   else state.vault.push(Object.assign(base, {amount:amt, src:'manual', note:'إيداع'}));
   save(); render(); vib(12); toast('تم'); sheetSavings();
 }
-let goalEmoji = '🎯';
+let goalEmoji = 'target';
 function sheetGoal(id, presetIdx){
   const g = id ? state.goals.find(x => x.id === id) : null, p = presetIdx != null ? GOAL_PRESETS[presetIdx] : null;
-  goalEmoji = g ? g.emoji : p ? p.emoji : '🎯';
+  goalEmoji = g ? g.emoji : p ? p.emoji : 'target';
   openSheet(head(g ? 'تعديل الهدف' : 'هدف جديد', 'savings') + `
-    <div class="field"><div class="emojis" id="gEm">${GOAL_EMOJIS.map(e => `<button class="${e === goalEmoji ? 'on' : ''}" data-a="pickGoalEm" data-e="${e}">${e}</button>`).join('')}</div></div>
+    <div class="field"><div class="emojis" id="gEm">${GOAL_EMOJIS.map(e => `<button class="${e === goalEmoji ? 'on' : ''}" data-a="pickGoalEm" data-e="${e}">${Ico(e, 'var(--org)')}</button>`).join('')}</div></div>
     <div class="field"><label>الاسم</label><input class="inp" id="gName" value="${esc(g ? g.name : p ? p.name : '')}" maxlength="40"></div>
     <div class="two"><div class="field"><label>المبلغ المطلوب</label><input class="inp" id="gTarget" inputmode="decimal" value="${g ? g.target : p ? p.target : ''}" data-in="gplan"></div>
     <div class="field"><label>خلال كم شهر؟</label><input class="inp" id="gMonths" inputmode="numeric" value="10" data-in="gplan"></div></div>
@@ -696,11 +733,11 @@ function sheetLog(){
   list = list.slice().sort((a, b) => (b.date + (b.ts || '')) > (a.date + (a.ts || '')) ? 1 : -1);
   const total = sum(list.map(e => e.amount)), g = {};
   const incList = (logUI.period === 'cycle' ? state.incomes.filter(x => x.cycle === state.cycle.id) : state.incomes).slice().reverse();
-  const incHtml = logUI.cat === 'all' && incList.length ? `<div class="day-h"><span>المبالغ الواردة</span><span class="num pos">+${fmt(sum(incList.map(x => x.amount)))}</span></div><div class="list">${incList.map(x => `<div class="item"><div class="ic" style="background:var(--grn-soft)">💵</div><div class="grow"><div class="t">${esc(x.note) || 'مبلغ وارد'}</div><div class="s">${x.to === 'free' ? 'الرصيد العام' : x.to === 'save' ? 'الادخار' : esc(catOf(x.to).name)} · ${fmtDate(x.date)}</div></div><div class="amt pos">+${KD(x.amount)}</div><button class="del" data-a="delInc" data-id="${x.id}" aria-label="حذف">${I('trash')}</button></div>`).join('')}</div>` : '';
+  const incHtml = logUI.cat === 'all' && incList.length ? `<div class="day-h"><span>المبالغ الواردة</span><span class="num pos">+${fmt(sum(incList.map(x => x.amount)))}</span></div><div class="list">${incList.map(x => `<div class="item"><div class="ic" style="background:var(--grn-soft)">${Ico('cash', 'var(--grn)')}</div><div class="grow"><div class="t">${esc(x.note) || 'مبلغ وارد'}</div><div class="s">${x.to === 'free' ? 'الرصيد العام' : x.to === 'save' ? 'الادخار' : esc(catOf(x.to).name)} · ${fmtDate(x.date)}</div></div><div class="amt pos">+${KD(x.amount)}</div><button class="del" data-a="delInc" data-id="${x.id}" aria-label="حذف">${I('trash')}</button></div>`).join('')}</div>` : '';
   list.forEach(e => (g[e.date] = g[e.date] || []).push(e));
   openSheet(head('السجل') + `
     <div class="seg-c" style="margin-bottom:10px">${Object.entries(periods).map(([id, n]) => `<button class="${logUI.period === id ? 'on' : ''}" data-a="logPeriod" data-id="${id}">${n}</button>`).join('')}</div>
-    <div class="chips"><button class="chip ${logUI.cat === 'all' ? 'on' : ''}" data-a="logCat" data-id="all">الكل</button>${state.cats.map(b => `<button class="chip ${logUI.cat === b.id ? 'on' : ''}" data-a="logCat" data-id="${b.id}">${b.icon} ${esc(b.name)}</button>`).join('')}</div>
+    <div class="chips"><button class="chip ${logUI.cat === 'all' ? 'on' : ''}" data-a="logCat" data-id="all">الكل</button>${state.cats.map(b => `<button class="chip ${logUI.cat === b.id ? 'on' : ''}" data-a="logCat" data-id="${b.id}">${esc(b.name)}</button>`).join('')}</div>
     <div class="panel" style="text-align:center;margin-top:10px"><div class="small muted">المجموع · ${list.length} عملية</div><div class="bigv"><span class="num">${fmt(total)}</span> <small>د.ك</small></div></div>
     ${incHtml}${list.length ? Object.keys(g).sort().reverse().map(d => `<div class="day-h"><span>${d === today() ? 'اليوم' : d === addDays(today(), -1) ? 'أمس' : fmtDate(d, {weekday:'long', day:'numeric', month:'long'})}</span><span class="num">${fmt(sum(g[d].map(e => e.amount)))}</span></div><div class="list">${g[d].map(expRow).join('')}</div>`).join('') : '<div class="empty">لا توجد مصروفات.</div>'}`);
 }
@@ -709,7 +746,7 @@ function sheetLog(){
 function sheetSettings(){
   const p = state.profile;
   openSheet(head('الإعدادات') + `
-    <div class="field"><div class="seg-c">${Object.entries(MODES).map(([id, m]) => `<button class="${state.mode === id ? 'on' : ''}" data-a="setMode" data-id="${id}">${m.icon} ${m.label}</button>`).join('')}</div></div>
+    <div class="field"><div class="seg-c">${Object.entries(MODES).map(([id, m]) => `<button class="${state.mode === id ? 'on' : ''}" data-a="setMode" data-id="${id}">${m.label}</button>`).join('')}</div></div>
     <div class="field"><label>الاسم</label><input class="inp" id="stName" value="${esc(p.name)}" maxlength="24"></div>
     <div class="two"><div class="field"><label>${M().incAsk}</label><input class="inp" id="stAl" inputmode="decimal" value="${p.allowance}"></div>
     <div class="field"><label>دخل إضافي</label><input class="inp" id="stEx" inputmode="decimal" value="${p.extra || 0}"></div></div>
@@ -721,7 +758,7 @@ function sheetSettings(){
     <div class="btns" style="margin-bottom:8px"><button class="btn ghost sm" data-a="exportJSON">تصدير نسخة</button><button class="btn ghost sm" data-a="importJSON">استيراد نسخة</button></div>
     <div class="btns" style="margin-bottom:8px"><button class="btn ghost sm" data-a="exportCSV">تقرير Excel</button><button class="btn ghost sm" data-a="install">التثبيت على الجوال</button></div>
     <button class="btn danger sm block" data-a="resetAll">حذف جميع البيانات</button>
-    <div class="hint" style="text-align:center;margin-top:10px">🔒 بياناتك محفوظة في جهازك فقط</div>`);
+    <div class="hint" style="text-align:center;margin-top:10px">بياناتك محفوظة في جهازك فقط</div>`);
 }
 function download(name, content, type){
   try { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([content], {type})); a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500); toast('تم التصدير'); }
@@ -749,24 +786,24 @@ let deferredPrompt = null;
 window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredPrompt = e; });
 function sheetInstall(){
   openSheet(head('التثبيت على الجوال', 'settings') + `${deferredPrompt ? `<button class="btn block" data-a="promptInstall" style="margin-bottom:14px">تثبيت الآن</button>` : ''}
-    <div class="panel"><b>آيفون (Safari)</b><ol class="install-steps small"><li>اضغط زر المشاركة <kbd>⬆️</kbd>.</li><li>اختر «إضافة إلى الشاشة الرئيسية».</li></ol></div>
+    <div class="panel"><b>آيفون (Safari)</b><ol class="install-steps small"><li>اضغط زر المشاركة <kbd>مشاركة</kbd>.</li><li>اختر «إضافة إلى الشاشة الرئيسية».</li></ol></div>
     <div class="panel"><b>أندرويد (Chrome)</b><ol class="install-steps small"><li>اضغط القائمة <kbd>⋮</kbd>.</li><li>اختر «تثبيت التطبيق».</li></ol></div>`);
 }
 
 /* ============ الإعداد الأول ============ */
 const ob = {step:0, mode:'student', tier:'basic', allowance:200, extra:0, name:'', payday:'', cats:null, commitments:null};
 const obIncome = () => r3(ob.allowance + ob.extra);
-function obAllocText(){ const un = r3(obIncome() - sum(ob.commitments.map(c => c.amount)) - sum(ob.cats.map(c => parseNum(c.limit)))); return un < -0.0005 ? `<span class="neg">أكثر من المتاح بـ ${KDt(-un)}</span>` : un > 0.0005 ? `غير موزَّع: ${KDt(un)}` : '✓ تم توزيع المبلغ كاملًا'; }
+function obAllocText(){ const un = r3(obIncome() - sum(ob.commitments.map(c => c.amount)) - sum(ob.cats.map(c => parseNum(c.limit)))); return un < -0.0005 ? `<span class="neg">أكثر من المتاح بـ ${KDt(-un)}</span>` : un > 0.0005 ? `غير موزَّع: ${KDt(un)}` : 'تم توزيع المبلغ كاملًا'; }
 function renderOnboarding(){
   $('#app').innerHTML = '';
   if (!ob.payday) ob.payday = addMonths(today(), 1);
   const m = MODES[ob.mode]; let body;
   if (ob.step === 0){
     body = `<div class="logo">${logoSVG()}</div><h1>مرحبًا بك</h1><p class="lead">نظّم أموالك في خانات واضحة.</p>
-      <div class="who">${Object.entries(MODES).map(([id, x]) => `<button data-a="obMode" data-id="${id}"><span class="em">${x.icon}</span><b>${x.label}</b><span>${x.has}</span></button>`).join('')}</div>`;
+      <div class="who">${Object.entries(MODES).map(([id, x]) => `<button data-a="obMode" data-id="${id}"><span class="em">${Ico(x.icon, 'var(--org)')}</span><b>${x.label}</b><span>${x.has}</span></button>`).join('')}</div>`;
   } else if (ob.step === 1){
     body = `<h1>${m.ask}</h1><p class="lead">يمكنك تعديله لاحقًا.</p>
-      ${ob.mode === 'student' ? [['basic','🎓','إعانة أساسية',200],['rare','⭐','تخصص نادر أو تفوق',350],['custom','✏️','مبلغ آخر',null]].map(([id, em, n, a]) => `<button class="tier ${ob.tier === id ? 'on' : ''}" data-a="obTier" data-id="${id}"><span class="em">${em}</span><b class="grow">${n}</b>${a ? `<b class="amt">${KD(a)}</b>` : ''}</button>`).join('') : ''}
+      ${ob.mode === 'student' ? [['basic','cap','إعانة أساسية',200],['rare','star','تخصص نادر أو تفوق',350],['custom','edit','مبلغ آخر',null]].map(([id, em, n, a]) => `<button class="tier ${ob.tier === id ? 'on' : ''}" data-a="obTier" data-id="${id}"><span class="em">${Ico(em, 'var(--org)')}</span><b class="grow">${n}</b>${a ? `<b class="amt">${KD(a)}</b>` : ''}</button>`).join('') : ''}
       <div class="two" style="margin-top:6px"><div class="field"><label>${m.incAsk}</label><input class="inp" id="obAl" inputmode="decimal" value="${ob.allowance || ''}" placeholder="${ob.mode === 'student' ? '200' : ob.mode === 'school' ? '30' : '900'}"></div>
       <div class="field"><label>دخل إضافي</label><input class="inp" id="obEx" inputmode="decimal" value="${ob.extra || ''}" placeholder="0"></div></div>
       <div class="field"><label>موعد ${m.next}</label><input class="inp" id="obPd" type="date" value="${ob.payday}" min="${addDays(today(), 1)}"></div>
@@ -778,7 +815,7 @@ function renderOnboarding(){
       <div class="card"><div class="row"><span class="grow">${m.inc}</span><b class="num">${fmt(inc)}</b></div>
         <div class="row small muted" style="margin-top:6px"><span class="grow">الالتزامات والادخار</span><span class="num">-${fmt(ct)}</span></div>
         <div class="row" style="margin-top:8px;border-top:1px solid var(--line);padding-top:8px"><b class="grow">للخانات</b><b class="num" style="color:var(--link)">${fmt(r3(inc - ct))}</b></div></div>
-      <div class="card">${ob.cats.map((c, i) => `<div class="box-edit"><span class="ic" style="background:color-mix(in srgb,${c.color} 14%,transparent)">${c.icon}</span><b class="grow">${esc(c.name)}</b><input class="inp lim" data-ob-limit="${i}" value="${c.limit}" inputmode="decimal"></div>`).join('')}
+      <div class="card">${ob.cats.map((c, i) => `<div class="box-edit"><span class="ic" style="background:color-mix(in srgb,${c.color} 14%,transparent)">${Ico(c.icon, c.color)}</span><b class="grow">${esc(c.name)}</b><input class="inp lim" data-ob-limit="${i}" value="${c.limit}" inputmode="decimal"></div>`).join('')}
         <div class="alloc" id="obAlloc">${obAllocText()}</div></div>
       <div class="btns"><button class="btn ghost" data-a="obBack">رجوع</button><button class="btn" data-a="obDone" style="flex:2">ابدأ</button></div>`;
   }
@@ -806,7 +843,7 @@ const ACT = {
     toast('تم الحذف', 'تراجع', () => { state.expenses.push(ex); save(); render(); reopen(); }); },
   boxesEdit: sheetBoxesEdit,
   boxesDone: () => { state.cats = state.cats.filter(c => c.name.trim()); closeSheet(); commit(); toast('تم الحفظ'); },
-  boxAdd: () => { state.cats.push({id:uid(), icon:'📦', name:'خانة جديدة', color:PALETTE[state.cats.length % PALETTE.length], limit:0}); save(); render(); sheetBoxesEdit(); setTimeout(() => { const ins = document.querySelectorAll('[data-box-name]'); const l = ins[ins.length - 1]; if (l){ l.focus(); l.select(); } }, 60); },
+  boxAdd: () => { state.cats.push({id:uid(), icon:'box', name:'خانة جديدة', color:PALETTE[state.cats.length % PALETTE.length], limit:0}); save(); render(); sheetBoxesEdit(); setTimeout(() => { const ins = document.querySelectorAll('[data-box-name]'); const l = ins[ins.length - 1]; if (l){ l.focus(); l.select(); } }, 60); },
   boxDel: d => { const i = state.cats.findIndex(c => c.id === d.id), b = state.cats[i]; state.cats.splice(i, 1); save(); render(); sheetBoxesEdit(); toast('تم حذف الخانة', 'تراجع', () => { state.cats.splice(i, 0, b); save(); render(); sheetBoxesEdit(); }); },
   boxIcon: d => boxIconSheet(d.id),
   setBoxIcon: d => { state.cats.find(c => c.id === d.id).icon = d.e; save(); render(); sheetBoxesEdit(); },

@@ -1,4 +1,4 @@
-const CACHE = 'e3anati-v7';
+const CACHE = 'e3anati-v8';
 const ASSETS = ['./', './index.html', './manifest.webmanifest', './icon.svg', './icon-192.png?v=3', './icon-512.png?v=3', './icon-180.png?v=3'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS))); self.skipWaiting(); });
 self.addEventListener('activate', e => {
