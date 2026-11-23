@@ -1,29 +1,29 @@
 {
-  "name": "إعانتي — مدير إعانة الطالب",
+  "name": "إعانتي — رتّب فلوسك",
   "short_name": "إعانتي",
-  "description": "إدارة الإعانة الجامعية والمصروفات والادخار بالدينار الكويتي",
+  "description": "توزيع الإعانة أو الراتب على خانات واضحة بالدينار الكويتي",
   "lang": "ar",
   "dir": "rtl",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#0b7a5c",
-  "theme_color": "#0b7a5c",
+  "background_color": "#0b1838",
+  "theme_color": "#12275a",
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "icon-192.png?v=3",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "icon-512.png",
+      "src": "icon-512.png?v=3",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "icon-512.png",
+      "src": "icon-512.png?v=3",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"

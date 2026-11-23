@@ -3,347 +3,282 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>إعانتي — مدير إعانة الطالب</title>
-<meta name="description" content="إعانتي: تطبيق مجاني لطلبة الجامعة لإدارة الإعانة والمصروفات والادخار بالدينار الكويتي. بياناتك تبقى في جهازك.">
-<meta name="theme-color" content="#0b7a5c">
+<title>إعانتي — رتّب فلوسك</title>
+<meta name="description" content="إعانتي: تطبيق مجاني للطلبة والموظفين الشباب لتوزيع الإعانة أو الراتب على خانات واضحة بالدينار الكويتي. بياناتك تبقى في جهازك.">
+<meta name="theme-color" content="#12275a">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="إعانتي">
-<link rel="manifest" href="manifest.webmanifest?v=2">
-<link rel="icon" href="icon.svg?v=2" type="image/svg+xml">
-<link rel="apple-touch-icon" href="icon-180.png?v=2">
+<link rel="manifest" href="manifest.webmanifest?v=3">
+<link rel="icon" href="icon.svg?v=3" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-180.png?v=3">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#f2f6f4;--card:#ffffff;--card2:#f7faf8;--text:#10201a;--muted:#5f716a;--line:#e1e9e5;
-  --pri:#0b7a5c;--pri2:#13a07a;--pri-soft:#e2f3ec;--on-pri:#fff;
-  --gold:#c98a12;--gold-soft:#fbf0d8;
-  --red:#d64545;--red-soft:#fde9e9;--yel:#b77d00;--yel-soft:#fff3d1;--grn:#168a52;--grn-soft:#dff4e8;
-  --shadow:0 1px 2px rgba(16,32,26,.05),0 10px 28px rgba(16,32,26,.07);
-  --r:22px;--free:#d5dfdb;
+  --bg:#f1f4fa;--card:#ffffff;--card2:#f5f7fc;--text:#0c1530;--muted:#5d6888;--line:#e1e6f1;
+  --navy:#12275a;--navy2:#1f3f8a;--org:#ff7a1a;--org2:#ff9c47;--org-soft:#fff0e3;--link:#e2600a;--on-org:#fff;
+  --red:#e0413b;--red-soft:#fdeaea;--yel:#c07a00;--yel-soft:#fff4d8;--grn:#15985a;--grn-soft:#e1f5ea;
+  --shadow:0 1px 2px rgba(12,21,48,.05),0 10px 26px rgba(12,21,48,.07);
+  --r:22px;--fd:"Alexandria","IBM Plex Sans Arabic",system-ui,sans-serif;
   --safe-b:env(safe-area-inset-bottom,0px);--safe-t:env(safe-area-inset-top,0px);
 }
 [data-theme="dark"]{
-  --bg:#0a110f;--card:#121c19;--card2:#17231f;--text:#e7f0ec;--muted:#93a69e;--line:#22312c;
-  --pri:#2cc394;--pri2:#2cc394;--pri-soft:#12322a;--on-pri:#06231a;
-  --gold:#f0b84a;--gold-soft:#2e2513;
-  --red:#ff7070;--red-soft:#3a1818;--yel:#ffcb52;--yel-soft:#33290f;--grn:#45d891;--grn-soft:#11301f;
-  --shadow:0 0 0 1px rgba(255,255,255,.03);--free:#2b3a35;
+  --bg:#060b1b;--card:#0e1730;--card2:#13203f;--text:#eaf0ff;--muted:#93a0c4;--line:#1f2c4f;
+  --org:#ff8a33;--org2:#ffa65c;--org-soft:#33200f;--link:#ff9d52;--on-org:#fff;
+  --red:#ff6b64;--red-soft:#3a1616;--yel:#ffc24d;--yel-soft:#33280e;--grn:#3fd68b;--grn-soft:#0f2e20;
+  --shadow:0 0 0 1px rgba(255,255,255,.03);
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;padding:0}
-body{font-family:"IBM Plex Sans Arabic",Tajawal,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--text);line-height:1.55;font-size:15px;min-height:100vh;transition:background .25s,color .25s}
-button,input,select,textarea{font:inherit;color:inherit}
-button{cursor:pointer;border:0;background:none}
-.app{max-width:620px;margin:0 auto;padding:calc(12px + var(--safe-t)) 16px calc(96px + var(--safe-b))}
-.num{font-variant-numeric:tabular-nums;direction:ltr;unicode-bidi:isolate;display:inline-block}
+body{font-family:"IBM Plex Sans Arabic",system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--text);line-height:1.55;font-size:15px;min-height:100vh;transition:background .25s,color .25s}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none;padding:0}
+.app{max-width:600px;margin:0 auto;padding:calc(12px + var(--safe-t)) 16px calc(100px + var(--safe-b))}
+.num{font-family:var(--fd);font-variant-numeric:tabular-nums;direction:ltr;unicode-bidi:isolate;display:inline-block}
+.i{display:inline-grid;place-items:center}
+.i svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.muted{color:var(--muted)}.small{font-size:13px}.neg{color:var(--red)!important}.pos{color:var(--grn)}
+.row{display:flex;align-items:center;gap:10px}.grow{flex:1;min-width:0}.sp{flex:1}
 
 /* header */
 .top{display:flex;align-items:center;gap:10px;margin:4px 0 14px}
-.top h1{font-size:19px;margin:0;font-weight:700;flex:1;line-height:1.3}
-.top h1 small{display:block;font-size:12.5px;color:var(--muted);font-weight:500}
-.icon-btn{width:42px;height:42px;border-radius:14px;background:var(--card);box-shadow:var(--shadow);display:grid;place-items:center;font-size:19px}
-.icon-btn:active{transform:scale(.94)}
+.top h1{font-family:var(--fd);font-size:20px;margin:0;font-weight:700;flex:1;line-height:1.35}
+.top h1 small{display:block;font-family:"IBM Plex Sans Arabic",sans-serif;font-size:12.5px;color:var(--muted);font-weight:500}
+.icon-btn{width:44px;height:44px;border-radius:14px;background:var(--card);box-shadow:var(--shadow);display:grid;place-items:center;color:var(--navy)}
+[data-theme="dark"] .icon-btn{color:var(--text)}
+.icon-btn:active{transform:scale(.92)}
 
 /* cards */
 .card{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);padding:16px;margin-bottom:14px}
-.card h2{font-size:16px;margin:0 0 12px;font-weight:700;display:flex;align-items:center;gap:8px}
-.card h2 .sp{flex:1}
-.muted{color:var(--muted)}
-.small{font-size:13px}
-.row{display:flex;align-items:center;gap:10px}
-.grow{flex:1;min-width:0}
+.card h2{font-family:var(--fd);font-size:16px;margin:0 0 4px;font-weight:700;display:flex;align-items:center;gap:8px}
+.card .sub-h{font-size:12.5px;color:var(--muted);margin-bottom:10px}
 
 /* hero */
-.hero{background:linear-gradient(140deg,#0b7a5c,#0f9a73 55%,#1fb488);color:#fff;border-radius:26px;padding:18px 18px 16px;margin-bottom:12px;position:relative;overflow:hidden;box-shadow:0 14px 30px rgba(11,122,92,.28)}
-[data-theme="dark"] .hero{background:linear-gradient(140deg,#0b5a45,#0e7a5c 55%,#14966f);box-shadow:none}
-.hero::after{content:"";position:absolute;inset:auto -60px -80px auto;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.08)}
-.hero-top{display:flex;justify-content:space-between;align-items:center;font-size:14px;opacity:.95}
-.pill{background:rgba(255,255,255,.18);padding:4px 10px;border-radius:99px;font-size:12.5px;font-weight:600;white-space:nowrap}
-.hero-num{font-size:44px;font-weight:700;margin:4px 0 0;line-height:1.15}
-.hero-num small{font-size:18px;font-weight:600;opacity:.9}
-.hero-sub{font-size:14px;opacity:.95;margin-bottom:12px}
-.hero-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;position:relative;z-index:1}
-.hero-row div{background:rgba(255,255,255,.14);border-radius:14px;padding:8px 10px}
-.hero-row b{display:block;font-size:15px}
-.hero-row span{font-size:11.5px;opacity:.9}
-.cycle-bar{height:6px;background:rgba(255,255,255,.2);border-radius:9px;margin-top:12px;overflow:hidden;position:relative;z-index:1}
-.cycle-bar i{display:block;height:100%;background:#fff;border-radius:9px}
-.cycle-cap{display:flex;justify-content:space-between;font-size:11.5px;opacity:.85;margin-top:5px;position:relative;z-index:1}
+.hero{background:radial-gradient(120% 140% at 100% 0%,#24489a 0%,#152d68 45%,#0b1838 100%);color:#fff;border-radius:26px;padding:18px;margin-bottom:12px;position:relative;overflow:hidden;box-shadow:0 16px 34px rgba(18,39,90,.3)}
+[data-theme="dark"] .hero{box-shadow:none;border:1px solid #1f3466}
+.hero::after{content:"";position:absolute;left:-70px;bottom:-90px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(255,122,26,.45),transparent 68%)}
+.hero > *{position:relative;z-index:1}
+.hero-top{display:flex;justify-content:space-between;align-items:center;font-size:14px;opacity:.92}
+.pill{background:rgba(255,255,255,.13);padding:4px 11px;border-radius:99px;font-size:12.5px;font-weight:600;white-space:nowrap}
+.hero-num{font-family:var(--fd);font-size:48px;font-weight:800;margin:6px 0 0;line-height:1.1}
+.hero-num small{font-size:18px;font-weight:600;color:var(--org2)}
+.hero-sub{font-size:14px;opacity:.92;margin:2px 0 14px}
+.hero-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.hero-row div{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:8px 10px}
+.hero-row b{display:block;font-size:15px;font-family:var(--fd);font-weight:700}
+.hero-row span{font-size:11.5px;opacity:.8}
+.cycle-bar{height:6px;background:rgba(255,255,255,.14);border-radius:9px;margin-top:14px;overflow:hidden}
+.cycle-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--org2),var(--org));border-radius:9px}
+.cycle-cap{display:flex;justify-content:space-between;font-size:11.5px;opacity:.75;margin-top:5px}
 
 /* alert */
-.alert{border-radius:16px;padding:12px 14px;font-weight:600;font-size:14px;margin-bottom:14px;display:flex;gap:10px;align-items:flex-start;border:1px solid transparent}
-.alert.green{background:var(--grn-soft);color:var(--grn);border-color:color-mix(in srgb,var(--grn) 25%,transparent)}
-.alert.yellow{background:var(--yel-soft);color:var(--yel);border-color:color-mix(in srgb,var(--yel) 30%,transparent)}
-.alert.red{background:var(--red-soft);color:var(--red);border-color:color-mix(in srgb,var(--red) 30%,transparent)}
-.alert.info{background:var(--gold-soft);color:var(--gold)}
-.alert .grow small{display:block;font-weight:500;opacity:.9;font-size:12.5px}
+.alert{border-radius:16px;padding:12px 14px;font-weight:600;font-size:14px;margin-bottom:14px;display:flex;gap:10px;align-items:flex-start}
+.alert .dot{width:10px;height:10px;border-radius:50%;margin-top:6px;flex:none;background:currentColor;box-shadow:0 0 0 4px color-mix(in srgb,currentColor 18%,transparent)}
+.alert.green{background:var(--grn-soft);color:var(--grn)}
+.alert.yellow{background:var(--yel-soft);color:var(--yel)}
+.alert.red{background:var(--red-soft);color:var(--red)}
+.alert.info{background:var(--org-soft);color:var(--link)}
+.alert small{display:block;font-weight:500;opacity:.92;font-size:12.5px}
 
-/* stats */
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
-.stat{background:var(--card);border-radius:18px;box-shadow:var(--shadow);padding:13px}
-.stat .lbl{font-size:12.5px;color:var(--muted);display:flex;gap:6px;align-items:center}
-.stat .val{font-size:20px;font-weight:700;margin-top:2px}
-.stat .val small{font-size:12px;font-weight:600;color:var(--muted)}
-.stat .sub{font-size:11.5px;color:var(--muted)}
-.stat.wide{grid-column:1/-1;display:flex;align-items:center;gap:12px}
-.stat.wide .val{font-size:26px}
-.neg{color:var(--red)!important}
-.pos{color:var(--grn)}
+/* boxes (الخانات) */
+.box{display:flex;gap:12px;align-items:center;width:100%;text-align:start;padding:12px 0;border-bottom:1px solid var(--line)}
+.box:last-of-type{border-bottom:0}
+.box:active{opacity:.7}
+.ic{width:44px;height:44px;border-radius:14px;background:var(--card2);display:grid;place-items:center;font-size:22px;flex:none}
+.box b{font-size:14.5px;font-weight:600}
+.box .left{font-family:var(--fd);font-weight:700;font-size:14px;white-space:nowrap}
+.box .s{font-size:12px;color:var(--muted);margin-top:3px}
+.bar{height:8px;background:var(--card2);border-radius:99px;overflow:hidden;margin-top:6px;border:1px solid var(--line)}
+.bar i{display:block;height:100%;border-radius:99px;transition:width .5s}
+.alloc{margin-top:12px;padding:12px;border-radius:16px;background:var(--card2);font-size:13px}
+.alloc b{font-family:var(--fd)}
+.box-edit{display:flex;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+.box-edit .ic{width:44px;height:44px;border:1.5px dashed var(--line)}
+.box-edit .nm{flex:1;min-width:0}
+.box-edit .lim{width:96px;text-align:center;font-family:var(--fd);font-weight:700}
 
-/* quick add */
-.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.qbtn{background:var(--card2);border:1px solid var(--line);border-radius:16px;padding:12px 6px;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12.5px;font-weight:600;text-align:center;line-height:1.3;transition:transform .12s}
-.qbtn .em{font-size:26px;line-height:1}
-.qbtn:active{transform:scale(.95)}
+/* summary tiles */
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tile{background:var(--card2);border-radius:16px;padding:11px 12px}
+.tile .l{font-size:12px;color:var(--muted)}
+.tile .v{font-family:var(--fd);font-size:18px;font-weight:700}
+.tile .v small{font-size:11px;color:var(--muted);font-weight:600}
 
 /* buttons */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 16px;border-radius:14px;font-weight:700;font-size:15px;background:var(--pri);color:var(--on-pri);transition:transform .12s,opacity .2s}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 16px;border-radius:14px;font-weight:700;font-size:15px;background:var(--org);color:var(--on-org);transition:transform .12s}
 .btn:active{transform:scale(.97)}
 .btn.block{width:100%}
-.btn.soft{background:var(--pri-soft);color:var(--pri)}
+.btn.soft{background:var(--org-soft);color:var(--link)}
+.btn.navy{background:var(--navy);color:#fff}
 .btn.ghost{background:var(--card2);color:var(--text);border:1px solid var(--line)}
-.btn.gold{background:var(--gold);color:#fff}
 .btn.danger{background:var(--red-soft);color:var(--red)}
 .btn.sm{padding:8px 12px;font-size:13.5px;border-radius:12px}
-.btns{display:flex;gap:8px;flex-wrap:wrap}
-.btns .btn{flex:1}
-.link{color:var(--pri);font-weight:600;font-size:13.5px}
-
-/* donut */
-.donut-wrap{display:flex;gap:16px;align-items:center}
-.donut{width:180px;height:180px;flex:none;position:relative}
-.donut svg{width:100%;height:100%;transform:rotate(-90deg)}
-.donut circle.seg{transition:stroke-width .2s,opacity .2s;cursor:pointer}
-.donut .center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px;pointer-events:none}
-.donut .center b{font-size:20px;line-height:1.2}
-.donut .center span{font-size:12px;color:var(--muted);line-height:1.3}
-.legend{flex:1;display:flex;flex-direction:column;gap:6px;min-width:0}
-.legend button{display:flex;align-items:center;gap:8px;font-size:13px;text-align:start;padding:4px 6px;border-radius:10px}
-.legend button.on{background:var(--card2)}
-.legend i{width:10px;height:10px;border-radius:4px;flex:none}
-.legend .grow{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-@media (max-width:420px){.donut-wrap{flex-direction:column}.legend{width:100%}.donut{width:200px;height:200px}}
+.btns{display:flex;gap:8px;flex-wrap:wrap}.btns .btn{flex:1}
+.link{color:var(--link);font-weight:700;font-size:13.5px;display:inline-flex;align-items:center;gap:4px}
+.link .i svg{width:16px;height:16px}
 
 /* lists */
 .list{display:flex;flex-direction:column}
 .item{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--line)}
 .item:last-child{border-bottom:0}
-.ic{width:42px;height:42px;border-radius:14px;background:var(--card2);display:grid;place-items:center;font-size:21px;flex:none}
 .item .t{font-weight:600;font-size:14.5px;line-height:1.35}
 .item .s{font-size:12.5px;color:var(--muted)}
-.amt{font-weight:700;white-space:nowrap}
-.item.off{opacity:.5}
-.check{width:34px;height:34px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-size:16px;color:transparent;flex:none;transition:all .15s}
-.check.on{background:var(--pri);border-color:var(--pri);color:var(--on-pri)}
-.del{color:var(--muted);font-size:17px;padding:6px}
-.empty{text-align:center;color:var(--muted);padding:22px 8px;font-size:14px}
-.empty .em{font-size:36px;display:block;margin-bottom:6px}
-.day-h{font-size:12.5px;color:var(--muted);font-weight:600;margin:12px 0 2px;display:flex;justify-content:space-between}
-
-/* switch */
+.amt{font-family:var(--fd);font-weight:700;white-space:nowrap}
+.item.off{opacity:.45}
+.check{width:34px;height:34px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;color:transparent;flex:none;transition:all .15s}
+.check .i svg{width:18px;height:18px;stroke-width:3}
+.check.on{background:var(--org);border-color:var(--org);color:#fff}
+.del{color:var(--muted);padding:6px;display:grid;place-items:center}
+.del .i svg{width:19px;height:19px}
+.empty{text-align:center;color:var(--muted);padding:20px 8px;font-size:14px}
+.empty .em{font-size:34px;display:block;margin-bottom:6px}
+.day-h{font-size:12.5px;color:var(--muted);font-weight:600;margin:12px 0 0;display:flex;justify-content:space-between}
 .sw{width:44px;height:26px;border-radius:99px;background:var(--line);position:relative;flex:none;transition:background .2s}
 .sw::after{content:"";position:absolute;top:3px;right:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:right .2s}
-.sw.on{background:var(--pri)}
-.sw.on::after{right:21px}
-
-/* progress */
+.sw.on{background:var(--org)}.sw.on::after{right:21px}
 .prog{height:10px;background:var(--card2);border-radius:99px;overflow:hidden;border:1px solid var(--line)}
-.prog i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--pri2),var(--pri))}
-.prog.gold i{background:linear-gradient(90deg,#f2c14e,var(--gold))}
+.prog i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--org2),var(--org))}
 
-/* chips / segmented */
+/* chips */
 .chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
 .chips::-webkit-scrollbar{display:none}
 .chip{white-space:nowrap;padding:7px 12px;border-radius:99px;background:var(--card2);border:1px solid var(--line);font-size:13px;font-weight:600}
-.chip.on{background:var(--pri);border-color:var(--pri);color:var(--on-pri)}
+.chip.on{background:var(--navy);border-color:var(--navy);color:#fff}
+[data-theme="dark"] .chip.on{background:var(--org);border-color:var(--org)}
 .seg-c{display:flex;background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:3px;gap:3px}
 .seg-c button{flex:1;padding:8px 6px;border-radius:11px;font-size:13.5px;font-weight:600;color:var(--muted)}
 .seg-c button.on{background:var(--card);color:var(--text);box-shadow:var(--shadow)}
 
-/* bars */
-.bars{display:flex;flex-direction:column;gap:9px;margin-top:10px}
-.bar-row{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;font-size:13px}
-.bar-row .prog{height:8px}
-.bar-row{width:100%;text-align:start}
-
-/* vault */
-.vault{background:linear-gradient(140deg,#b9780b,#d99a1e 60%,#ecb53f);color:#fff;border-radius:24px;padding:18px;margin-bottom:14px;box-shadow:0 12px 26px rgba(201,138,18,.28)}
-[data-theme="dark"] .vault{background:linear-gradient(140deg,#7c5108,#a8740f 60%,#c58c1f);box-shadow:none}
-.vault .big{font-size:36px;font-weight:700;line-height:1.2}
+/* savings */
+.vault{background:radial-gradient(130% 140% at 0% 0%,#ffa04d 0%,#ff7a1a 45%,#e85d00 100%);color:#fff;border-radius:24px;padding:18px;margin-bottom:14px;box-shadow:0 14px 28px rgba(255,122,26,.3)}
+[data-theme="dark"] .vault{box-shadow:none}
+.vault .big{font-family:var(--fd);font-size:38px;font-weight:800;line-height:1.2}
 .vault .btns .btn{background:rgba(255,255,255,.2);color:#fff}
 .goal{padding:14px;border:1px solid var(--line);border-radius:18px;margin-bottom:10px;background:var(--card2)}
 .goal .head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
 .goal .em{font-size:28px}
-.goal .pct{font-weight:700;color:var(--pri);font-size:18px}
+.goal .pct{font-family:var(--fd);font-weight:800;color:var(--link);font-size:18px}
 
 /* tabbar */
-.tabbar{position:fixed;bottom:0;left:0;right:0;background:color-mix(in srgb,var(--card) 92%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:6px 6px calc(6px + var(--safe-b));z-index:20}
-.tabbar nav{max-width:620px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr)}
-.tab{display:flex;flex-direction:column;align-items:center;gap:1px;font-size:11.5px;font-weight:600;color:var(--muted);padding:6px 2px;border-radius:12px}
-.tab .em{font-size:21px;line-height:1.1;filter:grayscale(1);opacity:.7}
-.tab.on{color:var(--pri)}
-.tab.on .em{filter:none;opacity:1}
-.fab{position:fixed;left:max(16px,calc(50% - 294px));bottom:calc(80px + var(--safe-b));width:58px;height:58px;border-radius:20px;background:var(--pri);color:var(--on-pri);font-size:30px;display:grid;place-items:center;box-shadow:0 10px 24px rgba(11,122,92,.35);z-index:19}
-.fab:active{transform:scale(.93)}
+.tabbar{position:fixed;bottom:0;left:0;right:0;background:color-mix(in srgb,var(--card) 92%,transparent);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid var(--line);padding:6px 6px calc(6px + var(--safe-b));z-index:20}
+.tabbar nav{max-width:600px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
+.tab{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11.5px;font-weight:600;color:var(--muted);padding:6px 2px;border-radius:12px}
+.tab.on{color:var(--link)}
+.tab:active{transform:scale(.92)}
+.fab{position:fixed;left:max(16px,calc(50% - 284px));bottom:calc(82px + var(--safe-b));width:60px;height:60px;border-radius:20px;background:var(--org);color:#fff;display:grid;place-items:center;box-shadow:0 12px 26px rgba(255,122,26,.42);z-index:19}
+.fab .i svg{width:28px;height:28px;stroke-width:2.6}
+.fab:active{transform:scale(.92)}
 
 /* sheet */
-.overlay{position:fixed;inset:0;background:rgba(5,15,12,.5);z-index:40;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s}
+.overlay{position:fixed;inset:0;background:rgba(4,9,24,.55);z-index:40;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s}
 .overlay.show{opacity:1;pointer-events:auto}
-.sheet{background:var(--card);width:100%;max-width:620px;max-height:92vh;overflow-y:auto;border-radius:26px 26px 0 0;padding:10px 18px calc(20px + var(--safe-b));transform:translateY(30px);transition:transform .25s}
+.sheet{background:var(--card);width:100%;max-width:600px;max-height:92vh;overflow-y:auto;border-radius:26px 26px 0 0;padding:10px 18px calc(20px + var(--safe-b));transform:translateY(30px);transition:transform .25s}
 .overlay.show .sheet{transform:none}
 .grab{width:44px;height:5px;border-radius:9px;background:var(--line);margin:4px auto 12px}
-.sheet h3{margin:0 0 14px;font-size:18px;display:flex;align-items:center;gap:8px}
-.sheet h3 .sp{flex:1}
+.sheet h3{font-family:var(--fd);margin:0 0 14px;font-size:18px;display:flex;align-items:center;gap:8px}
 @media (min-width:700px){.overlay{align-items:center}.sheet{border-radius:26px;max-height:86vh}}
 
 /* forms */
 .field{margin-bottom:12px}
 .field label{display:block;font-size:13px;font-weight:600;color:var(--muted);margin-bottom:5px}
 .inp{width:100%;padding:12px 14px;border-radius:14px;border:1.5px solid var(--line);background:var(--card2);font-size:16px;outline:none;transition:border .15s}
-.inp:focus{border-color:var(--pri)}
-.inp.big{font-size:30px;font-weight:700;text-align:center;padding:10px}
+.inp:focus{border-color:var(--org)}
+.inp.big{font-family:var(--fd);font-size:30px;font-weight:700;text-align:center;padding:10px}
 .hint{font-size:12px;color:var(--muted);margin-top:4px}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.cat-pick{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:12px}
-.cat-pick button{padding:9px 4px;border-radius:13px;border:1.5px solid var(--line);background:var(--card2);font-size:12px;font-weight:600;line-height:1.3}
-.cat-pick button .em{font-size:20px;display:block}
-.cat-pick button.on{border-color:var(--pri);background:var(--pri-soft);color:var(--pri)}
 .emojis{display:flex;flex-wrap:wrap;gap:6px}
-.emojis button{width:42px;height:42px;border-radius:12px;border:1.5px solid var(--line);background:var(--card2);font-size:21px}
-.emojis button.on{border-color:var(--pri);background:var(--pri-soft)}
+.emojis button{width:44px;height:44px;border-radius:12px;border:1.5px solid var(--line);background:var(--card2);font-size:21px}
+.emojis button.on{border-color:var(--org);background:var(--org-soft)}
+.checkline{display:flex;gap:10px;align-items:flex-start;padding:12px;border-radius:14px;background:var(--card2);border:1px solid var(--line);font-size:14px;cursor:pointer}
+.checkline input{width:20px;height:20px;accent-color:var(--org);flex:none;margin-top:2px}
+.section-title{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--muted);margin:18px 2px 8px}
 
-/* onboarding */
-.onb{position:fixed;inset:0;background:var(--bg);z-index:50;overflow-y:auto}
-.onb-in{max-width:520px;margin:0 auto;padding:calc(28px + var(--safe-t)) 20px calc(30px + var(--safe-b))}
-.logo{width:72px;height:72px;border-radius:22px;background:linear-gradient(140deg,#0b7a5c,#1fb488);display:grid;place-items:center;font-size:36px;margin:0 auto 12px;box-shadow:0 12px 26px rgba(11,122,92,.3)}
-.onb h1{text-align:center;margin:0;font-size:26px}
-.onb .lead{text-align:center;color:var(--muted);margin:6px 0 20px}
-.tier{display:flex;align-items:center;gap:12px;width:100%;text-align:start;background:var(--card);border:2px solid var(--line);border-radius:18px;padding:14px;margin-bottom:10px;transition:border .15s}
-.tier.on{border-color:var(--pri);background:var(--pri-soft)}
-.tier .em{font-size:28px}
-.tier b{display:block;font-size:15.5px}
-.tier span{font-size:12.5px;color:var(--muted)}
-.tier .amt{font-size:17px;color:var(--pri)}
-.dots{display:flex;justify-content:center;gap:6px;margin-bottom:18px}
-.dots i{width:8px;height:8px;border-radius:9px;background:var(--line)}
-.dots i.on{width:24px;background:var(--pri)}
-.checkline{display:flex;gap:10px;align-items:flex-start;padding:12px;border-radius:14px;background:var(--card);border:1px solid var(--line);font-size:14px;cursor:pointer}
-.checkline input{width:20px;height:20px;accent-color:var(--pri);flex:none;margin-top:2px}
-
-/* learn */
-.lesson{border-inline-start:4px solid var(--pri);padding:2px 12px;margin:10px 0}
-.quote{background:var(--pri-soft);color:var(--pri);border-radius:16px;padding:14px;font-weight:700;text-align:center;font-size:15.5px}
-.nw{display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid var(--line);font-size:14px}
-.nw:last-child{border:0}
-.nw .grow{line-height:1.35}
-.nw .btn{padding:6px 10px;font-size:12.5px;border-radius:10px}
-.tag{padding:4px 10px;border-radius:99px;font-size:12px;font-weight:700}
-.tag.need{background:var(--grn-soft);color:var(--grn)}
-.tag.want{background:var(--gold-soft);color:var(--gold)}
-.rules{margin:0;padding:0 18px 0 0}
-.rules li{margin-bottom:8px}
-.rules li small{display:block;color:var(--muted)}
-.calc-out{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px;text-align:center}
-.calc-out div{background:var(--card2);border-radius:14px;padding:10px 4px;border:1px solid var(--line)}
-.calc-out b{display:block;font-size:17px}
-.calc-out span{font-size:12px;color:var(--muted)}
-
-.tpl{border:1.5px solid var(--line);border-radius:18px;padding:14px;margin-bottom:10px;background:var(--card2)}
-.tpl .head{display:flex;gap:10px;align-items:center;margin-bottom:6px}
-.tpl .head .em{font-size:26px}
-.tpl .stack{display:flex;height:12px;border-radius:9px;overflow:hidden;margin:10px 0 6px}
-.tpl .keys{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12.5px;color:var(--muted)}
-.tpl .keys i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-inline-end:4px}
-.tpl details{margin-top:8px;font-size:13px}
-.tpl summary{cursor:pointer;color:var(--pri);font-weight:600}
-
-.toast{position:fixed;left:50%;top:calc(12px + var(--safe-t));transform:translate(-50%,-20px);background:#13221d;color:#fff;padding:11px 16px;border-radius:14px;font-size:14px;font-weight:600;opacity:0;transition:all .25s;z-index:60;max-width:90vw;text-align:center;pointer-events:none}
-[data-theme="dark"] .toast{background:#e7f0ec;color:#10201a}
-.toast.show{opacity:1;transform:translate(-50%,0)}
-.foot{text-align:center;font-size:12px;color:var(--muted);margin:20px 0 6px;line-height:1.8}
-.section-title{font-size:13px;font-weight:700;color:var(--muted);margin:18px 2px 8px}
-.install-steps{margin:0;padding:0 20px 0 0}
-.install-steps li{margin-bottom:10px}
-kbd{background:var(--card2);border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-family:inherit;font-size:13px}
-
-
-/* ===== شاشة الدخول ===== */
-#splash{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:radial-gradient(120% 75% at 50% 0%,#17b98a 0%,#0b7a5c 42%,#04382c 100%);color:#fff;transition:opacity .45s ease,transform .45s ease;padding-bottom:var(--safe-b)}
-#splash.out{opacity:0;transform:scale(1.08);pointer-events:none}
-#splash::before{content:"";position:absolute;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(255,214,107,.22),transparent 65%);animation:glow 2s ease-in-out infinite alternate}
-#splash .sp-logo{width:128px;height:128px;border-radius:30px;overflow:hidden;box-shadow:0 26px 60px rgba(0,0,0,.4),0 0 0 1px rgba(255,255,255,.12);animation:popIn .75s cubic-bezier(.2,1.5,.4,1) both;position:relative}
-#splash .sp-logo svg{width:100%;height:100%;display:block}
-#splash .coin{animation:coinDrop .9s .35s cubic-bezier(.55,0,.3,1.35) both}
-#splash .sp-name{font-size:36px;font-weight:700;margin-top:14px;animation:rise .6s .5s both;position:relative}
-#splash .sp-tag{font-size:15px;opacity:.88;animation:rise .6s .65s both;position:relative}
-#splash .sp-dots{display:flex;gap:7px;margin-top:22px;animation:rise .5s .85s both;position:relative}
-#splash .sp-dots i{width:7px;height:7px;border-radius:50%;background:#fff;opacity:.35;animation:blink 1s infinite}
-#splash .sp-dots i:nth-child(2){animation-delay:.15s}#splash .sp-dots i:nth-child(3){animation-delay:.3s}
-#splash .sp-foot{position:absolute;bottom:calc(26px + var(--safe-b));font-size:12px;opacity:.6}
-@keyframes popIn{from{opacity:0;transform:scale(.4) rotate(-10deg)}to{opacity:1;transform:none}}
-@keyframes coinDrop{0%{transform:translateY(-240px)}72%{transform:translateY(12px)}100%{transform:translateY(0)}}
-@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-@keyframes blink{50%{opacity:1}}
-@keyframes glow{from{transform:scale(.85);opacity:.6}to{transform:scale(1.1);opacity:1}}
-.logo{overflow:hidden;padding:0}
-.logo svg{width:100%;height:100%;display:block}
-.logo.emo{display:grid}
-/* ===== حركة الدخول للصفحات ===== */
-.view.enter > *{animation:rise .5s cubic-bezier(.2,.8,.2,1) both}
-.view.enter > *:nth-child(2){animation-delay:.05s}.view.enter > *:nth-child(3){animation-delay:.1s}.view.enter > *:nth-child(4){animation-delay:.15s}
-.view.enter > *:nth-child(5){animation-delay:.2s}.view.enter > *:nth-child(6){animation-delay:.25s}.view.enter > *:nth-child(n+7){animation-delay:.3s}
-/* ===== لوحة الأرقام ===== */
+/* keypad */
 .cat-row{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 10px;scrollbar-width:none}
 .cat-row::-webkit-scrollbar{display:none}
-.cat-row button{flex:none;display:flex;flex-direction:column;align-items:center;gap:3px;min-width:74px;padding:10px 8px;border-radius:18px;border:1.5px solid var(--line);background:var(--card2);font-size:12.5px;font-weight:600;transition:all .15s}
+.cat-row button{flex:none;display:flex;flex-direction:column;align-items:center;gap:3px;min-width:76px;padding:10px 8px;border-radius:18px;border:1.5px solid var(--line);background:var(--card2);font-size:12px;font-weight:600;transition:all .15s;line-height:1.3}
 .cat-row button .em{font-size:26px;line-height:1}
-.cat-row button.on{border-color:var(--pri);background:var(--pri-soft);color:var(--pri);transform:translateY(-2px)}
+.cat-row button small{font-size:10.5px;color:var(--muted);font-family:var(--fd)}
+.cat-row button.on{border-color:var(--org);background:var(--org-soft);color:var(--link);transform:translateY(-2px)}
 .amt-disp{text-align:center;margin:6px 0 2px}
-.amt-disp b{font-size:50px;font-weight:700;line-height:1.1;display:inline-block}
+.amt-disp b{font-family:var(--fd);font-size:52px;font-weight:800;line-height:1.1;display:inline-block}
 .amt-disp span{font-size:19px;color:var(--muted);font-weight:600}
-.amt-disp.empty b{opacity:.3}
+.amt-disp.empty b{opacity:.25}
 .amt-disp.bump b{animation:bump .18s ease}
 .amt-disp.shake{animation:shake .35s}
 @keyframes bump{50%{transform:scale(1.07)}}
 @keyframes shake{20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
 .keypad{direction:ltr;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}
-.keypad button{height:56px;border-radius:16px;background:var(--card2);border:1px solid var(--line);font-size:24px;font-weight:600;font-variant-numeric:tabular-nums;transition:transform .08s,background .15s;user-select:none;-webkit-user-select:none}
-.keypad button:active{transform:scale(.93);background:var(--pri-soft)}
+.keypad button{height:56px;border-radius:16px;background:var(--card2);border:1px solid var(--line);font-family:var(--fd);font-size:24px;font-weight:600;transition:transform .08s,background .15s;user-select:none;-webkit-user-select:none;display:grid;place-items:center}
+.keypad button:active{transform:scale(.93);background:var(--org-soft)}
 .more{margin-bottom:10px}
-.more summary{list-style:none;cursor:pointer;text-align:center;color:var(--pri);font-weight:600;font-size:13.5px;padding:4px}
+.more summary{list-style:none;cursor:pointer;text-align:center;color:var(--link);font-weight:600;font-size:13.5px;padding:4px}
 .more summary::-webkit-details-marker{display:none}
 .big-save{padding:15px;font-size:16.5px;border-radius:16px}
-/* ===== تنبيه مع تراجع ===== */
-.toast{display:flex;align-items:center;gap:12px;white-space:nowrap}
+
+/* onboarding */
+.onb{position:fixed;inset:0;background:var(--bg);z-index:50;overflow-y:auto}
+.onb-in{max-width:520px;margin:0 auto;padding:calc(26px + var(--safe-t)) 20px calc(30px + var(--safe-b))}
+.logo{width:84px;height:84px;border-radius:24px;overflow:hidden;margin:0 auto 14px;box-shadow:0 14px 30px rgba(18,39,90,.3)}
+.logo svg{width:100%;height:100%;display:block}
+.onb h1{font-family:var(--fd);text-align:center;margin:0;font-size:25px}
+.onb .lead{text-align:center;color:var(--muted);margin:6px 0 20px}
+.who{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.who button{background:var(--card);border:2px solid var(--line);border-radius:22px;padding:22px 10px;display:flex;flex-direction:column;align-items:center;gap:6px;transition:all .15s}
+.who button .em{font-size:44px;line-height:1}
+.who button b{font-family:var(--fd);font-size:17px}
+.who button span{font-size:12.5px;color:var(--muted)}
+.who button:active{transform:scale(.96)}
+.tier{display:flex;align-items:center;gap:12px;width:100%;text-align:start;background:var(--card);border:2px solid var(--line);border-radius:18px;padding:13px 14px;margin-bottom:9px}
+.tier.on{border-color:var(--org);background:var(--org-soft)}
+.tier .em{font-size:26px}
+.tier b{display:block;font-size:15px}
+.tier span{font-size:12.5px;color:var(--muted)}
+.tier .amt{font-size:16px;color:var(--link)}
+.dots{display:flex;justify-content:center;gap:6px;margin-bottom:18px}
+.dots i{width:8px;height:8px;border-radius:9px;background:var(--line)}
+.dots i.on{width:24px;background:var(--org)}
+
+.toast{position:fixed;left:50%;top:calc(12px + var(--safe-t));transform:translate(-50%,-20px);background:var(--navy);color:#fff;padding:11px 16px;border-radius:14px;font-size:14px;font-weight:600;opacity:0;transition:all .25s;z-index:60;max-width:92vw;pointer-events:none;display:flex;align-items:center;gap:12px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
 .toast.act{pointer-events:auto}
-.toast button{color:#3fe0ad;font-weight:700;font-size:14px;padding:2px 4px}
-[data-theme="dark"] .toast button{color:#0b7a5c}
-.tab:active,.qbtn:active,.icon-btn:active{transform:scale(.92)}
+.toast button{color:var(--org2);font-weight:700;font-size:14px;white-space:nowrap}
+.foot{text-align:center;font-size:12.5px;color:var(--muted);margin:22px 0 6px;line-height:1.9}
+.foot b{color:var(--text)}
+.install-steps{margin:0;padding:0 20px 0 0}.install-steps li{margin-bottom:9px}
+kbd{background:var(--card2);border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-family:inherit;font-size:13px}
+
+/* splash */
+#splash{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;background:radial-gradient(110% 70% at 50% 35%,#1d3c85 0%,#10224f 50%,#050b1f 100%);color:#fff;transition:opacity .45s ease,transform .45s ease}
+#splash.out{opacity:0;transform:scale(1.08);pointer-events:none}
+#splash::before{content:"";position:absolute;width:440px;height:440px;border-radius:50%;background:radial-gradient(circle,rgba(255,122,26,.28),transparent 65%);animation:glow 1.8s ease-in-out infinite alternate}
+#splash .sp-logo{width:132px;height:132px;border-radius:32px;overflow:hidden;box-shadow:0 26px 60px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.1);animation:popIn .7s cubic-bezier(.2,1.5,.4,1) both;position:relative}
+#splash .sp-logo svg{width:100%;height:100%;display:block}
+#splash .seg{stroke-dashoffset:var(--o);animation:draw .9s cubic-bezier(.6,0,.3,1) both}
+#splash .seg:nth-child(2){animation-delay:.15s}#splash .seg:nth-child(3){animation-delay:.3s}
+#splash .mark{transform-origin:256px 256px;animation:markIn .55s .65s cubic-bezier(.2,1.6,.4,1) both}
+#splash .sp-name{font-family:var(--fd);font-size:38px;font-weight:800;margin-top:16px;animation:rise .6s .55s both;position:relative}
+#splash .sp-name span{color:var(--org)}
+#splash .sp-tag{font-size:15px;opacity:.85;animation:rise .6s .7s both;position:relative}
+#splash .sp-foot{position:absolute;bottom:calc(28px + var(--safe-b));font-size:12.5px;opacity:.65;animation:rise .6s .9s both}
+@keyframes popIn{from{opacity:0;transform:scale(.4) rotate(-10deg)}to{opacity:1;transform:none}}
+@keyframes draw{from{stroke-dasharray:0 2000}}
+@keyframes markIn{from{transform:scale(0)}to{transform:scale(1)}}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes glow{from{transform:scale(.85);opacity:.6}to{transform:scale(1.1);opacity:1}}
+.view.enter > *{animation:rise .5s cubic-bezier(.2,.8,.2,1) both}
+.view.enter > *:nth-child(2){animation-delay:.05s}.view.enter > *:nth-child(3){animation-delay:.1s}.view.enter > *:nth-child(4){animation-delay:.15s}.view.enter > *:nth-child(n+5){animation-delay:.2s}
 @media (prefers-reduced-motion:reduce){*,*::before{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
-<div id="splash" role="presentation"><div class="sp-logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><linearGradient id="e3bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f8a66"/><stop offset="1" stop-color="#04432f"/></linearGradient><radialGradient id="e3gl" cx=".22" cy=".12" r=".75"><stop offset="0" stop-color="#3ee0aa" stop-opacity=".55"/><stop offset="1" stop-color="#3ee0aa" stop-opacity="0"/></radialGradient><linearGradient id="e3coin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe49a"/><stop offset=".55" stop-color="#f6bf3c"/><stop offset="1" stop-color="#d98d0c"/></linearGradient><linearGradient id="e3wal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#dcf3ea"/></linearGradient></defs>
-<rect width="512" height="512" fill="url(#e3bg)"/><rect width="512" height="512" fill="url(#e3gl)"/>
-<g class="coin"><circle cx="256" cy="176" r="80" fill="url(#e3coin)"/><circle cx="256" cy="176" r="60" fill="none" stroke="#b9750a" stroke-width="7" opacity=".45"/><path d="M220 196l26-28 20 17 30-36" fill="none" stroke="#9a5d04" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/><path d="M282 149h16v16" fill="none" stroke="#9a5d04" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/></g>
-<rect x="96" y="226" width="320" height="196" rx="46" fill="#03291f" opacity=".25" transform="translate(0 10)"/>
-<rect x="96" y="226" width="320" height="196" rx="46" fill="url(#e3wal)"/>
-<rect x="160" y="240" width="192" height="12" rx="6" fill="#0b6b50" opacity=".28"/>
-<rect x="318" y="296" width="120" height="70" rx="26" fill="#0b7a5c"/><circle cx="354" cy="331" r="13" fill="#f6bf3c"/></svg></div><div class="sp-name">إعانتي</div><div class="sp-tag">إعانتك… بخطة تكفيك لآخر الشهر</div><div class="sp-dots"><i></i><i></i><i></i></div><div class="sp-foot">المهندس بو عمر الخلفان</div></div>
-<template id="logoTpl"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><linearGradient id="e3bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f8a66"/><stop offset="1" stop-color="#04432f"/></linearGradient><radialGradient id="e3gl" cx=".22" cy=".12" r=".75"><stop offset="0" stop-color="#3ee0aa" stop-opacity=".55"/><stop offset="1" stop-color="#3ee0aa" stop-opacity="0"/></radialGradient><linearGradient id="e3coin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe49a"/><stop offset=".55" stop-color="#f6bf3c"/><stop offset="1" stop-color="#d98d0c"/></linearGradient><linearGradient id="e3wal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#dcf3ea"/></linearGradient></defs>
-<rect width="512" height="512" fill="url(#e3bg)"/><rect width="512" height="512" fill="url(#e3gl)"/>
-<g class="coin"><circle cx="256" cy="176" r="80" fill="url(#e3coin)"/><circle cx="256" cy="176" r="60" fill="none" stroke="#b9750a" stroke-width="7" opacity=".45"/><path d="M220 196l26-28 20 17 30-36" fill="none" stroke="#9a5d04" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/><path d="M282 149h16v16" fill="none" stroke="#9a5d04" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/></g>
-<rect x="96" y="226" width="320" height="196" rx="46" fill="#03291f" opacity=".25" transform="translate(0 10)"/>
-<rect x="96" y="226" width="320" height="196" rx="46" fill="url(#e3wal)"/>
-<rect x="160" y="240" width="192" height="12" rx="6" fill="#0b6b50" opacity=".28"/>
-<rect x="318" y="296" width="120" height="70" rx="26" fill="#0b7a5c"/><circle cx="354" cy="331" r="13" fill="#f6bf3c"/></svg></template>
+<div id="splash" role="presentation"><div class="sp-logo" id="spLogo"></div><div class="sp-name">إعانتي<span>.</span></div><div class="sp-tag">فلوسك… بخطة تكفيك لآخر الشهر</div><div class="sp-foot">تم تصميم الموقع من قبل المهندس بو عمر</div></div>
 <div class="app" id="app"></div>
 <div class="tabbar"><nav id="tabs"></nav></div>
-<button class="fab" id="fab" data-a="addExp" aria-label="إضافة مصروف">+</button>
+<button class="fab" id="fab" data-a="addExp" aria-label="مصروف جديد"></button>
 <div class="overlay" id="ov"><div class="sheet" id="sheet"></div></div>
 <div class="toast" id="toast"></div>
 <div id="onb"></div>
@@ -351,117 +286,105 @@ kbd{background:var(--card2);border:1px solid var(--line);border-radius:6px;paddi
 
 <script>
 "use strict";
+/* ============ الشعار ============ */
+function logoSVG(anim){
+  const C = 2 * Math.PI * 136, gap = 20, parts = [[.52, 'url(#lgO)'], [.28, '#ffffff'], [.20, '#ffc58f']];
+  let off = 0;
+  const segs = parts.map(([f, col]) => { const L = f * C - gap; const s = `<circle class="seg" style="--o:${(-off).toFixed(1)}" cx="256" cy="256" r="136" fill="none" stroke="${col}" stroke-width="60" stroke-dasharray="${L.toFixed(1)} ${(C - L).toFixed(1)}" stroke-dashoffset="${(-off).toFixed(1)}" transform="rotate(-90 256 256)"/>`; off += f * C; return s; }).join('');
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><linearGradient id="lgN" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22418c"/><stop offset=".55" stop-color="#132a5e"/><stop offset="1" stop-color="#0a1633"/></linearGradient><radialGradient id="lgG" cx=".85" cy=".9" r=".7"><stop offset="0" stop-color="#ff7a1a" stop-opacity=".35"/><stop offset="1" stop-color="#ff7a1a" stop-opacity="0"/></radialGradient><linearGradient id="lgO" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffa04d"/><stop offset="1" stop-color="#ff6a00"/></linearGradient></defs><rect width="512" height="512" fill="url(#lgN)"/><rect width="512" height="512" fill="url(#lgG)"/><g>${segs}</g><g class="mark"><circle cx="256" cy="256" r="74" fill="#ff7a1a"/><path d="M220 274l36-36 36 36" fill="none" stroke="#fff" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/></g></svg>`;
+}
+document.getElementById('spLogo').innerHTML = logoSVG();
+
+/* ============ أيقونات ============ */
+const ICON = {
+  home:'<path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
+  cal:'<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18M9 15.5l2 2 4-4"/>',
+  list:'<path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/>',
+  target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.3"/>',
+  gear:'<path d="M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="17" cy="18" r="2"/>',
+  moon:'<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>',
+  sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+  edit:'<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/>',
+  plus:'<path d="M12 5v14M5 12h14"/>',
+  trash:'<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>',
+  check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+  x:'<path d="M6 6l12 12M18 6 6 18"/>',
+  back:'<path d="M9 6l6 6-6 6"/>',
+  del:'<path d="M20 6H9l-5 6 5 6h11a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1z"/><path d="M12 10l4 4M16 10l-4 4"/>'
+};
+const I = n => `<span class="i"><svg viewBox="0 0 24 24">${ICON[n]}</svg></span>`;
+document.getElementById('fab').innerHTML = I('plus');
+
 /* ============ ثوابت ============ */
 const KEY = 'e3anati.v1';
-const CATS = [
-  {id:'coffee', icon:'☕', name:'قهوة وكافيهات الجامعة', short:'قهوة',     color:'#9a6239'},
-  {id:'food',   icon:'🍔', name:'مطاعم وكافتيريا',        short:'مطاعم',    color:'#e8663d'},
-  {id:'study',  icon:'📚', name:'كتب وطباعة وقرطاسية',    short:'دراسة',    color:'#3b7dd8'},
-  {id:'fun',    icon:'⚽', name:'طلعات وديوانية وأنشطة',  short:'طلعات',    color:'#14a394'},
-  {id:'car',    icon:'🚗', name:'صيانة ومواقف',           short:'سيارة',    color:'#667788'},
-  {id:'shop',   icon:'🛍️', name:'مشتريات متنوعة',         short:'مشتريات',  color:'#c2459a'}
-];
-const C_COMMIT = '#0b7a5c', C_SAVE = '#d99a1e';
+const MODES = {
+  student:{label:'طالب جامعي', icon:'🎓', inc:'الإعانة', next:'الإعانة القادمة', incAsk:'الإعانة الشهرية', extraAsk:'دخل إضافي (عمل طلابي، مشروع)',
+    commit:{fuel:15, net:5, subs:3, sadaqa:2, care:5, autosave:20},
+    cats:[['coffee','☕','قهوة الجامعة',15],['food','🍔','مطاعم وكافتيريا',30],['study','📚','كتب وطباعة',15],['fun','⚽','طلعات وديوانية',20],['car','🚗','سيارة ومواقف',10],['shop','🛍️','مشتريات',10]]},
+  employee:{label:'موظف', icon:'💼', inc:'الراتب', next:'الراتب القادم', incAsk:'الراتب الشهري', extraAsk:'دخل إضافي (عمل حر، مشروع)',
+    commit:{fuel:6, net:3, subs:2, sadaqa:2, care:4, family:10, autosave:20},
+    cats:[['coffee','☕','قهوة',10],['food','🍔','غداء ومطاعم',25],['fun','⚽','طلعات وأنشطة',20],['car','🚗','سيارة ومواقف',10],['shop','🛍️','مشتريات',20],['gifts','🎁','هدايا ومناسبات',15]]}
+};
 const BASE_ITEMS = {
-  fuel:    {icon:'⛽', name:'بانزين / مواصلات', type:'normal'},
-  net:     {icon:'📶', name:'باقة إنترنت / خط هاتف', type:'normal'},
-  subs:    {icon:'💻', name:'اشتراكات تعليمية وتقنية (AI، تصميم، iCloud)', type:'normal'},
-  sadaqa:  {icon:'🤲', name:'صدقة شهرية', type:'normal'},
-  care:    {icon:'👕', name:'ملابس / عناية شخصية', type:'normal'},
-  carfix:  {icon:'🔧', name:'احتياطي صيانة السيارة', type:'normal'},
+  fuel:{icon:'⛽', name:'بانزين / مواصلات'},
+  net:{icon:'📶', name:'باقة إنترنت / خط'},
+  subs:{icon:'💻', name:'اشتراكات (أدوات، iCloud…)'},
+  sadaqa:{icon:'🤲', name:'صدقة شهرية'},
+  care:{icon:'👕', name:'ملابس / عناية شخصية'},
+  family:{icon:'🏠', name:'مصروف البيت / الأهل'},
   autosave:{icon:'🐷', name:'ادخار تلقائي', type:'save'}
 };
-const TEMPLATES = [
-  {id:'balanced', icon:'⚖️', name:'الخطة المتوازنة 50/30/20',
-   desc:'نص الإعانة للاحتياجات، 30% للرغبات والطلعات، و20% ادخار من أول يوم. أنسب بداية لأغلب الطلبة.',
-   items:{fuel:15, net:5, subs:3, sadaqa:2, care:5, autosave:20}},
-  {id:'max', icon:'🚀', name:'خطة التوفير القصوى',
-   desc:'تقشّف ذكي لفترة محددة عشان توصل لهدف كبير بسرعة (لابتوب، سفر، صندوق طوارئ).',
-   items:{fuel:12, net:4, subs:2, sadaqa:2, care:3, autosave:35}},
-  {id:'car', icon:'🚗', name:'خطة الطالب صاحب السيارة والالتزامات',
-   desc:'البانزين والصيانة لهم حصة أكبر، مع احتياطي للسيارة وادخار ثابت ما ينلمس.',
-   items:{fuel:22, carfix:6, net:5, subs:3, sadaqa:2, care:4, autosave:15}}
-];
+const PALETTE = ['#ff7a1a','#2f6fe0','#14a38b','#e2483d','#8a5cf6','#c98a12','#0ea5c6','#d9468f','#5b6b8c'];
+const BOX_ICONS = ['☕','🍔','📚','⚽','🚗','🛍️','🎁','🏠','⛽','📱','💊','🎮','✂️','🧳','🍬','🐈','📦','🎓','💼','🧾'];
+const C_ICONS = ['⛽','📶','💻','🤲','👕','🏠','🐷','🔧','📱','🎓','🍽️','🚌','💊','🏋️','📦'];
 const GOAL_PRESETS = [
-  {emoji:'💻', name:'لابتوب / آيباد', target:300},
-  {emoji:'🎓', name:'التخرج', target:250},
-  {emoji:'✈️', name:'سفر', target:500},
-  {emoji:'🛟', name:'صندوق طوارئ', target:150},
-  {emoji:'🚗', name:'سيارة', target:1500}
+  {emoji:'💻', name:'لابتوب / آيباد', target:300}, {emoji:'🎓', name:'التخرج', target:250},
+  {emoji:'🧳', name:'عمرة أو سفر', target:400}, {emoji:'🛟', name:'صندوق طوارئ', target:150}, {emoji:'🚗', name:'سيارة', target:1500}
 ];
-const EMOJIS = ['🎯','💻','📱','🎓','✈️','🛟','🚗','🎮','⌚','📷','🕋','🏠','💍','📚','🏋️'];
+const GOAL_EMOJIS = ['🎯','💻','📱','🎓','🧳','🛟','🚗','⌚','📷','🏠','📚','🏋️','🎮','🎁','💼'];
 
 /* ============ أدوات ============ */
 const $ = s => document.querySelector(s);
 const uid = () => Math.random().toString(36).slice(2, 9) + Date.now().toString(36).slice(-3);
 const r3 = x => Math.round((+x || 0) * 1000) / 1000;
+const r05 = x => Math.max(0, Math.round((+x || 0) * 2) / 2);
 const sum = a => r3(a.reduce((s, x) => s + (+x || 0), 0));
 const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function parseNum(v){
   if (v == null) return 0;
   const s = String(v).replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٫,]/g, '.').replace(/[^\d.\-]/g, '');
-  const n = parseFloat(s);
-  return isFinite(n) ? r3(n) : 0;
+  const n = parseFloat(s); return isFinite(n) ? r3(n) : 0;
 }
-function fmt(x){
-  const v = r3(x);
-  const s = Math.abs(v).toLocaleString('en-US', {minimumFractionDigits:0, maximumFractionDigits:3});
-  return (v < 0 ? '-' : '') + s;
-}
+function fmt(x){ const v = r3(x); return (v < 0 ? '-' : '') + Math.abs(v).toLocaleString('en-US', {minimumFractionDigits:0, maximumFractionDigits:3}); }
 const KD = x => `<span class="num">${fmt(x)}</span> د.ك`;
 const KDt = x => `${fmt(x)} د.ك`;
 function iso(d){ return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'); }
 function parseISO(s){ const [y,m,d] = String(s).split('-').map(Number); return new Date(y, (m||1)-1, d||1); }
 const today = () => iso(new Date());
-function daysBetween(a, b){ return Math.round((parseISO(b) - parseISO(a)) / 864e5); }
-function addMonths(s, n){
-  const d = parseISO(s), day = d.getDate();
-  d.setDate(1); d.setMonth(d.getMonth() + n);
-  const last = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
-  d.setDate(Math.min(day, last));
-  return iso(d);
-}
+const daysBetween = (a, b) => Math.round((parseISO(b) - parseISO(a)) / 864e5);
+function addMonths(s, n){ const d = parseISO(s), day = d.getDate(); d.setDate(1); d.setMonth(d.getMonth() + n); d.setDate(Math.min(day, new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate())); return iso(d); }
 function addDays(s, n){ const d = parseISO(s); d.setDate(d.getDate() + n); return iso(d); }
 const LOC = 'ar-KW-u-nu-latn';
 function fmtDate(s, opt){ try { return parseISO(s).toLocaleDateString(LOC, opt || {day:'numeric', month:'long'}); } catch(e){ return s; } }
 function dayWord(n){ if (n === 1) return 'يوم واحد'; if (n === 2) return 'يومين'; if (n >= 3 && n <= 10) return n + ' أيام'; return n + ' يوم'; }
 function monthWord(n){ if (n === 1) return 'شهر واحد'; if (n === 2) return 'شهرين'; if (n >= 3 && n <= 10) return n + ' أشهر'; return n + ' شهر'; }
-const catOf = id => CATS.find(c => c.id === id) || CATS[5];
+const vib = (ms = 8) => { try { navigator.vibrate && navigator.vibrate(ms); } catch(e){} };
 
 /* ============ الحالة ============ */
-function defaultCommitments(income){
-  return TEMPLATES[0] ? planItems(TEMPLATES[0], income) : [];
+function buildCommitments(mode, income){
+  const m = MODES[mode];
+  return Object.keys(BASE_ITEMS).filter(id => m.commit[id] != null).map(id => ({id, icon:BASE_ITEMS[id].icon, name:BASE_ITEMS[id].name, type:BASE_ITEMS[id].type || 'normal', amount:r05(income * m.commit[id] / 100), active:true, goal:null}));
 }
-function planItems(tpl, income){
-  const out = [];
-  for (const id of ['fuel','net','subs','sadaqa','care','carfix','autosave']){
-    const p = tpl.items[id];
-    const b = BASE_ITEMS[id];
-    out.push({id, icon:b.icon, name:b.name, type:b.type, amount: Math.round(income * (p||0) / 100 * 2) / 2, active: p != null, goal:null});
-  }
-  return out;
+function buildCats(mode, spendable){
+  return MODES[mode].cats.map(([id, icon, name, w], i) => ({id, icon, name, color:PALETTE[i % PALETTE.length], limit:r05(spendable * w / 100)}));
 }
 function defaultState(){
-  const t = today();
-  return {
-    v:1, onboarded:false, theme:'auto', installHintHidden:false,
-    profile:{name:'', tier:'basic', allowance:200, extra:0, extraLabel:''},
-    nextPayday: addMonths(t, 1),
-    commitments: defaultCommitments(200),
-    cycle:{id:uid(), start:t, paid:{}},
-    cycles:[], expenses:[], vault:[], goals:[]
-  };
-}
-let state = load();
-const ui = {view:'home', donutSel:null, expPeriod:'cycle', expCat:'all', obStep:0, nwRevealed:{}, challenge:{}};
-
-function load(){
-  try {
-    const raw = localStorage.getItem(KEY);
-    if (!raw) return defaultState();
-    return normalize(JSON.parse(raw));
-  } catch(e){ return defaultState(); }
+  const t = today(), commitments = buildCommitments('student', 200);
+  return {v:2, onboarded:false, mode:'student', theme:'auto',
+    profile:{name:'', tier:'basic', allowance:200, extra:0},
+    nextPayday:addMonths(t, 1), commitments, cats:buildCats('student', 200 - sum(commitments.map(c => c.amount))),
+    cycle:{id:uid(), start:t, paid:{}}, cycles:[], expenses:[], vault:[], goals:[]};
 }
 function normalize(s){
   const d = defaultState();
@@ -470,19 +393,25 @@ function normalize(s){
   o.profile = Object.assign({}, d.profile, s.profile || {});
   o.cycle = Object.assign({}, d.cycle, s.cycle || {}); o.cycle.paid = o.cycle.paid || {};
   for (const k of ['commitments','cycles','expenses','vault','goals']) if (!Array.isArray(o[k])) o[k] = d[k];
-  if (!o.nextPayday) o.nextPayday = d.nextPayday;
+  if (!MODES[o.mode]) o.mode = 'student';
+  if (!Array.isArray(s.cats) || !s.cats.length){
+    const inc = parseNum(o.profile.allowance) + parseNum(o.profile.extra);
+    o.cats = buildCats(o.mode, inc - sum(o.commitments.filter(c => c.active).map(c => c.amount)));
+  }
+  o.v = 2;
   return o;
 }
+function load(){ try { const raw = localStorage.getItem(KEY); return raw ? normalize(JSON.parse(raw)) : defaultState(); } catch(e){ return defaultState(); } }
+let state = load();
+const ui = {view:'home', editBoxes:false, logPeriod:'cycle', logCat:'all', lastView:null};
 let storageOK = true;
-function save(){
-  try { localStorage.setItem(KEY, JSON.stringify(state)); storageOK = true; }
-  catch(e){ if (storageOK) toast('⚠️ المتصفح ما سمح بالحفظ المحلي — صدّر نسخة احتياطية'); storageOK = false; }
-}
+function save(){ try { localStorage.setItem(KEY, JSON.stringify(state)); storageOK = true; } catch(e){ if (storageOK) toast('⚠️ المتصفح ما سمح بالحفظ — صدّر نسخة احتياطية'); storageOK = false; } }
 function commit(){ save(); render(); }
+const M = () => MODES[state.mode] || MODES.student;
+const catOf = id => state.cats.find(c => c.id === id) || {id, icon:'📦', name:'خانة محذوفة', color:'#8a94ad', limit:0};
 
 /* ============ الحسابات ============ */
 function bucketBal(goalId){ return sum(state.vault.filter(v => (v.goal || null) === (goalId || null)).map(v => v.amount)); }
-function goalSaved(g){ return bucketBal(g.id); }
 function calc(){
   const S = state, c = S.cycle.id, t = today();
   const allowance = parseNum(S.profile.allowance), extra = parseNum(S.profile.extra);
@@ -491,14 +420,12 @@ function calc(){
   const commitTotal = sum(act.map(x => x.amount));
   const commitPaid = sum(act.filter(x => S.cycle.paid[x.id]).map(x => x.amount));
   const commitSave = sum(act.filter(x => x.type === 'save').map(x => x.amount));
-  const commitNormal = r3(commitTotal - commitSave);
   const exps = S.expenses.filter(e => e.cycle === c);
   const expTotal = sum(exps.map(e => e.amount));
   const manualSave = sum(S.vault.filter(v => v.cycle === c && (v.src === 'manual' || v.src === 'withdraw')).map(v => v.amount));
   const free = r3(income - commitTotal - expTotal - manualSave);
   const todaySpent = sum(exps.filter(e => e.date === t).map(e => e.amount));
-  const diff = daysBetween(t, S.nextPayday);
-  const daysLeft = Math.max(1, diff);
+  const diff = daysBetween(t, S.nextPayday), daysLeft = Math.max(1, diff);
   const startToday = r3(free + todaySpent);
   const safeDaily = r3(Math.max(0, startToday) / daysLeft);
   const leftToday = r3(safeDaily - todaySpent);
@@ -506,742 +433,482 @@ function calc(){
   const spendable = r3(income - commitTotal - manualSave);
   const ratio = spendable > 0 ? expTotal / spendable : (expTotal > 0 ? 1 : 0);
   const totalSavings = sum(S.vault.map(v => v.amount));
-  const unalloc = bucketBal(null);
   const cycleLen = Math.max(1, daysBetween(S.cycle.start, S.nextPayday));
   const elapsed = clamp(daysBetween(S.cycle.start, t) / cycleLen);
-  const byCat = {}; CATS.forEach(cc => byCat[cc.id] = 0);
-  exps.forEach(e => byCat[e.cat] = r3((byCat[e.cat] || 0) + e.amount));
+  const spentBy = {}; exps.forEach(e => spentBy[e.cat] = r3((spentBy[e.cat] || 0) + e.amount));
+  const boxes = S.cats.map(b => { const spent = spentBy[b.id] || 0, limit = parseNum(b.limit); return Object.assign({}, b, {spent, limit, left:r3(limit - spent), ratio: limit > 0 ? spent / limit : 0}); });
+  const orphan = r3(expTotal - sum(boxes.map(b => b.spent)));
+  const limitsTotal = sum(boxes.map(b => b.limit));
+  const unalloc = r3(spendable - limitsTotal);
+  const over = boxes.filter(b => b.limit > 0 && b.spent > b.limit + 0.0005);
 
   let status;
-  if (free < 0) status = {cls:'red', icon:'🔴', msg:`تجاوزت ميزانيتك بـ ${KDt(-free)}`, sub:'وقّف الصرف غير الضروري لين تنزل الإعانة، أو اسحب من الحصالة للطوارئ فقط.'};
-  else if (todaySpent > safeDaily + 0.0005 && todaySpent > 0) status = {cls:'red', icon:'🔴', msg:'تجاوزت الحد اليومي المقترح', sub:`صرفت اليوم ${KDt(todaySpent)} والمسموح ${KDt(safeDaily)} — خفّف بكرة عشان يتعدل الحساب.`};
-  else if (ratio >= 0.75) status = {cls:'yellow', icon:'🟡', msg:`انتبه! وصلت ${Math.round(ratio*100)}% من ميزانية الصرف`, sub:`باقي لك ${KDt(Math.max(0,free))} لين ${fmtDate(S.nextPayday)}.`};
-  else status = {cls:'green', icon:'🟢', msg:'وضعك ممتاز 👌', sub: expTotal > 0 ? `صارف ${Math.round(ratio*100)}% بس من ميزانية الصرف — كمّل على نفس الريتم.` : 'ما صرفت شي للحين هالدورة. سجّل أي مصروف أول بأول.'};
+  if (free < 0) status = {cls:'red', msg:`تجاوزت ميزانيتك بـ ${KDt(-free)}`, sub:'وقّف الصرف غير الضروري لين ' + M().next + '.'};
+  else if (todaySpent > safeDaily + 0.0005) status = {cls:'red', msg:'تجاوزت الحد اليومي المقترح', sub:`صرفت اليوم ${KDt(todaySpent)} والمسموح ${KDt(safeDaily)} — خفّف بكرة ويتعدّل الحساب.`};
+  else if (over.length) status = {cls:'yellow', msg:`تعدّيت حد خانة ${over[0].icon} ${over[0].name}`, sub:`صرفت ${KDt(over[0].spent)} من ${KDt(over[0].limit)}${over.length > 1 ? ` (و${over.length - 1} خانات ثانية)` : ''}.`};
+  else if (ratio >= 0.75) status = {cls:'yellow', msg:`انتبه! صرفت ${Math.round(ratio*100)}% من ميزانية الصرف`, sub:`باقي لك ${KDt(Math.max(0, free))} لين ${fmtDate(S.nextPayday)}.`};
+  else status = {cls:'green', msg:'وضعك ممتاز 👌', sub: expTotal > 0 ? `صارف ${Math.round(ratio*100)}% بس من ميزانية الصرف — كمّل كذا.` : 'سجّل أي مصروف أول بأول وخل الخانات تشتغل لك.'};
 
-  return {allowance, extra, income, commitTotal, commitPaid, commitSave, commitNormal, exps, expTotal, manualSave, free,
-    todaySpent, diff, daysLeft, safeDaily, leftToday, safeWeekly, spendable, ratio, totalSavings, unalloc, elapsed, byCat, status,
-    savedThisCycle: r3(commitSave + manualSave)};
+  return {allowance, extra, income, commitTotal, commitPaid, commitSave, exps, expTotal, manualSave, free, todaySpent, diff, daysLeft,
+    safeDaily, leftToday, safeWeekly, spendable, ratio, totalSavings, elapsed, boxes, orphan, limitsTotal, unalloc, status, savedThisCycle:r3(commitSave + manualSave)};
 }
 
-/* ============ الواجهة العامة ============ */
-const TABS = [
-  {id:'home', icon:'🏠', name:'الرئيسية'},
-  {id:'commit', icon:'📌', name:'الالتزامات'},
-  {id:'exp', icon:'🧾', name:'المصروفات'},
-  {id:'goals', icon:'🐷', name:'الأهداف'},
-  {id:'learn', icon:'💡', name:'تعلّم'}
-];
-function applyTheme(){
-  let th = state.theme;
-  if (th === 'auto') th = (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
-  document.documentElement.setAttribute('data-theme', th);
-  const m = document.querySelector('meta[name="theme-color"]'); if (m) m.content = th === 'dark' ? '#0a110f' : '#0b7a5c';
-}
+/* ============ الواجهة ============ */
+const TABS = [{id:'home', icon:'home', name:'الرئيسية'}, {id:'commit', icon:'cal', name:'الالتزامات'}, {id:'log', icon:'list', name:'السجل'}, {id:'save', icon:'target', name:'الادخار'}];
+function isDark(){ let th = state.theme; if (th === 'auto') th = (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light'; return th === 'dark'; }
+function applyTheme(){ const d = isDark(); document.documentElement.setAttribute('data-theme', d ? 'dark' : 'light'); const m = document.querySelector('meta[name="theme-color"]'); if (m) m.content = d ? '#060b1b' : '#12275a'; }
 function render(){
   applyTheme();
   if (!state.onboarded){ renderOnboarding(); return; }
   $('#onb').innerHTML = '';
-  const k = calc();
-  const v = ui.view;
-  const views = {home:viewHome, commit:viewCommit, exp:viewExp, goals:viewGoals, learn:viewLearn};
+  const k = calc(), v = ui.view;
+  const views = {home:viewHome, commit:viewCommit, log:viewLog, save:viewSave};
   const enter = ui.lastView !== v; ui.lastView = v;
   $('#app').innerHTML = header(k) + `<div class="view ${enter ? 'enter' : ''}">${(views[v] || viewHome)(k)}</div>` + footer();
-  if (enter && !document.getElementById('splash')) countUp();
-  $('#tabs').innerHTML = TABS.map(t => `<button class="tab ${t.id===v?'on':''}" data-a="go" data-v="${t.id}"><span class="em">${t.icon}</span>${t.name}</button>`).join('');
-  $('#fab').style.display = (v === 'home' || v === 'exp') ? '' : 'none';
+  $('#tabs').innerHTML = TABS.map(t => `<button class="tab ${t.id === v ? 'on' : ''}" data-a="go" data-v="${t.id}">${I(t.icon)}${t.name}</button>`).join('');
+  $('#fab').style.display = (v === 'home' || v === 'log') && !ui.editBoxes ? '' : 'none';
   document.querySelector('.tabbar').style.display = '';
+  if (enter && !document.getElementById('splash')) countUp();
 }
 function header(k){
-  const titles = {home:null, commit:'الالتزامات الثابتة', exp:'المصروفات', goals:'الأهداف والحصالة', learn:'تعلّم وخطط'};
-  const name = state.profile.name ? esc(state.profile.name) : 'يا بطل';
-  const title = titles[ui.view] || `هلا ${name} 👋`;
-  const sub = k.diff <= 0 ? 'الإعانة نزلت؟ ابدأ دورة جديدة 🎉' : `باقي ${dayWord(k.daysLeft)} على الإعانة القادمة`;
-  const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+  const titles = {commit:'الالتزامات الثابتة', log:'سجل المصروفات', save:'الادخار والأهداف'};
+  const name = state.profile.name ? esc(state.profile.name) : 'هلا والله';
+  const title = titles[ui.view] || (state.profile.name ? `هلا ${name} 👋` : 'هلا والله 👋');
+  const sub = k.diff <= 0 ? `وصل موعد ${M().inc}؟ ابدأ شهر جديد` : `باقي ${dayWord(k.daysLeft)} على ${M().next}`;
   return `<header class="top"><h1>${title}<small>${sub}</small></h1>
-    <button class="icon-btn" data-a="toggleTheme" aria-label="الوضع الليلي">${dark ? '☀️' : '🌙'}</button>
-    <button class="icon-btn" data-a="settings" aria-label="الإعدادات">⚙️</button></header>`;
+    <button class="icon-btn" data-a="toggleTheme" aria-label="الوضع الليلي">${I(isDark() ? 'sun' : 'moon')}</button>
+    <button class="icon-btn" data-a="settings" aria-label="الإعدادات">${I('gear')}</button></header>`;
 }
-function footer(){
-  return `<div class="foot">🔒 بياناتك محفوظة في جهازك فقط — ما تنرسل لأي مكان<br>
-  مستوحى من دورة «فلوسك مسؤوليتك» · تصميم وتطوير: المهندس بو عمر الخلفان</div>`;
-}
+function footer(){ return `<div class="foot">🔒 بياناتك محفوظة في جهازك فقط<br>تم تصميم الموقع من قبل <b>المهندس بو عمر</b></div>`; }
 
-/* ============ الرئيسية ============ */
+/* ---- الرئيسية ---- */
 function viewHome(k){
-  const S = state;
-  let h = '';
-  if (k.diff <= 0) h += `<div class="alert info"><span>🎉</span><div class="grow">وصل موعد الإعانة (${fmtDate(S.nextPayday)})<small>إذا نزلت، ابدأ دورة جديدة عشان تتصفّر الالتزامات وتبدأ شهر نظيف.</small></div><button class="btn sm gold" data-a="newCycle">دورة جديدة</button></div>`;
+  const S = state; let h = '';
+  if (k.diff <= 0) h += `<div class="alert info"><span class="dot"></span><div class="grow">وصل موعد ${M().inc} (${fmtDate(S.nextPayday)})<small>إذا نزلت، ابدأ شهر جديد عشان تتصفّر الخانات والالتزامات.</small></div><button class="btn sm" data-a="newCycle">شهر جديد</button></div>`;
   h += `<section class="hero">
     <div class="hero-top"><span>المسموح تصرفه اليوم</span><span class="pill">⏳ ${k.diff <= 0 ? 'وصل الموعد' : 'باقي ' + dayWord(k.daysLeft)}</span></div>
     <div class="hero-num"><span class="num" data-count="${k.safeDaily}">${fmt(k.safeDaily)}</span> <small>د.ك</small></div>
     <div class="hero-sub">${k.leftToday >= 0 ? `باقي لك اليوم ${KD(k.leftToday)}` : `تعدّيت حد اليوم بـ ${KD(-k.leftToday)}`}</div>
     <div class="hero-row">
+      <div><b class="${k.free < 0 ? 'neg' : ''}">${KD(k.free)}</b><span>الرصيد الحر</span></div>
       <div><b>${KD(k.safeWeekly)}</b><span>المسموح هالأسبوع</span></div>
-      <div><b>${KD(k.todaySpent)}</b><span>صرفت اليوم</span></div>
-      <div><b>${fmtDate(S.nextPayday)}</b><span>الإعانة القادمة</span></div>
+      <div><b>${fmtDate(S.nextPayday)}</b><span>${M().next}</span></div>
     </div>
     <div class="cycle-bar"><i style="width:${(k.elapsed*100).toFixed(1)}%"></i></div>
-    <div class="cycle-cap"><span>بداية الدورة ${fmtDate(S.cycle.start)}</span><span>${Math.round(k.elapsed*100)}% من الشهر</span></div>
+    <div class="cycle-cap"><span>بداية الشهر ${fmtDate(S.cycle.start)}</span><span>مضى <span class="num">${Math.round(k.elapsed*100)}%</span></span></div>
   </section>`;
-  h += `<div class="alert ${k.status.cls}"><span>${k.status.icon}</span><div class="grow">${k.status.msg}<small>${k.status.sub}</small></div></div>`;
-  h += `<div class="card"><h2>⚡ سجّل مصروفك بلمسة<span class="sp"></span><button class="link" data-a="go" data-v="exp">السجل ←</button></h2><div class="quick">${CATS.map(c => `<button class="qbtn" data-a="addExp" data-cat="${c.id}"><span class="em">${c.icon}</span>${c.short}</button>`).join('')}</div></div>`;
-  h += installHint();
-  h += `<div class="section-title">📊 ملخص الدورة</div><div class="stats">
-    ${stat('💰','إجمالي الدخل', k.income, k.extra ? `إعانة ${KDt(k.allowance)} + إضافي ${KDt(k.extra)}` : 'الإعانة الشهرية')}
-    ${stat('📌','الالتزامات الثابتة', k.commitTotal, `مدفوع ${KDt(k.commitPaid)}${k.commitSave ? ' · منها ادخار ' + KDt(k.commitSave) : ''}`)}
-    ${stat('🧾','المصروفات', k.expTotal, `${k.exps.length} عملية هالدورة`)}
-    ${stat('🐷','الادخار التراكمي', k.totalSavings, 'عبر كل الفصول')}
-    <div class="stat wide"><div class="ic" style="background:${k.free<0?'var(--red-soft)':'var(--grn-soft)'}">${k.free<0?'⚠️':'💚'}</div>
-      <div class="grow"><div class="lbl">الرصيد الحر المتبقي</div><div class="val ${k.free<0?'neg':''}">${KD(k.free)}</div><div class="sub">بعد الالتزامات والادخار والمصروفات</div></div></div>
-  </div>`;
-  h += donutCard(k);
-  const recent = k.exps.slice().sort((a,b) => (b.date + b.ts) > (a.date + a.ts) ? 1 : -1).slice(0, 5);
-  h += `<div class="card"><h2>🕒 آخر المصروفات<span class="sp"></span>${recent.length ? '<button class="link" data-a="go" data-v="exp">الكل ←</button>' : ''}</h2>${recent.length ? `<div class="list">${recent.map(expRow).join('')}</div>` : `<div class="empty"><span class="em">🧾</span>ما سجلت أي مصروف هالدورة.<br>اضغط على أي تصنيف فوق أو زر + تحت.</div>`}</div>`;
-  h += `<div class="card" style="display:flex;gap:12px;align-items:center"><div class="ic" style="background:var(--gold-soft)">🧭</div><div class="grow"><b>محتار كيف توزّع إعانتك؟</b><div class="small muted">3 خطط جاهزة تطبّقها بضغطة زر</div></div><button class="btn sm soft" data-a="templates">شوف الخطط</button></div>`;
+  h += `<div class="alert ${k.status.cls}"><span class="dot"></span><div class="grow">${k.status.msg}<small>${k.status.sub}</small></div></div>`;
+  h += ui.editBoxes ? boxesEdit(k) : boxesCard(k);
+  h += `<div class="card"><h2>📊 ملخص الشهر</h2><div class="tiles" style="margin-top:10px">
+    <div class="tile"><div class="l">${M().inc}${k.extra ? ' + الإضافي' : ''}</div><div class="v">${KD(k.income)}</div></div>
+    <div class="tile"><div class="l">الالتزامات الثابتة</div><div class="v">${KD(k.commitTotal)}</div></div>
+    <div class="tile"><div class="l">صرفت هالشهر</div><div class="v">${KD(k.expTotal)}</div></div>
+    <div class="tile"><div class="l">مجموع ادخارك</div><div class="v">${KD(k.totalSavings)}</div></div></div></div>`;
   return h;
 }
-function stat(icon, lbl, val, sub){
-  return `<div class="stat"><div class="lbl">${icon} ${lbl}</div><div class="val ${val<0?'neg':''}">${KD(val)}</div><div class="sub">${sub}</div></div>`;
-}
-function installHint(){
-  if (state.installHintHidden || isStandalone()) return '';
-  return `<div class="card" style="display:flex;gap:12px;align-items:center;padding:12px 14px"><div class="ic" style="background:var(--pri-soft)">📲</div><div class="grow"><b style="font-size:14px">ثبّت «إعانتي» على شاشتك</b><div class="small muted">يفتح مثل التطبيق وبدون إنترنت</div></div><button class="btn sm" data-a="install">كيف؟</button><button class="del" data-a="hideInstall" aria-label="إخفاء">✕</button></div>`;
-}
-
-/* ---- الرسم الدائري ---- */
-function donutData(k){
-  const segs = [];
-  if (k.commitNormal > 0) segs.push({id:'commit', label:'التزامات ثابتة', value:k.commitNormal, color:C_COMMIT});
-  if (k.savedThisCycle > 0) segs.push({id:'save', label:'ادخار', value:k.savedThisCycle, color:C_SAVE});
-  CATS.forEach(c => { if (k.byCat[c.id] > 0) segs.push({id:c.id, label:c.icon + ' ' + c.short, value:k.byCat[c.id], color:c.color}); });
-  if (k.free > 0) segs.push({id:'free', label:'رصيد حر', value:k.free, color:'var(--free)'});
-  return segs;
-}
-function donutCard(k){
-  const segs = donutData(k);
-  const total = sum(segs.map(s => s.value));
-  if (!total) return `<div class="card"><h2>🍩 وين تروح إعانتك؟</h2><div class="empty"><span class="em">🍩</span>حدد دخلك والتزاماتك عشان يطلع الرسم.</div></div>`;
-  const R = 70, C = 2 * Math.PI * R, gap = segs.length > 1 ? 1.5 : 0;
-  let off = 0;
-  const sel = segs.find(s => s.id === ui.donutSel);
-  const circles = segs.map(s => {
-    const len = s.value / total * C;
-    const dash = Math.max(0.5, len - gap);
-    const el = `<circle class="seg" data-a="donut" data-id="${s.id}" cx="90" cy="90" r="${R}" fill="none" stroke="${s.color}" stroke-width="${sel && sel.id === s.id ? 26 : 20}" stroke-dasharray="${dash.toFixed(2)} ${(C - dash).toFixed(2)}" stroke-dashoffset="${(-off).toFixed(2)}" opacity="${sel && sel.id !== s.id ? .35 : 1}"></circle>`;
-    off += len; return el;
+function boxColor(b){ if (b.limit <= 0) return b.color; if (b.ratio > 1) return 'var(--red)'; if (b.ratio >= .75) return 'var(--yel)'; return b.color; }
+function boxesCard(k){
+  let h = `<div class="card"><h2>🗂️ خاناتك هالشهر<span class="sp"></span><button class="link" data-a="editBoxes">${I('edit')} وزّع</button></h2>
+    <div class="sub-h">اضغط على أي خانة وسجّل اللي صرفته فيها</div>`;
+  if (!k.boxes.length) h += `<div class="empty"><span class="em">🗂️</span>ما عندك خانات. اضغط «وزّع» وسوّ خاناتك.</div>`;
+  h += k.boxes.map(b => {
+    const pct = b.limit > 0 ? clamp(b.ratio) * 100 : (b.spent > 0 ? 100 : 0);
+    const leftTxt = b.limit <= 0 ? `<span class="muted small">بدون حد</span>` : b.left >= 0 ? `باقي ${KD(b.left)}` : `<span class="neg">تعدّيت ${KD(-b.left)}</span>`;
+    return `<button class="box" data-a="addExp" data-cat="${b.id}"><span class="ic" style="background:color-mix(in srgb,${b.color} 14%,transparent)">${b.icon}</span>
+      <div class="grow"><div class="row"><b>${esc(b.name)}</b><span class="sp"></span><span class="left">${leftTxt}</span></div>
+      <div class="bar"><i style="width:${pct.toFixed(1)}%;background:${boxColor(b)}"></i></div>
+      <div class="s">صرفت ${KD(b.spent)}${b.limit > 0 ? ` من ${KD(b.limit)}` : ''}</div></div></button>`;
   }).join('');
-  const center = sel
-    ? `<b class="num">${fmt(sel.value)}</b><span>د.ك · ${Math.round(sel.value/total*100)}%</span><span>${sel.label}</span>`
-    : (k.free < 0 ? `<b class="num neg">${fmt(k.free)}</b><span>د.ك — تجاوزت الدخل</span>` : `<b class="num">${fmt(k.income)}</b><span>د.ك إجمالي الدخل</span>`);
-  return `<div class="card"><h2>🍩 وين تروح إعانتك بالضبط؟</h2><div class="donut-wrap">
-    <div class="donut"><svg viewBox="0 0 180 180"><circle cx="90" cy="90" r="${R}" fill="none" stroke="var(--card2)" stroke-width="20"></circle>${circles}</svg><div class="center">${center}</div></div>
-    <div class="legend">${segs.map(s => `<button class="${sel && sel.id === s.id ? 'on' : ''}" data-a="donut" data-id="${s.id}"><i style="background:${s.color}"></i><span class="grow">${s.label}</span><b>${KD(s.value)}</b></button>`).join('')}</div>
-  </div><div class="hint" style="text-align:center">اضغط على أي جزء عشان تشوف تفاصيله</div></div>`;
+  if (k.orphan > 0) h += `<div class="s small muted" style="margin-top:8px">+ ${KD(k.orphan)} مصروفات في خانات محذوفة</div>`;
+  h += `<div class="alloc">${allocText(k)}</div></div>`;
+  return h;
+}
+function allocText(k){
+  if (k.unalloc < -0.0005) return `<span class="neg">⚠️ وزّعت على الخانات أكثر من المتاح بـ <b>${KDt(-k.unalloc)}</b></span><div class="hint">المتاح للصرف بعد الالتزامات: ${KDt(k.spendable)}</div>`;
+  return `المتاح للصرف بعد الالتزامات: <b>${KDt(k.spendable)}</b> · موزّع ${KDt(k.limitsTotal)}${k.unalloc > 0.0005 ? `<div class="hint">باقي ${KDt(k.unalloc)} بدون خانة — حطها في خانة أو خلها احتياط</div>` : '<div class="hint">✅ كل فلوسك موزّعة على الخانات</div>'}`;
+}
+function boxesEdit(k){
+  return `<div class="card"><h2>🗂️ وزّع فلوسك على الخانات<span class="sp"></span><button class="btn sm" data-a="boxesDone">تم ${I('check')}</button></h2>
+    <div class="sub-h">غيّر الاسم أو الحد الشهري لكل خانة. الأيقونة تتغير بلمسة.</div>
+    ${state.cats.map(b => `<div class="box-edit"><button class="ic" data-a="boxIcon" data-id="${b.id}" style="background:color-mix(in srgb,${b.color} 14%,transparent)">${b.icon}</button>
+      <input class="inp nm" data-box-name="${b.id}" value="${esc(b.name)}" maxlength="24" aria-label="اسم الخانة">
+      <input class="inp lim" data-box-limit="${b.id}" value="${b.limit || ''}" placeholder="0" inputmode="decimal" aria-label="الحد">
+      <button class="del" data-a="boxDel" data-id="${b.id}" aria-label="حذف">${I('trash')}</button></div>`).join('')}
+    <div class="btns" style="margin-top:12px"><button class="btn soft sm" data-a="boxAdd">${I('plus')} خانة جديدة</button><button class="btn ghost sm" data-a="boxFit">📐 طابق المتاح</button></div>
+    <div class="alloc" id="allocBox">${allocText(k)}</div></div>`;
 }
 
-/* ============ الالتزامات ============ */
+/* ---- الالتزامات ---- */
 function viewCommit(k){
-  const S = state;
-  const act = S.commitments.filter(x => x.active);
-  const paidN = act.filter(x => S.cycle.paid[x.id]).length;
-  let h = `<div class="card"><div class="row"><div class="grow"><div class="small muted">إجمالي الالتزامات المفعّلة</div><div style="font-size:26px;font-weight:700">${KD(k.commitTotal)}</div><div class="small muted">${Math.round(k.income ? k.commitTotal/k.income*100 : 0)}% من دخلك · مدفوع ${paidN} من ${act.length}</div></div>
-    <div class="ic" style="width:54px;height:54px;font-size:26px;background:var(--pri-soft)">📌</div></div>
-    <div class="prog" style="margin-top:12px"><i style="width:${act.length ? paidN/act.length*100 : 0}%"></i></div></div>`;
-  h += `<div class="card"><h2>📋 بنودك الشهرية<span class="sp"></span><button class="link" data-a="templates">🧭 خطط جاهزة</button></h2>
-    <div class="hint" style="margin:-6px 0 6px">✓ = دفعته هالشهر · المفتاح = تفعيل/إيقاف البند · اضغط على البند للتعديل. <b>الادخار التلقائي</b> ينتقل للحصالة أول ما تأشّره.</div>
+  const S = state, act = S.commitments.filter(x => x.active), paidN = act.filter(x => S.cycle.paid[x.id]).length;
+  let h = `<div class="card"><div class="row"><div class="grow"><div class="small muted">مجموع الالتزامات الشهرية</div><div class="num" style="font-size:28px;font-weight:800">${fmt(k.commitTotal)} <small style="font-size:14px">د.ك</small></div><div class="small muted">${Math.round(k.income ? k.commitTotal / k.income * 100 : 0)}% من دخلك · دفعت ${paidN} من ${act.length}</div></div></div>
+    <div class="prog" style="margin-top:12px"><i style="width:${act.length ? paidN / act.length * 100 : 0}%"></i></div></div>`;
+  h += `<div class="card"><h2>📋 بنودك الثابتة</h2><div class="sub-h">✓ = دفعته هالشهر · المفتاح = تشغيل/إيقاف · اضغط على البند للتعديل. «الادخار التلقائي» يروح للحصالة أول ما تأشّره.</div>
     <div class="list">${S.commitments.map(it => {
-      const paid = !!S.cycle.paid[it.id];
-      const goal = it.type === 'save' ? (it.goal ? S.goals.find(g => g.id === it.goal) : null) : null;
-      return `<div class="item ${it.active ? '' : 'off'}">
-        <button class="check ${paid ? 'on' : ''}" data-a="paid" data-id="${it.id}" ${it.active ? '' : 'disabled'} aria-label="تم الدفع">✓</button>
-        <div class="grow" data-a="editCommit" data-id="${it.id}" style="cursor:pointer"><div class="t">${it.icon} ${esc(it.name)}</div><div class="s">${it.type === 'save' ? '🐷 يروح ' + (goal ? 'لهدف: ' + esc(goal.name) : 'للحصالة') + ' · ' : ''}${paid ? '✅ مدفوع' : (it.active ? 'لم يُدفع بعد' : 'موقوف')}</div></div>
-        <div class="amt">${KD(it.amount)}</div>
-        <button class="sw ${it.active ? 'on' : ''}" data-a="toggleActive" data-id="${it.id}" aria-label="تفعيل"></button></div>`;
+      const paid = !!S.cycle.paid[it.id], goal = it.type === 'save' && it.goal ? S.goals.find(g => g.id === it.goal) : null;
+      return `<div class="item ${it.active ? '' : 'off'}"><button class="check ${paid ? 'on' : ''}" data-a="paid" data-id="${it.id}" ${it.active ? '' : 'disabled'} aria-label="تم الدفع">${I('check')}</button>
+        <div class="grow" data-a="editCommit" data-id="${it.id}" style="cursor:pointer"><div class="t">${it.icon} ${esc(it.name)}</div><div class="s">${it.type === 'save' ? '🐷 للـ' + (goal ? 'هدف: ' + esc(goal.name) : 'حصالة') + ' · ' : ''}${paid ? 'مدفوع ✅' : it.active ? 'لم يُدفع بعد' : 'موقوف'}</div></div>
+        <div class="amt">${KD(it.amount)}</div><button class="sw ${it.active ? 'on' : ''}" data-a="toggleActive" data-id="${it.id}" aria-label="تشغيل"></button></div>`;
     }).join('')}</div>
-    <button class="btn soft block" style="margin-top:12px" data-a="editCommit">+ أضف بند جديد</button></div>`;
-  h += `<div class="card" style="border:2px dashed color-mix(in srgb,var(--gold) 50%,transparent)"><h2>🔄 دورة إعانة جديدة</h2>
-    <p class="small muted" style="margin:0 0 12px">نزلت الإعانة؟ بضغطة زر نصفّر علامات الدفع ونبدأ شهر جديد بنفس إعداداتك، وسجل ادخارك وأهدافك يبقى مثل ما هو. وتقدر تحوّل الباقي من الشهر للحصالة.</p>
-    <button class="btn gold block" data-a="newCycle">🎉 ابدأ دورة إعانة جديدة</button></div>`;
-  if (S.cycles.length){
-    h += `<div class="card"><h2>🗂️ الدورات السابقة</h2><div class="list">${S.cycles.slice().reverse().slice(0, 12).map(c => `<div class="item"><div class="ic">📅</div><div class="grow"><div class="t">${fmtDate(c.start)} ← ${fmtDate(c.end)}</div><div class="s">دخل ${KDt(c.income)} · صرف ${KDt(c.expTotal)} · ادخار ${KDt(c.saved)}</div></div><div class="amt ${c.left < 0 ? 'neg' : 'pos'}">${KD(c.left)}</div></div>`).join('')}</div><div class="hint">الرقم على اليسار = الباقي آخر الدورة</div></div>`;
-  }
+    <button class="btn soft block" style="margin-top:12px" data-a="editCommit">${I('plus')} بند جديد</button></div>`;
+  h += `<div class="card"><h2>🔄 شهر جديد</h2><p class="small muted" style="margin:4px 0 12px">نزل ${M().inc}؟ بضغطة نصفّر الدفع والخانات ونبدأ شهر جديد بنفس إعداداتك، وادخارك يبقى مثل ما هو.</p>
+    <button class="btn navy block" data-a="newCycle">ابدأ شهر جديد</button></div>`;
   return h;
 }
 
-/* ============ المصروفات ============ */
-function filteredExps(){
+/* ---- السجل ---- */
+function viewLog(){
+  const periods = {cycle:'هالشهر (الدورة)', month:'الشهر الميلادي', all:'من البداية'};
   const t = today(), mon = t.slice(0, 7);
   let list = state.expenses;
-  if (ui.expPeriod === 'cycle') list = list.filter(e => e.cycle === state.cycle.id);
-  else if (ui.expPeriod === 'month') list = list.filter(e => String(e.date).slice(0, 7) === mon);
-  if (ui.expCat !== 'all') list = list.filter(e => e.cat === ui.expCat);
-  return list.slice().sort((a, b) => (b.date + (b.ts||'')) > (a.date + (a.ts||'')) ? 1 : -1);
+  if (ui.logPeriod === 'cycle') list = list.filter(e => e.cycle === state.cycle.id);
+  else if (ui.logPeriod === 'month') list = list.filter(e => String(e.date).slice(0, 7) === mon);
+  if (ui.logCat !== 'all') list = list.filter(e => e.cat === ui.logCat);
+  list = list.slice().sort((a, b) => (b.date + (b.ts || '')) > (a.date + (a.ts || '')) ? 1 : -1);
+  const total = sum(list.map(e => e.amount));
+  const c = ui.logCat === 'all' ? null : catOf(ui.logCat);
+  let h = `<div class="card"><div class="seg-c" style="margin-bottom:10px">${Object.entries(periods).map(([id, n]) => `<button class="${ui.logPeriod === id ? 'on' : ''}" data-a="logPeriod" data-id="${id}">${n}</button>`).join('')}</div>
+    <div class="chips"><button class="chip ${!c ? 'on' : ''}" data-a="logCat" data-id="all">الكل</button>${state.cats.map(b => `<button class="chip ${ui.logCat === b.id ? 'on' : ''}" data-a="logCat" data-id="${b.id}">${b.icon} ${esc(b.name)}</button>`).join('')}</div>
+    <div style="text-align:center;margin:14px 0 2px"><div class="small muted">${c ? `صرفت على ${c.icon} ${esc(c.name)}` : 'مجموع اللي صرفته'}</div><div class="num" style="font-size:34px;font-weight:800">${fmt(total)} <small style="font-size:15px">د.ك</small></div><div class="small muted">${list.length} عملية</div></div></div>`;
+  h += `<div class="card">${list.length ? groupByDay(list) : `<div class="empty"><span class="em">🧾</span>ما فيه مصروفات هني.</div>`}</div>`;
+  return h;
 }
 function expRow(e){
   const c = catOf(e.cat);
-  return `<div class="item"><div class="ic" style="background:color-mix(in srgb,${c.color} 15%,transparent)">${c.icon}</div>
-    <div class="grow"><div class="t">${esc(e.note) || c.name}</div><div class="s">${c.short} · ${fmtDate(e.date, {weekday:'short', day:'numeric', month:'short'})}</div></div>
-    <div class="amt">${KD(e.amount)}</div><button class="del" data-a="delExp" data-id="${e.id}" aria-label="حذف">🗑️</button></div>`;
-}
-function viewExp(k){
-  const periods = {cycle:'هالدورة', month:'هالشهر', all:'من البداية'};
-  const list = filteredExps();
-  const total = sum(list.map(e => e.amount));
-  let h = `<div class="card"><h2>⚡ إضافة سريعة بلمسة</h2><div class="quick">${CATS.map(c => `<button class="qbtn" data-a="addExp" data-cat="${c.id}"><span class="em">${c.icon}</span>${c.name}</button>`).join('')}</div></div>`;
-  h += `<div class="card"><h2>🔎 كم صرفت على…؟</h2>
-    <div class="seg-c" style="margin-bottom:10px">${Object.entries(periods).map(([id, n]) => `<button class="${ui.expPeriod === id ? 'on' : ''}" data-a="expPeriod" data-id="${id}">${n}</button>`).join('')}</div>
-    <div class="chips"><button class="chip ${ui.expCat === 'all' ? 'on' : ''}" data-a="expCat" data-id="all">الكل</button>${CATS.map(c => `<button class="chip ${ui.expCat === c.id ? 'on' : ''}" data-a="expCat" data-id="${c.id}">${c.icon} ${c.short}</button>`).join('')}</div>
-    <div style="text-align:center;margin:14px 0 4px"><div class="small muted">${ui.expCat === 'all' ? 'صرفت' : 'صرفت على ' + catOf(ui.expCat).icon + ' ' + catOf(ui.expCat).short} ${periods[ui.expPeriod]}</div><div style="font-size:32px;font-weight:700">${KD(total)}</div><div class="small muted">${list.length} عملية${list.length ? ' · المتوسط ' + KDt(total / list.length) : ''}</div></div>`;
-  if (ui.expCat === 'all' && total > 0){
-    const by = {}; list.forEach(e => by[e.cat] = r3((by[e.cat] || 0) + e.amount));
-    const max = Math.max(...Object.values(by));
-    h += `<div class="bars">${CATS.filter(c => by[c.id]).sort((a, b) => by[b.id] - by[a.id]).map(c => `<button class="bar-row" data-a="expCat" data-id="${c.id}"><span>${c.icon} ${c.short}</span><div class="prog"><i style="width:${by[c.id]/max*100}%;background:${c.color}"></i></div><b>${KD(by[c.id])}</b></button>`).join('')}</div>`;
-  }
-  if (ui.expCat === 'coffee' && total > 0){
-    h += `<div class="hint" style="text-align:center;margin-top:8px">☕ ${ui.expPeriod === 'all' ? 'جرّب حاسبة العادات في «تعلّم» وشوف تكلفتها السنوية.' : `لو استمر نفس المعدل كل شهر، القهوة تكلّفك تقريبًا ${KDt(total * 12)} بالسنة.`}</div>`;
-  }
-  h += `</div>`;
-  h += `<div class="card"><h2>📜 السجل</h2>${list.length ? groupByDay(list) : `<div class="empty"><span class="em">🔍</span>ما فيه مصروفات بهالفلتر.</div>`}</div>`;
-  return h;
+  return `<div class="item"><div class="ic" style="background:color-mix(in srgb,${c.color} 14%,transparent)">${c.icon}</div>
+    <div class="grow"><div class="t">${esc(e.note) || esc(c.name)}</div><div class="s">${esc(c.name)}</div></div>
+    <div class="amt">${KD(e.amount)}</div><button class="del" data-a="delExp" data-id="${e.id}" aria-label="حذف">${I('trash')}</button></div>`;
 }
 function groupByDay(list){
-  const g = {};
-  list.forEach(e => (g[e.date] = g[e.date] || []).push(e));
-  return Object.keys(g).sort().reverse().map(d => `<div class="day-h"><span>${d === today() ? 'اليوم' : d === addDays(today(), -1) ? 'أمس' : fmtDate(d, {weekday:'long', day:'numeric', month:'long'})}</span><span>${KD(sum(g[d].map(e => e.amount)))}</span></div><div class="list">${g[d].map(expRow).join('')}</div>`).join('');
+  const g = {}; list.forEach(e => (g[e.date] = g[e.date] || []).push(e));
+  return Object.keys(g).sort().reverse().map(d => `<div class="day-h"><span>${d === today() ? 'اليوم' : d === addDays(today(), -1) ? 'أمس' : fmtDate(d, {weekday:'long', day:'numeric', month:'long'})}</span><span class="num">${fmt(sum(g[d].map(e => e.amount)))} د.ك</span></div><div class="list">${g[d].map(expRow).join('')}</div>`).join('');
 }
 
-/* ============ الأهداف ============ */
-function viewGoals(k){
+/* ---- الادخار ---- */
+function viewSave(k){
   const S = state;
-  let h = `<section class="vault"><div class="row"><div class="grow"><div style="opacity:.92;font-size:14px">🐷 حصالة الادخار التراكمية</div><div class="big"><span class="num">${fmt(k.totalSavings)}</span> <small style="font-size:16px">د.ك</small></div>
-    <div style="font-size:12.5px;opacity:.92">حرّ في الحصالة: ${KD(k.unalloc)} · مخصص للأهداف: ${KD(r3(k.totalSavings - k.unalloc))}</div></div></div>
-    <div class="btns" style="margin-top:12px"><button class="btn sm" data-a="vaultOp" data-op="manual">➕ إيداع</button><button class="btn sm" data-a="vaultOp" data-op="withdraw">🛟 سحب طوارئ</button><button class="btn sm" data-a="vaultOp" data-op="move">🔁 نقل لهدف</button></div></section>`;
-  h += `<div class="card"><h2>🎯 أهدافك<span class="sp"></span><button class="link" data-a="editGoal">+ هدف جديد</button></h2>`;
-  if (!S.goals.length){
-    h += `<div class="empty"><span class="em">🎯</span>حط لك هدف وخلّ الادخار له معنى!</div><div class="chips" style="justify-content:center;flex-wrap:wrap">${GOAL_PRESETS.map((p, i) => `<button class="chip" data-a="editGoal" data-preset="${i}">${p.emoji} ${p.name}</button>`).join('')}</div>`;
-  } else {
-    h += S.goals.map(g => {
-      const saved = goalSaved(g), target = parseNum(g.target), rem = r3(Math.max(0, target - saved));
-      const pct = target ? clamp(saved / target) * 100 : 0;
-      const monthly = parseNum(g.monthly);
-      let eta;
-      if (rem <= 0) eta = '🎉 وصلت لهدفك! مبروك';
-      else if (monthly > 0){ const m = Math.ceil(rem / monthly - 1e-9); eta = `بمعدل ${KDt(monthly)} شهريًا توصل بعد ${monthWord(m)} تقريبًا (${fmtDate(addMonths(today(), m), {month:'long', year:'numeric'})})`; }
-      else eta = 'حدد مبلغ شهري عشان نحسب لك متى توصل';
-      return `<div class="goal"><div class="head"><span class="em">${g.emoji || '🎯'}</span><div class="grow"><b>${esc(g.name)}</b><div class="small muted">${KD(saved)} من ${KD(target)}</div></div><span class="pct num">${Math.floor(pct)}%</span></div>
-        <div class="prog"><i style="width:${pct}%"></i></div>
-        <div class="small muted" style="margin:8px 0 10px">${eta}${rem > 0 ? ` · باقي ${KD(rem)}` : ''}</div>
-        <div class="btns"><button class="btn sm soft" data-a="vaultOp" data-op="manual" data-goal="${g.id}">➕ أضف له</button><button class="btn sm ghost" data-a="vaultOp" data-op="move" data-goal="${g.id}">🔁 من الحصالة</button><button class="btn sm ghost" data-a="editGoal" data-id="${g.id}">✏️</button></div></div>`;
-    }).join('');
-  }
+  let h = `<section class="vault"><div style="opacity:.92;font-size:14px">🐷 مجموع ادخارك</div><div class="big"><span class="num">${fmt(k.totalSavings)}</span> <small style="font-size:16px">د.ك</small></div>
+    <div style="font-size:12.5px;opacity:.92">في الحصالة: ${KDt(bucketBal(null))} · في الأهداف: ${KDt(r3(k.totalSavings - bucketBal(null)))}</div>
+    <div class="btns" style="margin-top:12px"><button class="btn sm" data-a="vaultOp" data-op="manual">${I('plus')} إيداع</button><button class="btn sm" data-a="vaultOp" data-op="withdraw">🛟 سحب للطوارئ</button></div></section>`;
+  h += `<div class="card"><h2>🎯 أهدافك<span class="sp"></span><button class="link" data-a="editGoal">${I('plus')} هدف</button></h2>`;
+  if (!S.goals.length) h += `<div class="empty"><span class="em">🎯</span>حط لك هدف وخلّ للادخار معنى</div><div class="chips" style="justify-content:center;flex-wrap:wrap">${GOAL_PRESETS.map((p, i) => `<button class="chip" data-a="editGoal" data-preset="${i}">${p.emoji} ${p.name}</button>`).join('')}</div>`;
+  else h += '<div style="margin-top:10px"></div>' + S.goals.map(g => {
+    const saved = bucketBal(g.id), target = parseNum(g.target), rem = r3(Math.max(0, target - saved)), pct = target ? clamp(saved / target) * 100 : 0, monthly = parseNum(g.monthly);
+    let eta;
+    if (rem <= 0) eta = '🎉 وصلت لهدفك! مبروك';
+    else if (monthly > 0){ const m = Math.ceil(rem / monthly - 1e-9); eta = `بـ ${KDt(monthly)} شهرياً توصل بعد ${monthWord(m)} (${fmtDate(addMonths(today(), m), {month:'long', year:'numeric'})})`; }
+    else eta = 'حدد مبلغ شهري عشان نحسب لك متى توصل';
+    return `<div class="goal"><div class="head"><span class="em">${g.emoji || '🎯'}</span><div class="grow"><b>${esc(g.name)}</b><div class="small muted">${KD(saved)} من ${KD(target)}</div></div><span class="pct num">${Math.floor(pct)}%</span></div>
+      <div class="prog"><i style="width:${pct}%"></i></div><div class="small muted" style="margin:8px 0 10px">${eta}</div>
+      <div class="btns"><button class="btn sm soft" data-a="vaultOp" data-op="manual" data-goal="${g.id}">${I('plus')} أضف له</button><button class="btn sm ghost" data-a="editGoal" data-id="${g.id}">${I('edit')} تعديل</button></div></div>`;
+  }).join('');
   h += `</div>`;
-  h += goalCalcCard();
-  const hist = S.vault.slice().sort((a, b) => (b.date + (b.ts||'')) > (a.date + (a.ts||'')) ? 1 : -1).slice(0, 12);
-  const srcName = {auto:'ادخار تلقائي', manual:'إيداع', withdraw:'سحب طوارئ', move:'نقل', carry:'ترحيل باقي الشهر'};
-  h += `<div class="card"><h2>🧾 حركة الحصالة</h2>${hist.length ? `<div class="list">${hist.map(v => {
-    const g = v.goal ? S.goals.find(x => x.id === v.goal) : null;
-    return `<div class="item"><div class="ic">${v.amount >= 0 ? '⬆️' : '⬇️'}</div><div class="grow"><div class="t">${esc(v.note) || srcName[v.src] || 'حركة'}</div><div class="s">${g ? g.emoji + ' ' + esc(g.name) : '🐷 الحصالة'} · ${fmtDate(v.date)}</div></div><div class="amt ${v.amount < 0 ? 'neg' : 'pos'}">${v.amount > 0 ? '+' : ''}${KD(v.amount)}</div></div>`;
-  }).join('')}</div>` : `<div class="empty">ما فيه حركات للحين. أشّر «ادخار تلقائي» في الالتزامات أو سوّ إيداع.</div>`}</div>`;
+  const hist = S.vault.slice().sort((a, b) => (b.date + (b.ts || '')) > (a.date + (a.ts || '')) ? 1 : -1).slice(0, 8);
+  if (hist.length) h += `<div class="card"><h2>🧾 آخر الحركات</h2><div class="list">${hist.map(v => { const g = v.goal ? S.goals.find(x => x.id === v.goal) : null;
+    return `<div class="item"><div class="grow"><div class="t">${esc(v.note) || 'حركة'}</div><div class="s">${g ? g.emoji + ' ' + esc(g.name) : '🐷 الحصالة'} · ${fmtDate(v.date)}</div></div><div class="amt ${v.amount < 0 ? 'neg' : 'pos'}">${v.amount > 0 ? '+' : ''}${KD(v.amount)}</div></div>`; }).join('')}</div></div>`;
   return h;
 }
-function goalCalcCard(){
-  return `<div class="card"><h2>🧮 حاسبة تقسيم الهدف</h2>
-    <div class="small muted" style="margin:-6px 0 10px">حدد هدفك ← حدد المبلغ ← حدد المدة ← نحسب لك كم تدخر شهريًا.</div>
-    <div class="two"><div class="field"><label>سعر الهدف (د.ك)</label><input class="inp" id="gcT" inputmode="decimal" value="300" data-in="gcalc"></div>
-    <div class="field"><label>بعد كم شهر؟</label><input class="inp" id="gcM" inputmode="numeric" value="10" data-in="gcalc"></div></div>
-    <div class="quote" id="gcOut">${gcText(300, 10)}</div></div>`;
-}
-function gcText(t, m){
-  if (!(t > 0) || !(m > 0)) return 'دخّل المبلغ والمدة';
-  const per = r3(t / m), k = calc();
-  const pctInc = k.income ? Math.round(per / k.income * 100) : 0;
-  return `تحتاج تدخر ${KD(per)} شهريًا<div class="small" style="font-weight:500;margin-top:4px">${fmt(t)} ÷ ${m} = ${fmt(per)} — يعني تقريبًا ${pctInc}% من دخلك الشهري</div>`;
-}
-
-/* ============ تعلّم ============ */
-const NW_ITEMS = [
-  ['شراء وجبة غداء بين المحاضرات', 'need'], ['قهوة يوميًا بـ 2 د.ك', 'want'], ['ملابس مناسبة للجامعة', 'need'],
-  ['حذاء جديد وعندك أحذية زينة', 'want'], ['كتب ومذكرات المقرر', 'need'], ['تغيير الهاتف وهو شغّال زين', 'want'],
-  ['بانزين للدوام الجامعي', 'need'], ['اشتراك لعبة أونلاين ثاني', 'want']
-];
-const CHALLENGE = [
-  {id:'food', icon:'🍽️', name:'صديقك عزمك على مطعم', amount:12, need:false},
-  {id:'shoe', icon:'👟', name:'حذاء رياضي جديد عجبك', amount:35, need:false},
-  {id:'sup', icon:'📚', name:'مستلزمات جامعية', amount:15, need:true},
-  {id:'hp', icon:'🎧', name:'سماعة جديدة', amount:25, need:false},
-  {id:'tr', icon:'⛽', name:'مواصلات للشهر', amount:40, need:true}
-];
-function viewLearn(){
-  let h = `<div class="quote" style="margin-bottom:14px">«مو المهم جم تستلم… المهم شلون تدير اللي تستلمه»</div>`;
-  h += `<div class="card"><h2>🤔 حاجة ولا رغبة؟</h2><div class="small muted" style="margin:-6px 0 6px"><b>الحاجة</b>: شي أساسي ما تستغني عنه. <b>الرغبة</b>: شي تحبه لكن تقدر تأجله أو تستغني عنه. جرّب:</div>
-    ${NW_ITEMS.map((it, i) => {
-      const r = ui.nwRevealed[i];
-      return `<div class="nw"><span class="grow">${it[0]}</span>${r ? `<span class="tag ${it[1]}">${r.ok ? '✅' : '❌'} ${it[1] === 'need' ? 'حاجة' : 'رغبة'}</span>` : `<button class="btn soft" data-a="nw" data-i="${i}" data-g="need">حاجة</button><button class="btn ghost" data-a="nw" data-i="${i}" data-g="want">رغبة</button>`}</div>`;
-    }).join('')}
-    <div class="hint">ملاحظة: الأكل حاجة، بس اختيار مطعم غالي كل يوم ممكن يصير رغبة 😉</div></div>`;
-  h += `<div class="card"><h2>📊 قاعدة 50/30/20 على إعانتك</h2>${rule503020()}<div class="lesson small">«اصرف، وادّخر، واستمتع… لكن بخطة!» — قسّم من أول يوم تستلم فيه، لا تنتظر آخر الشهر تشوف كم باقي.</div><button class="btn soft block" data-a="templates">🧭 طبّق خطة جاهزة على التزاماتي</button></div>`;
-  h += `<div class="card"><h2>☕ حاسبة العادات الصغيرة</h2><div class="small muted" style="margin:-6px 0 10px">المصروف الصغير المتكرر يستنزف أكثر من مشترى كبير مرة وحدة.</div>
-    <div class="two"><div class="field"><label>كم تصرف بالمرة؟ (د.ك)</label><input class="inp" id="hbA" inputmode="decimal" value="2" data-in="habit"></div>
-    <div class="field"><label>كم يوم بالشهر؟</label><input class="inp" id="hbD" inputmode="numeric" value="30" data-in="habit"></div></div>
-    <div class="calc-out" id="hbOut">${habitOut(2, 30)}</div></div>`;
-  h += `<div class="card"><h2>🐷 ادّخر أول — مو اللي يتبقى</h2><div class="small muted" style="margin:-6px 0 10px">حطّ مبلغ الادخار أول ما تنزل الإعانة، وشوف وين يوصلك:</div>
-    <div class="two"><div class="field"><label>ادخار شهري (د.ك)</label><input class="inp" id="svA" inputmode="decimal" value="40" data-in="savefirst"></div>
-    <div class="field"><label>كم شهر؟</label><input class="inp" id="svM" inputmode="numeric" value="48" data-in="savefirst"></div></div>
-    <div class="quote" id="svOut">${saveOut(40, 48)}</div></div>`;
-  const chosen = CHALLENGE.filter(c => ui.challenge[c.id]);
-  const spent = sum(chosen.map(c => c.amount));
-  const needsOk = CHALLENGE.filter(c => c.need).every(c => ui.challenge[c.id]);
-  h += `<div class="card"><h2>🏆 تحدي: أول إعانة جامعية</h2><div class="small muted" style="margin:-6px 0 8px">استلمت 200 د.ك، وبأول أسبوع صار التالي. شنو بتشتري؟</div>
-    ${CHALLENGE.map(c => `<label class="checkline" style="margin-bottom:6px"><input type="checkbox" data-a="chal" data-id="${c.id}" ${ui.challenge[c.id] ? 'checked' : ''}><span class="grow">${c.icon} ${c.name}</span><b>${KD(c.amount)}</b></label>`).join('')}
-    <div class="calc-out"><div><b>${KD(spent)}</b><span>صرفت</span></div><div><b>${KD(200 - spent)}</b><span>باقي من 200</span></div><div><b>${chosen.length ? (needsOk ? (spent <= 75 ? '👏' : '🤏') : '⚠️') : '—'}</b><span>تقييمك</span></div></div>
-    <div class="hint" style="text-align:center">${!chosen.length ? 'اختر وشوف النتيجة' : !needsOk ? 'لا تنسى الاحتياجات: المستلزمات والمواصلات أول!' : spent <= 75 ? 'قرار ذكي! غطيت احتياجاتك وخليت مجال للادخار.' : 'غطيت احتياجاتك، بس الرغبات أكلت جزء كبير — كم بتدخر؟'}</div></div>`;
-  h += `<div class="card"><h2>💳 بطاقة السحب ≠ البطاقة الائتمانية</h2>
-    <div class="lesson small"><b>بطاقة السحب (Debit):</b> تصرف من فلوسك الموجودة بالحساب — رصيدك 200 واشتريت بـ 50، يبقى 150.</div>
-    <div class="lesson small" style="border-color:var(--gold)"><b>البطاقة الائتمانية (Credit):</b> حد يقرضك إياه البنك وترجعه بعدين، وممكن عليه رسوم إذا تأخرت. حد 1,000 د.ك <b>مو معناه</b> عندك 1,000 د.ك!</div></div>`;
-  h += `<div class="card"><h2>🛡️ خمس قواعد ذهبية ضد الاحتيال</h2><ol class="rules small">
-    <li>لا تشارك الرقم السري مع أي أحد<small>حتى لو صديقك.</small></li>
-    <li>لا تعطي رمز التحقق OTP لأي أحد<small>حتى لو قال إنه موظف بنك.</small></li>
-    <li>لا تضغط على الروابط المشبوهة<small>خصوصًا «حسابك موقوف، حدّث بياناتك خلال ساعة».</small></li>
-    <li>لا تشارك بيانات بطاقتك<small>الرقم وتاريخ الانتهاء ورمز الأمان.</small></li>
-    <li>فعّل إشعارات العمليات البنكية<small>عشان تنتبه لأي عملية غريبة بسرعة.</small></li></ol>
-    <div class="lesson small" style="border-color:var(--red)">أحد قال لك «عطني 100 وأضمن لك 200 خلال أسبوع»؟ ربح سريع ومضمون = علامة احتيال. لا تستثمر في شي ما تفهمه.</div></div>`;
-  h += `<div class="card"><h2>📝 خمس قواعد لا تنساها</h2><ol class="rules">
-    <li>لا تصرف أكثر من اللي عندك.</li><li>فرّق دايمًا بين احتياجاتك ورغباتك.</li><li>ادّخر جزء من إعانتك مهما كان بسيط.</li>
-    <li>لا تشتري شي بس لأن غيرك عنده.</li><li>احمِ معلوماتك وفلوسك من الاحتيال.</li></ol>
-    <div class="quote">الفلوس اللي تتحكم فيها اليوم، تساعدك تحقق أهدافك باچر.</div></div>`;
-  return h;
-}
-function rule503020(){
-  const inc = calc().income;
-  const parts = [['الاحتياجات', 50, C_COMMIT], ['الرغبات والترفيه', 30, '#14a394'], ['الادخار', 20, C_SAVE]];
-  return `<div class="calc-out" style="margin-top:0">${parts.map(p => `<div><b style="color:${p[2]}">${KD(r3(inc * p[1] / 100))}</b><span>${p[0]} ${p[1]}%</span></div>`).join('')}</div>`;
-}
-function habitOut(a, d){ const m = r3(a * d), y = r3(m * 12); return `<div><b>${KD(a)}</b><span>بالمرة</span></div><div><b>${KD(m)}</b><span>شهريًا</span></div><div><b class="neg">${KD(y)}</b><span>سنويًا!</span></div>`; }
-function saveOut(a, m){ const t = r3(a * m); return `بعد ${monthWord(m)} يصير عندك ${KD(t)}<div class="small" style="font-weight:500;margin-top:4px">${fmt(a)} × ${m} = ${fmt(t)} — بدون أي أرباح، بس بالاستمرار</div>`; }
 
 /* ============ النوافذ ============ */
-function openSheet(html){ $('#sheet').innerHTML = `<div class="grab"></div>` + html; $('#ov').classList.add('show'); }
+function openSheet(html){ $('#sheet').innerHTML = `<div class="grab"></div>` + html; $('#sheet').scrollTop = 0; $('#ov').classList.add('show'); }
 function closeSheet(){ $('#ov').classList.remove('show'); }
 $('#ov').addEventListener('click', e => { if (e.target.id === 'ov') closeSheet(); });
+const sheetHead = t => `<h3>${t}<span class="sp"></span><button class="del" data-a="close" aria-label="إغلاق">${I('x')}</button></h3>`;
 let toastT;
 function toast(msg, label, fn){
   const t = $('#toast'); t.innerHTML = '';
-  const sp = document.createElement('span'); sp.textContent = msg; t.appendChild(sp);
-  if (label){ const b = document.createElement('button'); b.textContent = label; b.onclick = () => { t.classList.remove('show', 'act'); fn(); }; t.appendChild(b); t.classList.add('act'); }
-  else t.classList.remove('act');
-  t.classList.add('show'); clearTimeout(toastT);
-  toastT = setTimeout(() => t.classList.remove('show', 'act'), label ? 4500 : 2600);
+  const s = document.createElement('span'); s.textContent = msg; t.appendChild(s);
+  if (label){ const b = document.createElement('button'); b.textContent = label; b.onclick = () => { t.classList.remove('show', 'act'); fn(); }; t.appendChild(b); t.classList.add('act'); } else t.classList.remove('act');
+  t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show', 'act'), label ? 4500 : 2600);
 }
-function askConfirm(title, msg, yesLabel, onYes, danger){
-  openSheet(`<h3>${title}</h3><p class="muted" style="margin-top:0">${msg}</p><div class="btns"><button class="btn ${danger ? 'danger' : ''}" id="cfYes">${yesLabel}</button><button class="btn ghost" data-a="close">إلغاء</button></div>`);
+function askConfirm(title, msg, yes, onYes, danger){
+  openSheet(`<h3>${title}</h3><p class="muted" style="margin-top:0">${msg}</p><div class="btns"><button class="btn ${danger ? 'danger' : ''}" id="cfYes">${yes}</button><button class="btn ghost" data-a="close">إلغاء</button></div>`);
   $('#cfYes').onclick = () => { closeSheet(); onYes(); };
 }
 
-/* ---- مصروف جديد (لوحة أرقام) ---- */
-let expDraftCat = 'coffee', expAmtStr = '';
-const vib = (ms = 8) => { try { navigator.vibrate && navigator.vibrate(ms); } catch(e){} };
-function hintLeft(){ const k = calc(); return k.leftToday >= 0 ? `المسموح لك اليوم: ${KDt(k.leftToday)}` : `<span class="neg">تعدّيت حد اليوم بـ ${KDt(-k.leftToday)}</span>`; }
+/* ---- مصروف (لوحة أرقام) ---- */
+let expCat = null, expAmt = '';
+function hintFor(a){
+  const k = calc(), b = k.boxes.find(x => x.id === expCat);
+  if (!(a > 0)) return b && b.limit > 0 ? `باقي في خانة ${b.icon} ${esc(b.name)}: ${KDt(b.left)}` : `المسموح لك اليوم: ${KDt(Math.max(0, k.leftToday))}`;
+  if (b && b.limit > 0){ const left = r3(b.left - a); return left >= 0 ? `بيبقى في الخانة ${KDt(left)} 👍` : `<span class="neg">بتتعدّى حد الخانة بـ ${KDt(-left)}</span>`; }
+  const left = r3(k.leftToday - a); return left >= 0 ? `بيبقى لك اليوم ${KDt(left)} 👍` : `<span class="neg">بتتعدّى حد اليوم بـ ${KDt(-left)}</span>`;
+}
 function sheetExpense(cat){
-  expDraftCat = cat || expDraftCat; expAmtStr = '';
-  openSheet(`<h3>🧾 مصروف جديد<span class="sp"></span><button class="del" data-a="close">✕</button></h3>
-    <div class="cat-row" id="catPick">${CATS.map(c => `<button class="${c.id === expDraftCat ? 'on' : ''}" data-a="pickCat" data-id="${c.id}"><span class="em">${c.icon}</span>${c.short}</button>`).join('')}</div>
-    <div class="amt-disp empty" id="amtDisp"><b class="num">0</b> <span>د.ك</span></div>
-    <div class="hint" id="amtHint" style="text-align:center;font-size:13px">${hintLeft()}</div>
+  if (!state.cats.length){ toast('سوّ خانة أول'); ui.editBoxes = true; ui.view = 'home'; render(); return; }
+  expCat = cat && state.cats.some(c => c.id === cat) ? cat : (state.cats.some(c => c.id === expCat) ? expCat : state.cats[0].id);
+  expAmt = '';
+  const k = calc();
+  openSheet(sheetHead('🧾 سجّل مصروف') + `
+    <div class="cat-row" id="catPick">${k.boxes.map(b => `<button class="${b.id === expCat ? 'on' : ''}" data-a="pickCat" data-id="${b.id}"><span class="em">${b.icon}</span>${esc(b.name)}${b.limit > 0 ? `<small>باقي ${fmt(b.left)}</small>` : ''}</button>`).join('')}</div>
+    <div class="amt-disp empty" id="amtDisp"><b>0</b> <span>د.ك</span></div>
+    <div class="hint" id="amtHint" style="text-align:center;font-size:13px">${hintFor(0)}</div>
     <div class="chips" style="justify-content:center;margin-top:10px">${[0.25, 0.5, 1, 2, 5, 10].map(v => `<button class="chip" data-a="quickAmt" data-v="${v}">+${v}</button>`).join('')}</div>
-    <div class="keypad">${['1','2','3','4','5','6','7','8','9','.','0','⌫'].map(k => `<button data-a="key" data-k="${k}" aria-label="${k === '⌫' ? 'مسح' : k}">${k}</button>`).join('')}</div>
-    <details class="more"><summary>📝 ملاحظة أو تاريخ مختلف (اختياري)</summary>
-      <div class="two" style="margin-top:10px"><div class="field"><label>ملاحظة</label><input class="inp" id="exNote" placeholder="مثلاً: لاتيه قبل المحاضرة" maxlength="60"></div>
+    <div class="keypad">${['1','2','3','4','5','6','7','8','9','.','0','⌫'].map(x => `<button data-a="key" data-k="${x}" aria-label="${x === '⌫' ? 'مسح' : x}">${x === '⌫' ? I('del') : x}</button>`).join('')}</div>
+    <details class="more"><summary>📝 ملاحظة أو تاريخ ثاني (اختياري)</summary>
+      <div class="two" style="margin-top:10px"><div class="field"><label>ملاحظة</label><input class="inp" id="exNote" placeholder="مثلاً: غدا مع الربع" maxlength="60"></div>
       <div class="field"><label>التاريخ</label><input class="inp" id="exDate" type="date" value="${today()}" max="${addDays(today(), 1)}"></div></div></details>
-    <button class="btn block big-save" data-a="saveExp">حفظ المصروف ✓</button>`);
+    <button class="btn block big-save" data-a="saveExp">حفظ ${I('check')}</button>`);
+  const on = document.querySelector('#catPick .on'); if (on) on.scrollIntoView({inline:'center', block:'nearest'});
 }
 function updAmt(){
   const d = $('#amtDisp'); if (!d) return;
-  d.querySelector('b').textContent = expAmtStr || '0';
-  d.classList.toggle('empty', !expAmtStr);
+  d.querySelector('b').textContent = expAmt || '0'; d.classList.toggle('empty', !expAmt);
   d.classList.remove('bump'); void d.offsetWidth; d.classList.add('bump');
-  const a = parseNum(expAmtStr), h = $('#amtHint'); if (!h) return;
-  if (a > 0){ const left = r3(calc().leftToday - a); h.innerHTML = left >= 0 ? `بعدها يبقى لك اليوم ${KDt(left)} 👍` : `<span class="neg">بتتعدّى حد اليوم بـ ${KDt(-left)}</span>`; }
-  else h.innerHTML = hintLeft();
+  $('#amtHint').innerHTML = hintFor(parseNum(expAmt));
 }
-function pressKey(k){
-  if (k === '⌫') expAmtStr = expAmtStr.slice(0, -1);
-  else if (k === '.'){ if (expAmtStr.includes('.')) return; expAmtStr = (expAmtStr || '0') + '.'; }
-  else {
-    const parts = expAmtStr.split('.');
-    if (parts.length > 1 && parts[1].length >= 3) return;
-    if (parts.length === 1 && parts[0].length >= 5) return;
-    expAmtStr = expAmtStr === '0' ? k : expAmtStr + k;
-  }
+function pressKey(x){
+  if (x === '⌫') expAmt = expAmt.slice(0, -1);
+  else if (x === '.'){ if (expAmt.includes('.')) return; expAmt = (expAmt || '0') + '.'; }
+  else { const p = expAmt.split('.'); if (p.length > 1 && p[1].length >= 3) return; if (p.length === 1 && p[0].length >= 5) return; expAmt = expAmt === '0' ? x : expAmt + x; }
   vib(5); updAmt();
 }
 function saveExpense(){
-  const amt = parseNum(expAmtStr);
-  if (!(amt > 0)) { toast('اكتب المبلغ أول'); const d = $('#amtDisp'); if (d){ d.classList.remove('shake'); void d.offsetWidth; d.classList.add('shake'); } return; }
-  const date = ($('#exDate') && $('#exDate').value) || today();
-  const note = $('#exNote') ? $('#exNote').value.trim() : '';
-  const e = {id:uid(), cat:expDraftCat, amount:amt, note, date, ts:Date.now().toString(36), cycle:state.cycle.id};
-  state.expenses.push(e);
-  closeSheet(); commit(); vib(15);
-  const k = calc();
-  toast(k.leftToday < 0 ? `انحفظ ⚠️ تعدّيت حد اليوم بـ ${KDt(-k.leftToday)}` : `انحفظ ✓ باقي لك اليوم ${KDt(k.leftToday)}`, 'تراجع', () => { state.expenses = state.expenses.filter(x => x.id !== e.id); commit(); toast('انلغى ✓'); });
+  const amt = parseNum(expAmt);
+  if (!(amt > 0)){ toast('اكتب المبلغ أول'); const d = $('#amtDisp'); if (d){ d.classList.remove('shake'); void d.offsetWidth; d.classList.add('shake'); } return; }
+  const e = {id:uid(), cat:expCat, amount:amt, note:$('#exNote') ? $('#exNote').value.trim() : '', date:($('#exDate') && $('#exDate').value) || today(), ts:Date.now().toString(36), cycle:state.cycle.id};
+  state.expenses.push(e); closeSheet(); commit(); vib(15);
+  const b = calc().boxes.find(x => x.id === e.cat);
+  const msg = b && b.limit > 0 ? (b.left >= 0 ? `انحفظ ✓ باقي في ${b.name} ${KDt(b.left)}` : `انحفظ ⚠️ تعدّيت حد ${b.name}`) : 'انحفظ ✓';
+  toast(msg, 'تراجع', () => { state.expenses = state.expenses.filter(x => x.id !== e.id); commit(); toast('انلغى ✓'); });
 }
 
-/* ---- بند التزام ---- */
-const C_ICONS = ['⛽','📶','💻','🤲','👕','🐷','🔧','🏠','📱','🎓','🍽️','🚌','💊','🎁','📦'];
+/* ---- الخانات ---- */
+function boxIconSheet(id){
+  const b = state.cats.find(c => c.id === id);
+  openSheet(sheetHead('اختر أيقونة للخانة') + `<div class="emojis">${BOX_ICONS.map(e => `<button class="${e === b.icon ? 'on' : ''}" data-a="setBoxIcon" data-id="${id}" data-e="${e}">${e}</button>`).join('')}</div>`);
+}
+function updAlloc(){ const el = $('#allocBox'); if (el) el.innerHTML = allocText(calc()); }
+
+/* ---- الالتزامات ---- */
 let editIcon = '📌';
 function sheetCommit(id){
   const it = id ? state.commitments.find(x => x.id === id) : null;
   editIcon = it ? it.icon : '📌';
-  const goals = state.goals;
-  openSheet(`<h3>${it ? '✏️ تعديل البند' : '➕ بند التزام جديد'}<span class="sp"></span><button class="del" data-a="close">✕</button></h3>
+  openSheet(sheetHead(it ? '✏️ تعديل البند' : '➕ بند ثابت جديد') + `
     <div class="field"><label>الأيقونة</label><div class="emojis" id="icPick">${C_ICONS.map(e => `<button class="${e === editIcon ? 'on' : ''}" data-a="pickIcon" data-e="${e}">${e}</button>`).join('')}</div></div>
-    <div class="field"><label>اسم البند</label><input class="inp" id="cmName" value="${esc(it ? it.name : '')}" placeholder="مثلاً: اشتراك النادي" maxlength="50"></div>
+    <div class="field"><label>اسم البند</label><input class="inp" id="cmName" value="${esc(it ? it.name : '')}" placeholder="مثلاً: اشتراك النادي" maxlength="40"></div>
     <div class="field"><label>المبلغ الشهري (د.ك)</label><input class="inp" id="cmAmt" inputmode="decimal" value="${it ? it.amount : ''}" placeholder="0"></div>
-    <label class="checkline" style="margin-bottom:12px"><input type="checkbox" id="cmSave" ${it && it.type === 'save' ? 'checked' : ''}><span>🐷 هذا بند ادخار (يتحوّل للحصالة أول ما أأشّره مدفوع)</span></label>
-    ${goals.length ? `<div class="field"><label>إذا كان ادخار، يروح لـ:</label><select class="inp" id="cmGoal"><option value="">🐷 الحصالة العامة</option>${goals.map(g => `<option value="${g.id}" ${it && it.goal === g.id ? 'selected' : ''}>${g.emoji} ${esc(g.name)}</option>`).join('')}</select></div>` : ''}
-    <div class="btns"><button class="btn" data-a="saveCommit" data-id="${it ? it.id : ''}">حفظ</button>${it ? `<button class="btn danger" data-a="delCommit" data-id="${it.id}">حذف البند</button>` : ''}</div>`);
-}
-function saveCommit(id){
-  const name = $('#cmName').value.trim(), amt = parseNum($('#cmAmt').value);
-  if (!name) { toast('اكتب اسم البند'); return; }
-  if (amt < 0) { toast('المبلغ لازم يكون موجب'); return; }
-  const type = $('#cmSave').checked ? 'save' : 'normal';
-  const goal = $('#cmGoal') ? ($('#cmGoal').value || null) : null;
-  if (id){
-    const it = state.commitments.find(x => x.id === id);
-    const wasPaid = !!state.cycle.paid[id];
-    if (wasPaid && it.type === 'save'){
-      // ألغِ القيد القديم وأعد إنشاءه بالقيم الجديدة
-      if (!unpay(it)) return;
-      Object.assign(it, {name, amount:amt, type, icon:editIcon, goal});
-      pay(it);
-    } else Object.assign(it, {name, amount:amt, type, icon:editIcon, goal});
-  } else {
-    state.commitments.push({id:uid(), icon:editIcon, name, amount:amt, type, goal, active:true});
-  }
-  closeSheet(); commit(); toast('انحفظ ✓');
+    <label class="checkline" style="margin-bottom:12px"><input type="checkbox" id="cmSave" ${it && it.type === 'save' ? 'checked' : ''}><span>🐷 بند ادخار (يروح للحصالة أول ما تأشّره)</span></label>
+    ${state.goals.length ? `<div class="field"><label>الادخار يروح لـ</label><select class="inp" id="cmGoal"><option value="">🐷 الحصالة</option>${state.goals.map(g => `<option value="${g.id}" ${it && it.goal === g.id ? 'selected' : ''}>${g.emoji} ${esc(g.name)}</option>`).join('')}</select></div>` : ''}
+    <div class="btns"><button class="btn" data-a="saveCommit" data-id="${it ? it.id : ''}">حفظ</button>${it ? `<button class="btn danger" data-a="delCommit" data-id="${it.id}">حذف</button>` : ''}</div>`);
 }
 function pay(it){
   state.cycle.paid[it.id] = true;
-  if (it.type === 'save' && it.amount > 0)
-    state.vault.push({id:uid(), amount:r3(it.amount), date:today(), ts:Date.now().toString(36), goal:it.goal || null, src:'auto', ref:it.id, cycle:state.cycle.id, note:'ادخار تلقائي — ' + it.name});
+  if (it.type === 'save' && it.amount > 0) state.vault.push({id:uid(), amount:r3(it.amount), date:today(), ts:Date.now().toString(36), goal:it.goal || null, src:'auto', ref:it.id, cycle:state.cycle.id, note:'ادخار تلقائي'});
 }
 function unpay(it){
-  const c = state.cycle.id;
-  const entries = state.vault.filter(v => v.src === 'auto' && v.ref === it.id && v.cycle === c);
-  for (const e of entries){
-    if (bucketBal(e.goal) - e.amount < -0.0005){ toast('ما نقدر نلغي — المبلغ انسحب أو انتقل من الحصالة'); return false; }
-  }
-  state.vault = state.vault.filter(v => !entries.includes(v));
-  delete state.cycle.paid[it.id];
-  return true;
+  const entries = state.vault.filter(v => v.src === 'auto' && v.ref === it.id && v.cycle === state.cycle.id);
+  for (const e of entries) if (bucketBal(e.goal) - e.amount < -0.0005){ toast('ما نقدر نلغي — المبلغ انسحب من الحصالة'); return false; }
+  state.vault = state.vault.filter(v => !entries.includes(v)); delete state.cycle.paid[it.id]; return true;
+}
+function saveCommit(id){
+  const name = $('#cmName').value.trim(), amt = parseNum($('#cmAmt').value);
+  if (!name){ toast('اكتب اسم البند'); return; }
+  if (amt < 0){ toast('المبلغ لازم يكون موجب'); return; }
+  const type = $('#cmSave').checked ? 'save' : 'normal', goal = $('#cmGoal') ? ($('#cmGoal').value || null) : null;
+  if (id){
+    const it = state.commitments.find(x => x.id === id);
+    if (state.cycle.paid[id] && it.type === 'save'){ if (!unpay(it)) return; Object.assign(it, {name, amount:amt, type, icon:editIcon, goal}); pay(it); }
+    else Object.assign(it, {name, amount:amt, type, icon:editIcon, goal});
+  } else state.commitments.push({id:uid(), icon:editIcon, name, amount:amt, type, goal, active:true});
+  closeSheet(); commit(); toast('انحفظ ✓');
 }
 
-/* ---- دورة جديدة ---- */
+/* ---- شهر جديد ---- */
 function sheetNewCycle(){
-  const k = calc();
-  let np = addMonths(state.nextPayday, 1), guard = 0;
-  while (np <= today() && guard++ < 60) np = addMonths(np, 1);
-  openSheet(`<h3>🔄 دورة إعانة جديدة<span class="sp"></span><button class="del" data-a="close">✕</button></h3>
-    <p class="small muted" style="margin-top:0">بنصفّر علامات الدفع للالتزامات، ونبدأ الحساب من اليوم. إعداداتك، الحصالة والأهداف تبقى مثل ما هي.</p>
-    <div class="two"><div class="field"><label>الإعانة (د.ك)</label><input class="inp" id="ncAl" inputmode="decimal" value="${state.profile.allowance}"></div>
+  const k = calc(); let np = addMonths(state.nextPayday, 1), g = 0;
+  while (np <= today() && g++ < 60) np = addMonths(np, 1);
+  openSheet(sheetHead('🔄 شهر جديد') + `<p class="small muted" style="margin-top:0">نصفّر علامات الدفع والخانات ونبدأ الحساب من اليوم. إعداداتك وادخارك يبقون.</p>
+    <div class="two"><div class="field"><label>${M().inc} (د.ك)</label><input class="inp" id="ncAl" inputmode="decimal" value="${state.profile.allowance}"></div>
     <div class="field"><label>دخل إضافي (د.ك)</label><input class="inp" id="ncEx" inputmode="decimal" value="${state.profile.extra || 0}"></div></div>
-    <div class="field"><label>موعد الإعانة اللي بعدها</label><input class="inp" id="ncPd" type="date" value="${np}" min="${addDays(today(), 1)}"></div>
-    ${k.free > 0 ? `<label class="checkline" style="margin-bottom:12px"><input type="checkbox" id="ncCarry" checked><span>🐷 حوّل الباقي من الدورة الحالية (${KD(k.free)}) للحصالة</span></label>` : ''}
-    <button class="btn gold block" data-a="doNewCycle">🎉 ابدأ الدورة الجديدة</button>`);
+    <div class="field"><label>موعد ${M().next} اللي بعده</label><input class="inp" id="ncPd" type="date" value="${np}" min="${addDays(today(), 1)}"></div>
+    ${k.free > 0 ? `<label class="checkline" style="margin-bottom:12px"><input type="checkbox" id="ncCarry" checked><span>🐷 حوّل الباقي من هالشهر (${KD(k.free)}) للحصالة</span></label>` : ''}
+    <button class="btn block" data-a="doNewCycle">ابدأ الشهر الجديد</button>`);
 }
 function doNewCycle(){
-  const pd = $('#ncPd').value;
-  if (!pd || pd <= today()) { toast('اختر موعد بعد اليوم'); return; }
-  const k = calc();
-  const old = state.cycle;
-  let carry = 0;
-  if ($('#ncCarry') && $('#ncCarry').checked && k.free > 0){
-    carry = k.free;
-    state.vault.push({id:uid(), amount:carry, date:today(), ts:Date.now().toString(36), goal:null, src:'manual', cycle:old.id, note:'ترحيل باقي الدورة'});
-  }
+  const pd = $('#ncPd').value; if (!pd || pd <= today()){ toast('اختر موعد بعد اليوم'); return; }
+  const k = calc(), old = state.cycle; let carry = 0;
+  if ($('#ncCarry') && $('#ncCarry').checked && k.free > 0){ carry = k.free; state.vault.push({id:uid(), amount:carry, date:today(), ts:Date.now().toString(36), goal:null, src:'manual', cycle:old.id, note:'باقي الشهر'}); }
   state.cycles.push({id:old.id, start:old.start, end:today(), income:k.income, commitTotal:k.commitTotal, expTotal:k.expTotal, saved:r3(k.savedThisCycle + carry), left:r3(k.free - carry)});
-  state.profile.allowance = parseNum($('#ncAl').value);
-  state.profile.extra = parseNum($('#ncEx').value);
-  state.cycle = {id:uid(), start:today(), paid:{}};
-  state.nextPayday = pd;
-  closeSheet(); ui.view = 'home'; location.hash = 'home'; commit();
-  toast('بداية جديدة 🎉 الله يبارك لك فيها');
+  state.profile.allowance = parseNum($('#ncAl').value); state.profile.extra = parseNum($('#ncEx').value);
+  state.cycle = {id:uid(), start:today(), paid:{}}; state.nextPayday = pd;
+  closeSheet(); ui.view = 'home'; location.hash = 'home'; commit(); toast('بداية جديدة 🎉 الله يبارك لك فيها');
 }
 
-/* ---- الحصالة ---- */
+/* ---- الادخار ---- */
 function sheetVault(op, goalId){
-  const k = calc(), goals = state.goals;
-  const opts = (sel) => `<option value="">🐷 الحصالة العامة (${KDt(bucketBal(null))})</option>${goals.map(g => `<option value="${g.id}" ${sel === g.id ? 'selected' : ''}>${g.emoji} ${esc(g.name)} (${KDt(goalSaved(g))})</option>`).join('')}`;
-  const titles = {manual:'➕ إيداع في الحصالة', withdraw:'🛟 سحب للطوارئ', move:'🔁 نقل بين الحصالة والأهداف'};
-  const notes = {
-    manual:`المبلغ ينخصم من رصيدك الحر لهالدورة (المتاح: ${KD(Math.max(0, k.free))}).`,
-    withdraw:'المبلغ يرجع لرصيدك الحر لهالدورة. خلّه للطوارئ الحقيقية بس 🙏',
-    move:'نقل داخلي — ما يأثر على رصيدك الحر.'
-  };
-  if (op === 'move' && !goals.length){ toast('سوّ هدف أول عشان تنقل له'); sheetGoal(); return; }
-  openSheet(`<h3>${titles[op]}<span class="sp"></span><button class="del" data-a="close">✕</button></h3>
-    <p class="small muted" style="margin-top:0">${notes[op]}</p>
-    <div class="field"><input class="inp big" id="vaAmt" inputmode="decimal" placeholder="0.000"></div>
-    ${op === 'move'
-      ? `<div class="field"><label>من</label><select class="inp" id="vaFrom">${opts(goalId ? '' : null)}</select></div><div class="field"><label>إلى</label><select class="inp" id="vaTo">${opts(goalId || (goals[0] && goals[0].id))}</select></div>`
-      : `<div class="field"><label>${op === 'withdraw' ? 'من' : 'إلى'}</label><select class="inp" id="vaGoal">${opts(goalId || '')}</select></div>`}
-    <div class="field"><label>ملاحظة (اختياري)</label><input class="inp" id="vaNote" maxlength="50"></div>
-    <button class="btn ${op === 'withdraw' ? 'gold' : ''} block" data-a="doVault" data-op="${op}">تأكيد</button>`);
+  const k = calc(), opts = sel => `<option value="">🐷 الحصالة (${KDt(bucketBal(null))})</option>${state.goals.map(g => `<option value="${g.id}" ${sel === g.id ? 'selected' : ''}>${g.emoji} ${esc(g.name)} (${KDt(bucketBal(g.id))})</option>`).join('')}`;
+  openSheet(sheetHead(op === 'withdraw' ? '🛟 سحب للطوارئ' : '➕ إيداع') + `
+    <p class="small muted" style="margin-top:0">${op === 'withdraw' ? 'المبلغ يرجع لرصيدك الحر هالشهر. خلّه للطوارئ بس 🙏' : `ينخصم من رصيدك الحر هالشهر (المتاح ${KD(Math.max(0, k.free))}).`}</p>
+    <div class="field"><input class="inp big" id="vaAmt" inputmode="decimal" placeholder="0"></div>
+    <div class="field"><label>${op === 'withdraw' ? 'من' : 'إلى'}</label><select class="inp" id="vaGoal">${opts(goalId || '')}</select></div>
+    <button class="btn block" data-a="doVault" data-op="${op}">تأكيد</button>`);
 }
 function doVault(op){
-  const amt = parseNum($('#vaAmt').value);
-  if (!(amt > 0)) { toast('دخّل مبلغ صحيح'); return; }
-  const note = $('#vaNote').value.trim();
-  const base = {date:today(), ts:Date.now().toString(36), cycle:state.cycle.id};
-  if (op === 'move'){
-    const from = $('#vaFrom').value || null, to = $('#vaTo').value || null;
-    if (from === to) { toast('اختر وجهة مختلفة'); return; }
-    if (bucketBal(from) + 0.0005 < amt) { toast(`الرصيد ما يكفي (${KDt(bucketBal(from))})`); return; }
-    state.vault.push(Object.assign({id:uid(), amount:-amt, goal:from, src:'move', note:note || 'نقل'}, base));
-    state.vault.push(Object.assign({id:uid(), amount:amt, goal:to, src:'move', note:note || 'نقل'}, base));
-  } else if (op === 'withdraw'){
-    const g = $('#vaGoal').value || null;
-    if (bucketBal(g) + 0.0005 < amt) { toast(`الرصيد ما يكفي (${KDt(bucketBal(g))})`); return; }
-    state.vault.push(Object.assign({id:uid(), amount:-amt, goal:g, src:'withdraw', note:note || 'سحب طوارئ'}, base));
-  } else {
-    const g = $('#vaGoal').value || null;
-    const k = calc();
-    state.vault.push(Object.assign({id:uid(), amount:amt, goal:g, src:'manual', note:note || 'إيداع'}, base));
-    if (amt > k.free + 0.0005) setTimeout(() => toast('⚠️ الإيداع أكبر من رصيدك الحر — انتبه لمصروفك'), 2700);
-  }
-  closeSheet(); commit(); toast('تم ✓');
+  const amt = parseNum($('#vaAmt').value); if (!(amt > 0)){ toast('اكتب مبلغ صحيح'); return; }
+  const g = $('#vaGoal').value || null, base = {id:uid(), date:today(), ts:Date.now().toString(36), cycle:state.cycle.id, goal:g};
+  if (op === 'withdraw'){ if (bucketBal(g) + 0.0005 < amt){ toast(`الرصيد ما يكفي (${KDt(bucketBal(g))})`); return; } state.vault.push(Object.assign(base, {amount:-amt, src:'withdraw', note:'سحب للطوارئ'})); }
+  else state.vault.push(Object.assign(base, {amount:amt, src:'manual', note:'إيداع'}));
+  closeSheet(); commit(); vib(12); toast('تم ✓');
 }
-
-/* ---- الأهداف ---- */
 let goalEmoji = '🎯';
 function sheetGoal(id, presetIdx){
-  const g = id ? state.goals.find(x => x.id === id) : null;
-  const p = presetIdx != null ? GOAL_PRESETS[presetIdx] : null;
+  const g = id ? state.goals.find(x => x.id === id) : null, p = presetIdx != null ? GOAL_PRESETS[presetIdx] : null;
   goalEmoji = g ? g.emoji : p ? p.emoji : '🎯';
-  const target = g ? g.target : p ? p.target : '';
-  const months = g && g.monthly > 0 ? Math.ceil(Math.max(0, g.target - goalSaved(g)) / g.monthly) : 10;
-  openSheet(`<h3>${g ? '✏️ تعديل الهدف' : '🎯 هدف جديد'}<span class="sp"></span><button class="del" data-a="close">✕</button></h3>
+  const months = g && g.monthly > 0 ? Math.max(1, Math.ceil(Math.max(0, g.target - bucketBal(g.id)) / g.monthly)) : 10;
+  openSheet(sheetHead(g ? '✏️ تعديل الهدف' : '🎯 هدف جديد') + `
     ${g ? '' : `<div class="chips" style="flex-wrap:wrap;margin-bottom:12px">${GOAL_PRESETS.map((x, i) => `<button class="chip" data-a="goalPreset" data-i="${i}">${x.emoji} ${x.name}</button>`).join('')}</div>`}
-    <div class="field"><label>الأيقونة</label><div class="emojis" id="gEm">${EMOJIS.map(e => `<button class="${e === goalEmoji ? 'on' : ''}" data-a="pickGoalEm" data-e="${e}">${e}</button>`).join('')}</div></div>
-    <div class="field"><label>اسم الهدف</label><input class="inp" id="gName" value="${esc(g ? g.name : p ? p.name : '')}" placeholder="مثلاً: آيباد للمحاضرات" maxlength="40"></div>
-    <div class="two"><div class="field"><label>المبلغ المطلوب (د.ك)</label><input class="inp" id="gTarget" inputmode="decimal" value="${target}" data-in="gplan"></div>
-    <div class="field"><label>توصل له بعد كم شهر؟</label><input class="inp" id="gMonths" inputmode="numeric" value="${months}" data-in="gplan"></div></div>
-    <div class="field"><label>كم تدخر له شهريًا؟ (د.ك)</label><input class="inp" id="gMonthly" inputmode="decimal" value="${g ? g.monthly : ''}"><div class="hint" id="gHint"></div></div>
-    <div class="btns"><button class="btn" data-a="saveGoal" data-id="${g ? g.id : ''}">حفظ الهدف</button>${g ? `<button class="btn danger" data-a="delGoal" data-id="${g.id}">حذف</button>` : ''}</div>`);
+    <div class="field"><label>الأيقونة</label><div class="emojis" id="gEm">${GOAL_EMOJIS.map(e => `<button class="${e === goalEmoji ? 'on' : ''}" data-a="pickGoalEm" data-e="${e}">${e}</button>`).join('')}</div></div>
+    <div class="field"><label>اسم الهدف</label><input class="inp" id="gName" value="${esc(g ? g.name : p ? p.name : '')}" placeholder="مثلاً: آيباد للدراسة" maxlength="40"></div>
+    <div class="two"><div class="field"><label>المبلغ المطلوب (د.ك)</label><input class="inp" id="gTarget" inputmode="decimal" value="${g ? g.target : p ? p.target : ''}" data-in="gplan"></div>
+    <div class="field"><label>بعد كم شهر؟</label><input class="inp" id="gMonths" inputmode="numeric" value="${months}" data-in="gplan"></div></div>
+    <div class="field"><label>كم تدخر له شهرياً؟ (د.ك)</label><input class="inp" id="gMonthly" inputmode="decimal" value="${g ? g.monthly : ''}"><div class="hint" id="gHint"></div></div>
+    <div class="btns"><button class="btn" data-a="saveGoal" data-id="${g ? g.id : ''}">حفظ</button>${g ? `<button class="btn danger" data-a="delGoal" data-id="${g.id}">حذف</button>` : ''}</div>`);
   gPlan(!g);
 }
 function gPlan(fill){
   const t = parseNum($('#gTarget') && $('#gTarget').value), m = parseNum($('#gMonths') && $('#gMonths').value);
   const per = t > 0 && m > 0 ? Math.ceil(t / m * 2) / 2 : 0;
-  if ($('#gHint')) $('#gHint').innerHTML = per ? `المقترح: ${KD(per)} شهريًا (${fmt(t)} ÷ ${m})` : '';
+  if ($('#gHint')) $('#gHint').innerHTML = per ? `المقترح: ${KD(per)} شهرياً` : '';
   if (fill && per && $('#gMonthly')) $('#gMonthly').value = per;
 }
 function saveGoal(id){
   const name = $('#gName').value.trim(), target = parseNum($('#gTarget').value), monthly = parseNum($('#gMonthly').value);
-  if (!name) { toast('اكتب اسم الهدف'); return; }
-  if (!(target > 0)) { toast('حدد المبلغ المطلوب'); return; }
+  if (!name){ toast('اكتب اسم الهدف'); return; } if (!(target > 0)){ toast('حدد المبلغ'); return; }
   if (id) Object.assign(state.goals.find(x => x.id === id), {name, target, monthly, emoji:goalEmoji});
-  else state.goals.push({id:uid(), name, target, monthly, emoji:goalEmoji, created:today()});
+  else state.goals.push({id:uid(), name, target, monthly, emoji:goalEmoji});
   closeSheet(); commit(); toast('انحفظ الهدف 🎯');
-}
-
-/* ---- الخطط الجاهزة ---- */
-function tplStats(tpl, income){
-  const items = planItems(tpl, income);
-  const save = sum(items.filter(i => i.active && i.type === 'save').map(i => i.amount));
-  const fixed = sum(items.filter(i => i.active && i.type !== 'save').map(i => i.amount));
-  return {items, save, fixed, daily: r3(income - save - fixed)};
-}
-function sheetTemplates(){
-  const inc = calc().income;
-  openSheet(`<h3>🧭 خطط توزيع جاهزة<span class="sp"></span><button class="del" data-a="close">✕</button></h3>
-    <p class="small muted" style="margin-top:0">محسوبة على دخلك (${KD(inc)}). التطبيق يعدّل مبالغ التزاماتك، والباقي يصير للصرف اليومي. تقدر تعدّل أي بند بعدين.</p>
-    ${TEMPLATES.map(t => {
-      const s = tplStats(t, inc);
-      const pc = x => inc ? x / inc * 100 : 0;
-      return `<div class="tpl"><div class="head"><span class="em">${t.icon}</span><div class="grow"><b>${t.name}</b></div></div>
-        <div class="small muted">${t.desc}</div>
-        <div class="stack"><i style="width:${pc(s.fixed)}%;background:${C_COMMIT}"></i><i style="width:${pc(s.daily)}%;background:#14a394"></i><i style="width:${pc(s.save)}%;background:${C_SAVE}"></i></div>
-        <div class="keys"><span><i style="background:${C_COMMIT}"></i>التزامات ${KD(s.fixed)}</span><span><i style="background:#14a394"></i>صرف يومي ${KD(s.daily)}</span><span><i style="background:${C_SAVE}"></i>ادخار ${KD(s.save)}</span></div>
-        <details><summary>تفاصيل البنود</summary>${s.items.filter(i => i.active).map(i => `<div class="row" style="padding:3px 0"><span class="grow">${i.icon} ${i.name}</span><b>${KD(i.amount)}</b></div>`).join('')}</details>
-        <button class="btn sm block" style="margin-top:10px" data-a="applyTpl" data-id="${t.id}">طبّق هالخطة</button></div>`;
-    }).join('')}`);
-}
-function applyTemplate(id){
-  const tpl = TEMPLATES.find(t => t.id === id), inc = calc().income;
-  const items = planItems(tpl, inc);
-  let skipped = false;
-  for (const ni of items){
-    let it = state.commitments.find(x => x.id === ni.id);
-    if (!it){ if (!ni.active) continue; it = Object.assign({}, ni); state.commitments.push(it); }
-    if (state.cycle.paid[it.id] && it.type === 'save'){
-      const e = state.vault.find(v => v.src === 'auto' && v.ref === it.id && v.cycle === state.cycle.id);
-      const target = ni.active ? ni.amount : 0, delta = r3(target - (e ? e.amount : 0));
-      if (e && delta < 0 && bucketBal(e.goal) + delta < -0.0005){ skipped = true; continue; }
-      if (e){ e.amount = target; if (!target) state.vault = state.vault.filter(v => v !== e); }
-      it.amount = ni.amount; it.active = ni.active; if (!it.active) delete state.cycle.paid[it.id];
-    }
-    else { it.amount = ni.amount; it.active = ni.active; if (!it.active) delete state.cycle.paid[it.id]; }
-  }
-  closeSheet(); commit(); toast(skipped ? 'تم التطبيق ✓ (ما غيّرنا الادخار التلقائي لأنك استخدمت مبلغه)' : `تم تطبيق «${tpl.name}» ✓`);
 }
 
 /* ---- الإعدادات ---- */
 function sheetSettings(){
   const p = state.profile;
-  openSheet(`<h3>⚙️ الإعدادات<span class="sp"></span><button class="del" data-a="close">✕</button></h3>
+  openSheet(sheetHead('⚙️ الإعدادات') + `
+    <div class="field"><label>أنت</label><div class="seg-c">${Object.entries(MODES).map(([id, m]) => `<button class="${state.mode === id ? 'on' : ''}" data-a="setMode" data-id="${id}">${m.icon} ${m.label}</button>`).join('')}</div></div>
     <div class="field"><label>اسمك (اختياري)</label><input class="inp" id="stName" value="${esc(p.name)}" maxlength="24"></div>
-    <div class="two"><div class="field"><label>الإعانة الشهرية (د.ك)</label><input class="inp" id="stAl" inputmode="decimal" value="${p.allowance}"></div>
+    <div class="two"><div class="field"><label>${M().incAsk} (د.ك)</label><input class="inp" id="stAl" inputmode="decimal" value="${p.allowance}"></div>
     <div class="field"><label>دخل إضافي (د.ك)</label><input class="inp" id="stEx" inputmode="decimal" value="${p.extra || 0}"></div></div>
-    <div class="field"><label>موعد نزول الإعانة القادمة</label><input class="inp" id="stPd" type="date" value="${state.nextPayday}"></div>
-    <button class="btn block" data-a="saveSettings">حفظ التعديلات</button>
+    <div class="field"><label>موعد ${M().next}</label><input class="inp" id="stPd" type="date" value="${state.nextPayday}"></div>
+    <button class="btn block" data-a="saveSettings">حفظ</button>
     <div class="section-title">المظهر</div>
     <div class="seg-c">${[['light','☀️ نهاري'],['dark','🌙 ليلي'],['auto','📱 تلقائي']].map(([id, n]) => `<button class="${state.theme === id ? 'on' : ''}" data-a="setTheme" data-id="${id}">${n}</button>`).join('')}</div>
-    <div class="section-title">النسخ الاحتياطي والتقارير</div>
-    <div class="btns" style="margin-bottom:8px"><button class="btn ghost sm" data-a="exportJSON">💾 تصدير نسخة (JSON)</button><button class="btn ghost sm" data-a="importJSON">📂 استيراد نسخة</button></div>
-    <div class="btns"><button class="btn ghost sm" data-a="exportCSV" data-scope="cycle">📊 تقرير الشهر (Excel)</button><button class="btn ghost sm" data-a="exportCSV" data-scope="all">📊 كل المصروفات</button></div>
-    <div class="hint">بياناتك محفوظة في هالمتصفح فقط. صدّر نسخة احتياطية بين فترة وفترة، خصوصًا قبل ما تمسح بيانات المتصفح أو تغيّر جهازك.</div>
+    <div class="section-title">النسخ الاحتياطي</div>
+    <div class="btns" style="margin-bottom:8px"><button class="btn ghost sm" data-a="exportJSON">💾 تصدير نسخة</button><button class="btn ghost sm" data-a="importJSON">📂 استيراد نسخة</button></div>
+    <button class="btn ghost sm block" data-a="exportCSV">📊 تقرير الشهر (Excel)</button>
+    <div class="hint">بياناتك في هالمتصفح بس. صدّر نسخة بين فترة وفترة.</div>
     <div class="section-title">أخرى</div>
-    <div class="btns" style="margin-bottom:8px"><button class="btn ghost sm" data-a="install">📲 طريقة التثبيت</button><button class="btn ghost sm" data-a="templates">🧭 الخطط الجاهزة</button></div>
-    <div class="btns"><button class="btn ghost sm" data-a="reOnboard">🔁 الإعداد السريع</button><button class="btn danger sm" data-a="resetAll">🗑️ مسح كل البيانات</button></div>`);
-}
-function saveSettings(){
-  const pd = $('#stPd').value;
-  state.profile.name = $('#stName').value.trim();
-  state.profile.allowance = parseNum($('#stAl').value);
-  state.profile.extra = parseNum($('#stEx').value);
-  if (pd) state.nextPayday = pd;
-  closeSheet(); commit(); toast('انحفظ ✓');
+    <div class="btns"><button class="btn ghost sm" data-a="install">📲 طريقة التثبيت</button><button class="btn danger sm" data-a="resetAll">🗑️ مسح كل البيانات</button></div>`);
 }
 
 /* ---- تصدير / استيراد ---- */
 function download(name, content, type){
-  try {
-    const blob = new Blob([content], {type});
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob); a.download = name;
-    document.body.appendChild(a); a.click();
-    setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
-    toast('تم التصدير ✓');
-  } catch(e){ toast('ما قدرنا نصدّر الملف من هالمتصفح'); }
+  try { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([content], {type})); a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500); toast('تم التصدير ✓'); }
+  catch(e){ toast('ما قدرنا نصدّر من هالمتصفح'); }
 }
-function exportJSON(){ download(`e3anati-backup-${today()}.json`, JSON.stringify(state, null, 2), 'application/json'); }
-function csvCell(v){ const s = String(v ?? ''); return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; }
-function exportCSV(scope){
-  const k = calc();
-  const rows = [];
-  const list = scope === 'all' ? state.expenses.slice() : k.exps.slice();
-  list.sort((a, b) => a.date > b.date ? 1 : -1);
-  if (scope === 'cycle'){
-    rows.push(['تقرير إعانتي', `${state.cycle.start} إلى ${state.nextPayday}`]);
-    rows.push([]);
-    rows.push(['الملخص', 'المبلغ (د.ك)']);
-    rows.push(['إجمالي الدخل', k.income], ['الالتزامات الثابتة', k.commitTotal], ['المصروفات', k.expTotal], ['ادخار هالدورة', k.savedThisCycle], ['الرصيد الحر', k.free], ['الادخار التراكمي', k.totalSavings]);
-    rows.push([]);
-    rows.push(['الالتزامات', 'المبلغ (د.ك)', 'الحالة']);
-    state.commitments.filter(c => c.active).forEach(c => rows.push([c.name, c.amount, state.cycle.paid[c.id] ? 'مدفوع' : 'غير مدفوع']));
-    rows.push([]);
-    rows.push(['المصروفات حسب التصنيف', 'المبلغ (د.ك)']);
-    CATS.forEach(c => rows.push([c.name, k.byCat[c.id] || 0]));
-    rows.push([]);
-  }
-  rows.push(['التاريخ', 'التصنيف', 'المبلغ (د.ك)', 'ملاحظة']);
-  list.forEach(e => rows.push([e.date, catOf(e.cat).name, e.amount, e.note || '']));
-  const csv = '﻿' + rows.map(r => r.map(csvCell).join(',')).join('\r\n');
-  download(`e3anati-${scope === 'all' ? 'all-expenses' : 'report'}-${today()}.csv`, csv, 'text/csv;charset=utf-8');
+const csvCell = v => { const s = String(v ?? ''); return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
+function exportCSV(){
+  const k = calc(), rows = [['تقرير إعانتي', `${state.cycle.start} إلى ${state.nextPayday}`], [], ['الملخص', 'د.ك'],
+    ['الدخل', k.income], ['الالتزامات الثابتة', k.commitTotal], ['المصروفات', k.expTotal], ['ادخار هالشهر', k.savedThisCycle], ['الرصيد الحر', k.free], ['مجموع الادخار', k.totalSavings], [],
+    ['الخانة', 'الحد', 'صرفت', 'الباقي']];
+  k.boxes.forEach(b => rows.push([b.name, b.limit, b.spent, b.left]));
+  rows.push([], ['الالتزامات', 'المبلغ', 'الحالة']);
+  state.commitments.filter(c => c.active).forEach(c => rows.push([c.name, c.amount, state.cycle.paid[c.id] ? 'مدفوع' : 'غير مدفوع']));
+  rows.push([], ['التاريخ', 'الخانة', 'المبلغ', 'ملاحظة']);
+  k.exps.slice().sort((a, b) => a.date > b.date ? 1 : -1).forEach(e => rows.push([e.date, catOf(e.cat).name, e.amount, e.note || '']));
+  download(`e3anati-${today()}.csv`, '﻿' + rows.map(r => r.map(csvCell).join(',')).join('\r\n'), 'text/csv;charset=utf-8');
 }
 $('#importFile').addEventListener('change', e => {
-  const f = e.target.files && e.target.files[0];
-  if (!f) return;
+  const f = e.target.files && e.target.files[0]; if (!f) return;
   const rd = new FileReader();
-  rd.onload = () => {
-    try {
-      const data = JSON.parse(rd.result);
-      if (!data || !Array.isArray(data.commitments) || !data.profile) throw new Error('bad');
-      askConfirm('📂 استيراد نسخة', 'بنستبدل بياناتك الحالية بالنسخة المستوردة. متأكد؟', 'استورد', () => {
-        state = normalize(data); state.onboarded = true; commit(); toast('تم الاستيراد ✓');
-      });
-    } catch(err){ toast('الملف مو نسخة صحيحة من إعانتي'); }
-    e.target.value = '';
-  };
+  rd.onload = () => { try { const d = JSON.parse(rd.result); if (!d || !Array.isArray(d.commitments) || !d.profile) throw 0;
+      askConfirm('📂 استيراد نسخة', 'بنستبدل بياناتك الحالية بالنسخة. متأكد؟', 'استورد', () => { state = normalize(d); state.onboarded = true; commit(); toast('تم الاستيراد ✓'); });
+    } catch(err){ toast('الملف مو نسخة صحيحة'); } e.target.value = ''; };
   rd.readAsText(f);
 });
 
 /* ---- التثبيت ---- */
 let deferredPrompt = null;
 window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredPrompt = e; });
-function isStandalone(){ return (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true; }
+const isStandalone = () => (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
 function sheetInstall(){
-  const ua = navigator.userAgent;
-  const ios = /iphone|ipad|ipod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-  const android = /android/i.test(ua);
-  openSheet(`<h3>📲 ثبّت «إعانتي» على شاشتك<span class="sp"></span><button class="del" data-a="close">✕</button></h3>
-    ${isStandalone() ? '<div class="alert green">✅ التطبيق مثبّت عندك وشغّال كتطبيق.</div>' : ''}
-    ${deferredPrompt ? '<button class="btn block" data-a="promptInstall" style="margin-bottom:14px">⬇️ ثبّت الحين بضغطة</button>' : ''}
-    <div class="card" style="box-shadow:none;border:1px solid var(--line);${ios ? 'border-color:var(--pri)' : ''}"><h2>🍎 آيفون / آيباد (Safari)</h2><ol class="install-steps small">
-      <li>افتح الموقع من متصفح <b>Safari</b>.</li><li>اضغط زر المشاركة <kbd>⬆️</kbd> تحت.</li><li>اختر <b>«إضافة إلى الشاشة الرئيسية»</b>.</li><li>اضغط <b>«إضافة»</b> — وصار عندك تطبيق 🎉</li></ol></div>
-    <div class="card" style="box-shadow:none;border:1px solid var(--line);${android ? 'border-color:var(--pri)' : ''}"><h2>🤖 أندرويد (Chrome)</h2><ol class="install-steps small">
-      <li>افتح الموقع من <b>Chrome</b>.</li><li>اضغط القائمة <kbd>⋮</kbd> فوق.</li><li>اختر <b>«تثبيت التطبيق»</b> أو <b>«إضافة إلى الشاشة الرئيسية»</b>.</li></ol></div>
-    <div class="card" style="box-shadow:none;border:1px solid var(--line)"><h2>💻 الكمبيوتر (Chrome / Edge)</h2><p class="small muted" style="margin:0">اضغط أيقونة التثبيت <kbd>⊕</kbd> في شريط العنوان فوق.</p></div>`);
+  openSheet(sheetHead('📲 ثبّت «إعانتي» على شاشتك') + `
+    ${isStandalone() ? '<div class="alert green"><span class="dot"></span>التطبيق مثبّت عندك ✅</div>' : ''}
+    ${deferredPrompt ? `<button class="btn block" data-a="promptInstall" style="margin-bottom:14px">ثبّت الحين</button>` : ''}
+    <div class="card" style="box-shadow:none;border:1px solid var(--line)"><h2>🍎 آيفون (Safari)</h2><ol class="install-steps small"><li>افتح الموقع من <b>Safari</b>.</li><li>اضغط زر المشاركة <kbd>⬆️</kbd>.</li><li>اختر <b>«إضافة إلى الشاشة الرئيسية»</b> ثم <b>«إضافة»</b>.</li></ol></div>
+    <div class="card" style="box-shadow:none;border:1px solid var(--line)"><h2>🤖 أندرويد (Chrome)</h2><ol class="install-steps small"><li>اضغط القائمة <kbd>⋮</kbd>.</li><li>اختر <b>«تثبيت التطبيق»</b>.</li></ol></div>`);
 }
 
 /* ============ الإعداد السريع ============ */
-const ob = {tier:'basic', allowance:200, extra:0, name:'', payday:'', applyPlan:true};
+const ob = {step:0, mode:'student', tier:'basic', allowance:200, extra:0, name:'', payday:'', cats:null, commitments:null};
+function obIncome(){ return r3(ob.allowance + ob.extra); }
 function renderOnboarding(){
-  $('#app').innerHTML = ''; $('#fab').style.display = 'none';
-  document.querySelector('.tabbar').style.display = 'none';
-  if (!ob.payday) ob.payday = state.nextPayday && state.nextPayday > today() ? state.nextPayday : addMonths(today(), 1);
-  const step = ui.obStep;
-  let body;
-  if (step === 0){
-    body = `<div class="logo">${LOGO_SVG()}</div><h1>هلا بك في «إعانتي»</h1><p class="lead">نظّم إعانتك الجامعية، اعرف كم يحق لك تصرف كل يوم، وادّخر لأهدافك — بدون تعقيد.</p>
-      <div class="section-title">اختر فئتك (تقدر تعدّل المبلغ)</div>
-      ${[['basic','🎓','إعانة أساسية','المكافأة الطلابية الأساسية',200],['rare','⭐','تخصص نادر / تفوّق','إعانة التخصصات النادرة أو المتفوقين',350],['custom','💼','مخصص + دخل إضافي','عمل طلابي، مشروع جانبي، أو مبلغ مختلف',null]].map(([id, em, n, d, a]) => `
-        <button class="tier ${ob.tier === id ? 'on' : ''}" data-a="obTier" data-id="${id}"><span class="em">${em}</span><div class="grow"><b>${n}</b><span>${d}</span></div>${a ? `<span class="amt">${KD(a)}</span>` : '<span class="amt">✏️</span>'}</button>`).join('')}
-      <div class="two" style="margin-top:6px"><div class="field"><label>الإعانة الشهرية (د.ك)</label><input class="inp" id="obAl" inputmode="decimal" value="${ob.allowance}"></div>
-      <div class="field"><label>دخل إضافي (د.ك)</label><input class="inp" id="obEx" inputmode="decimal" value="${ob.extra}" placeholder="0"></div></div>
-      ${ob.tier === 'custom' ? '<div class="hint" style="margin-top:-6px;margin-bottom:10px">💼 مثل مكافأة عمل طلابي أو دخل مشروع جانبي — نضيفه لدخلك الشهري.</div>' : ''}
-      <button class="btn block" data-a="obNext">التالي ←</button>`;
+  $('#app').innerHTML = ''; $('#fab').style.display = 'none'; document.querySelector('.tabbar').style.display = 'none';
+  if (!ob.payday) ob.payday = addMonths(today(), 1);
+  const m = MODES[ob.mode]; let body;
+  if (ob.step === 0){
+    body = `<div class="logo">${logoSVG()}</div><h1>هلا والله! خلنا نرتب فلوسك</h1><p class="lead">توزّع دخلك على خانات واضحة، وتعرف كل يوم كم يحق لك تصرف — بدون تعقيد.</p>
+      <div class="section-title" style="text-align:center">أنت؟</div>
+      <div class="who">${Object.entries(MODES).map(([id, x]) => `<button data-a="obMode" data-id="${id}"><span class="em">${x.icon}</span><b>${x.label}</b><span>${id === 'student' ? 'عندي إعانة شهرية' : 'عندي راتب شهري'}</span></button>`).join('')}</div>`;
+  } else if (ob.step === 1){
+    body = `<div class="logo">${logoSVG()}</div><h1>${ob.mode === 'student' ? 'كم إعانتك؟' : 'كم راتبك؟'}</h1><p class="lead">نحسب لك منها كل شي، وتقدر تغيّرها بأي وقت.</p>
+      ${ob.mode === 'student' ? [['basic','🎓','إعانة أساسية',200],['rare','⭐','تخصص نادر / تفوّق',350],['custom','✏️','مبلغ ثاني',null]].map(([id, em, n, a]) => `<button class="tier ${ob.tier === id ? 'on' : ''}" data-a="obTier" data-id="${id}"><span class="em">${em}</span><div class="grow"><b>${n}</b></div>${a ? `<span class="amt">${KD(a)}</span>` : ''}</button>`).join('') : ''}
+      <div class="two" style="margin-top:6px"><div class="field"><label>${m.incAsk} (د.ك)</label><input class="inp" id="obAl" inputmode="decimal" value="${ob.allowance || ''}" placeholder="${ob.mode === 'student' ? '200' : 'مثلاً 900'}"></div>
+      <div class="field"><label>دخل إضافي (د.ك)</label><input class="inp" id="obEx" inputmode="decimal" value="${ob.extra || ''}" placeholder="0"></div></div>
+      <div class="field"><label>متى ${m.next}؟</label><input class="inp" id="obPd" type="date" value="${ob.payday}" min="${addDays(today(), 1)}"><div class="hint" id="obDays">${obDaysText(ob.payday)}</div></div>
+      <div class="field"><label>اسمك (اختياري)</label><input class="inp" id="obName" value="${esc(ob.name)}" maxlength="24"></div>
+      <div class="btns"><button class="btn ghost" data-a="obBack">رجوع</button><button class="btn" data-a="obNext" style="flex:2">التالي</button></div>`;
   } else {
-    const inc = r3(ob.allowance + ob.extra);
-    body = `<div class="logo emo">📅</div><h1>آخر خطوة!</h1><p class="lead">حدد متى تنزل الإعانة الجاية عشان نحسب لك المسموح اليومي.</p>
-      <div class="field"><label>اسمك (اختياري)</label><input class="inp" id="obName" value="${esc(ob.name)}" placeholder="مثلاً: عمر" maxlength="24"></div>
-      <div class="field"><label>تاريخ نزول الإعانة القادمة</label><input class="inp" id="obPd" type="date" value="${ob.payday}" min="${addDays(today(), 1)}"><div class="hint" id="obDays">${obDaysText(ob.payday)}</div></div>
-      <label class="checkline" style="margin-bottom:14px"><input type="checkbox" id="obPlan" ${ob.applyPlan ? 'checked' : ''}><span>⚖️ وزّع التزاماتي تلقائيًا حسب <b>الخطة المتوازنة</b> على ${KD(inc)} (بانزين، إنترنت، اشتراكات، صدقة، ملابس، وادخار 20%) — تقدر تعدّلها بعدين</span></label>
-      <div class="btns"><button class="btn ghost" data-a="obBack">→ رجوع</button><button class="btn" data-a="obDone" style="flex:2">يلا نبدأ 🚀</button></div>`;
+    const inc = obIncome(), ct = sum(ob.commitments.map(c => c.amount)), spend = r3(inc - ct), lt = sum(ob.cats.map(c => parseNum(c.limit))), un = r3(spend - lt);
+    body = `<h1>🗂️ وزّع فلوسك على الخانات</h1><p class="lead">اقترحنا لك توزيع، غيّر أي رقم يناسبك.</p>
+      <div class="card"><div class="row"><span class="grow">${m.inc}${ob.extra ? ' + الإضافي' : ''}</span><b class="num">${fmt(inc)}</b></div>
+        <div class="row small muted" style="margin-top:6px"><span class="grow">− التزامات ثابتة (بانزين، إنترنت، صدقة، ادخار ${m.commit.autosave}%…)</span><span class="num">${fmt(ct)}</span></div>
+        <div class="row" style="margin-top:8px;border-top:1px solid var(--line);padding-top:8px"><b class="grow">المتاح للخانات</b><b class="num" style="color:var(--link)">${fmt(spend)}</b></div></div>
+      <div class="card">${ob.cats.map((c, i) => `<div class="box-edit"><span class="ic" style="background:color-mix(in srgb,${c.color} 14%,transparent)">${c.icon}</span><span class="grow" style="font-weight:600">${esc(c.name)}</span><input class="inp lim" data-ob-limit="${i}" value="${c.limit}" inputmode="decimal"></div>`).join('')}
+        <div class="alloc" id="obAlloc">${un < -0.0005 ? `<span class="neg">وزّعت أكثر من المتاح بـ ${KDt(-un)}</span>` : un > 0.0005 ? `باقي ${KDt(un)} بدون خانة (احتياط)` : '✅ كل فلوسك موزّعة'}</div></div>
+      <div class="hint" style="text-align:center;margin-bottom:12px">تقدر تضيف خانات وتغيّر الالتزامات بعدين</div>
+      <div class="btns"><button class="btn ghost" data-a="obBack">رجوع</button><button class="btn" data-a="obDone" style="flex:2">يلا نبدأ 🚀</button></div>`;
   }
-  $('#onb').innerHTML = `<div class="onb"><div class="onb-in"><div class="dots"><i class="${step === 0 ? 'on' : ''}"></i><i class="${step === 1 ? 'on' : ''}"></i></div>${body}
-    <div class="foot">🔒 كل بياناتك تبقى في جهازك فقط</div></div></div>`;
+  $('#onb').innerHTML = `<div class="onb"><div class="onb-in"><div class="dots">${[0,1,2].map(i => `<i class="${ob.step === i ? 'on' : ''}"></i>`).join('')}</div>${body}<div class="foot">🔒 كل بياناتك تبقى في جهازك<br>تم تصميم الموقع من قبل <b>المهندس بو عمر</b></div></div></div>`;
 }
-function obDaysText(pd){ if (!pd) return ''; const d = daysBetween(today(), pd); return d > 0 ? `⏳ باقي ${dayWord(d)} على الإعانة` : '⚠️ اختر تاريخ بعد اليوم'; }
+function obDaysText(pd){ if (!pd) return ''; const d = daysBetween(today(), pd); return d > 0 ? `⏳ باقي ${dayWord(d)}` : '⚠️ اختر تاريخ بعد اليوم'; }
 function obCollect(){
-  if ($('#obAl')){ ob.allowance = parseNum($('#obAl').value); ob.extra = parseNum($('#obEx').value); }
-  if ($('#obName')){ ob.name = $('#obName').value.trim(); ob.payday = $('#obPd').value; ob.applyPlan = $('#obPlan').checked; }
+  if ($('#obAl')){ ob.allowance = parseNum($('#obAl').value); ob.extra = parseNum($('#obEx').value); ob.payday = $('#obPd').value; ob.name = $('#obName').value.trim(); }
 }
 
 /* ============ الأحداث ============ */
 const ACT = {
-  go: d => { ui.view = d.v; location.hash = d.v; render(); window.scrollTo(0, 0); },
+  go: d => { ui.view = d.v; ui.editBoxes = false; location.hash = d.v; render(); window.scrollTo(0, 0); },
   close: closeSheet,
-  toggleTheme: () => { const dark = document.documentElement.getAttribute('data-theme') === 'dark'; state.theme = dark ? 'light' : 'dark'; commit(); },
-  setTheme: d => { state.theme = d.id; save(); applyTheme(); render(); sheetSettings(); },
-  settings: sheetSettings, saveSettings,
+  toggleTheme: () => { state.theme = isDark() ? 'light' : 'dark'; commit(); },
+  setTheme: d => { state.theme = d.id; save(); render(); sheetSettings(); },
+  setMode: d => { state.mode = d.id; save(); render(); sheetSettings(); },
+  settings: sheetSettings,
+  saveSettings: () => { const pd = $('#stPd').value; Object.assign(state.profile, {name:$('#stName').value.trim(), allowance:parseNum($('#stAl').value), extra:parseNum($('#stEx').value)}); if (pd) state.nextPayday = pd; closeSheet(); commit(); toast('انحفظ ✓'); },
   addExp: d => sheetExpense(d.cat),
-  pickCat: d => { expDraftCat = d.id; vib(5); document.querySelectorAll('#catPick button').forEach(b => b.classList.toggle('on', b.dataset.id === d.id)); },
-  quickAmt: d => { expAmtStr = String(r3(parseNum(expAmtStr) + parseFloat(d.v))); vib(5); updAmt(); },
+  pickCat: d => { expCat = d.id; vib(5); document.querySelectorAll('#catPick button').forEach(b => b.classList.toggle('on', b.dataset.id === d.id)); $('#amtHint').innerHTML = hintFor(parseNum(expAmt)); },
+  quickAmt: d => { expAmt = String(r3(parseNum(expAmt) + parseFloat(d.v))); vib(5); updAmt(); },
   key: d => pressKey(d.k),
   saveExp: saveExpense,
-  delExp: d => { const i = state.expenses.findIndex(e => e.id === d.id); if (i < 0) return; const [ex] = state.expenses.splice(i, 1); commit(); vib(10); toast('انحذف المصروف', 'تراجع', () => { state.expenses.push(ex); commit(); toast('رجع ✓'); }); },
-  expPeriod: d => { ui.expPeriod = d.id; render(); },
-  expCat: d => { ui.expCat = d.id; render(); },
-  donut: d => { ui.donutSel = ui.donutSel === d.id ? null : d.id; render(); },
-  paid: d => { const it = state.commitments.find(x => x.id === d.id); if (!it || !it.active) return; if (state.cycle.paid[it.id]) { if (unpay(it)) commit(); } else { pay(it); commit(); vib(12); toast(it.type === 'save' ? `🐷 ${KDt(it.amount)} انتقلت للحصالة` : 'تم ✓'); } },
+  delExp: d => { const i = state.expenses.findIndex(e => e.id === d.id); if (i < 0) return; const [ex] = state.expenses.splice(i, 1); commit(); vib(10); toast('انحذف', 'تراجع', () => { state.expenses.push(ex); commit(); toast('رجع ✓'); }); },
+  logPeriod: d => { ui.logPeriod = d.id; render(); },
+  logCat: d => { ui.logCat = d.id; render(); },
+  editBoxes: () => { ui.editBoxes = true; render(); },
+  boxesDone: () => { state.cats = state.cats.filter(c => c.name.trim()); ui.editBoxes = false; commit(); toast('انحفظ التوزيع ✓'); },
+  boxAdd: () => { state.cats.push({id:uid(), icon:'📦', name:'خانة جديدة', color:PALETTE[state.cats.length % PALETTE.length], limit:0}); commit(); setTimeout(() => { const ins = document.querySelectorAll('[data-box-name]'); const last = ins[ins.length - 1]; if (last){ last.focus(); last.select(); } }, 50); },
+  boxDel: d => { const b = state.cats.find(c => c.id === d.id), i = state.cats.indexOf(b); state.cats.splice(i, 1); commit(); toast('انحذفت الخانة', 'تراجع', () => { state.cats.splice(i, 0, b); commit(); }); },
+  boxIcon: d => boxIconSheet(d.id),
+  setBoxIcon: d => { state.cats.find(c => c.id === d.id).icon = d.e; closeSheet(); commit(); },
+  boxFit: () => { const k = calc(); if (k.spendable <= 0){ toast('ما فيه مبلغ متاح للتوزيع'); return; } const tot = k.limitsTotal, n = state.cats.length; if (!n) return;
+    state.cats.forEach(c => c.limit = tot > 0 ? r05(parseNum(c.limit) / tot * k.spendable) : r05(k.spendable / n));
+    const diff = r3(k.spendable - sum(state.cats.map(c => c.limit))); const big = state.cats.reduce((a, b) => parseNum(b.limit) > parseNum(a.limit) ? b : a); big.limit = r3(Math.max(0, parseNum(big.limit) + diff));
+    commit(); toast('تم توزيع المتاح على خاناتك ✓'); },
+  paid: d => { const it = state.commitments.find(x => x.id === d.id); if (!it || !it.active) return; if (state.cycle.paid[it.id]){ if (unpay(it)) commit(); } else { pay(it); commit(); vib(12); toast(it.type === 'save' ? `🐷 ${KDt(it.amount)} راحت للحصالة` : 'تم ✓'); } },
   toggleActive: d => { const it = state.commitments.find(x => x.id === d.id); if (it.active && state.cycle.paid[it.id] && !unpay(it)) return; it.active = !it.active; commit(); },
   editCommit: d => sheetCommit(d.id),
   pickIcon: d => { editIcon = d.e; document.querySelectorAll('#icPick button').forEach(b => b.classList.toggle('on', b.dataset.e === d.e)); },
   saveCommit: d => saveCommit(d.id),
-  delCommit: d => { const it = state.commitments.find(x => x.id === d.id); askConfirm('🗑️ حذف البند', `بنحذف «${esc(it.name)}» من التزاماتك.`, 'احذف', () => { if (state.cycle.paid[it.id] && !unpay(it)) return; state.commitments = state.commitments.filter(x => x.id !== it.id); commit(); }, true); },
+  delCommit: d => { const it = state.commitments.find(x => x.id === d.id); askConfirm('🗑️ حذف البند', `بنحذف «${esc(it.name)}».`, 'احذف', () => { if (state.cycle.paid[it.id] && !unpay(it)) return; state.commitments = state.commitments.filter(x => x.id !== it.id); commit(); }, true); },
   newCycle: sheetNewCycle, doNewCycle,
   vaultOp: d => sheetVault(d.op, d.goal),
   doVault: d => doVault(d.op),
@@ -1249,112 +916,78 @@ const ACT = {
   goalPreset: d => { const p = GOAL_PRESETS[+d.i]; $('#gName').value = p.name; $('#gTarget').value = p.target; goalEmoji = p.emoji; document.querySelectorAll('#gEm button').forEach(b => b.classList.toggle('on', b.dataset.e === p.emoji)); gPlan(true); },
   pickGoalEm: d => { goalEmoji = d.e; document.querySelectorAll('#gEm button').forEach(b => b.classList.toggle('on', b.dataset.e === d.e)); },
   saveGoal: d => saveGoal(d.id),
-  delGoal: d => askConfirm('🗑️ حذف الهدف', 'المبلغ المدخر للهدف يرجع للحصالة العامة، وما يضيع شي.', 'احذف', () => { state.vault.forEach(v => { if (v.goal === d.id) v.goal = null; }); state.commitments.forEach(c => { if (c.goal === d.id) c.goal = null; }); state.goals = state.goals.filter(g => g.id !== d.id); commit(); }, true),
-  templates: sheetTemplates,
-  applyTpl: d => { const t = TEMPLATES.find(x => x.id === d.id); askConfirm(`${t.icon} تطبيق الخطة`, 'بنعدّل مبالغ التزاماتك حسب هالخطة. تقدر تغيّر أي بند بعدين.', 'طبّق', () => applyTemplate(d.id)); },
-  exportJSON, importJSON: () => $('#importFile').click(),
-  exportCSV: d => exportCSV(d.scope),
+  delGoal: d => askConfirm('🗑️ حذف الهدف', 'المبلغ المدخر له يرجع للحصالة، ما يضيع شي.', 'احذف', () => { state.vault.forEach(v => { if (v.goal === d.id) v.goal = null; }); state.commitments.forEach(c => { if (c.goal === d.id) c.goal = null; }); state.goals = state.goals.filter(g => g.id !== d.id); commit(); }, true),
+  exportJSON: () => download(`e3anati-backup-${today()}.json`, JSON.stringify(state, null, 2), 'application/json'),
+  importJSON: () => $('#importFile').click(),
+  exportCSV,
   install: sheetInstall,
-  hideInstall: () => { state.installHintHidden = true; commit(); },
   promptInstall: async () => { if (!deferredPrompt) return; deferredPrompt.prompt(); try { await deferredPrompt.userChoice; } catch(e){} deferredPrompt = null; closeSheet(); },
-  reOnboard: () => { closeSheet(); Object.assign(ob, {tier:state.profile.tier || 'basic', allowance:state.profile.allowance, extra:state.profile.extra, name:state.profile.name, payday:state.nextPayday, applyPlan:false}); ui.obStep = 0; state.onboarded = false; render(); },
-  resetAll: () => askConfirm('🗑️ مسح كل البيانات', 'بنمسح كل شي (الالتزامات، المصروفات، الحصالة والأهداف). ما نقدر نرجعها إلا من نسخة احتياطية.', 'امسح كل شي', () => { state = defaultState(); try { localStorage.removeItem(KEY); } catch(e){} ui.obStep = 0; Object.assign(ob, {tier:'basic', allowance:200, extra:0, name:'', payday:'', applyPlan:true}); render(); }, true),
-  nw: d => { const it = NW_ITEMS[+d.i]; ui.nwRevealed[d.i] = {ok: it[1] === d.g}; render(); },
-  chal: (d, el) => { ui.challenge[d.id] = el.checked; render(); },
-  obTier: d => { obCollect(); ob.tier = d.id; if (d.id === 'basic') ob.allowance = 200; if (d.id === 'rare') ob.allowance = 350; render(); if (d.id === 'custom') setTimeout(() => $('#obEx') && $('#obEx').focus(), 50); },
-  obNext: () => { obCollect(); if (!(ob.allowance > 0) && !(ob.extra > 0)) { toast('دخّل مبلغ الإعانة'); return; } ui.obStep = 1; render(); },
-  obBack: () => { obCollect(); ui.obStep = 0; render(); },
+  resetAll: () => askConfirm('🗑️ مسح كل البيانات', 'بنمسح كل شي. ما يرجع إلا من نسخة احتياطية.', 'امسح', () => { state = defaultState(); try { localStorage.removeItem(KEY); } catch(e){} Object.assign(ob, {step:0, mode:'student', tier:'basic', allowance:200, extra:0, name:'', payday:''}); render(); }, true),
+  obMode: d => { ob.mode = d.id; if (d.id === 'student'){ ob.allowance = ob.tier === 'rare' ? 350 : 200; } else { ob.allowance = 0; ob.tier = 'custom'; } ob.step = 1; render(); },
+  obTier: d => { obCollect(); ob.tier = d.id; if (d.id === 'basic') ob.allowance = 200; if (d.id === 'rare') ob.allowance = 350; render(); if (d.id === 'custom') setTimeout(() => { const i = $('#obAl'); i.focus(); i.select(); }, 50); },
+  obBack: () => { obCollect(); ob.step = Math.max(0, ob.step - 1); render(); },
+  obNext: () => { obCollect();
+    if (!(obIncome() > 0)){ toast('اكتب المبلغ'); return; }
+    if (!ob.payday || ob.payday <= today()){ toast(`اختر موعد ${MODES[ob.mode].next} (بعد اليوم)`); return; }
+    ob.commitments = buildCommitments(ob.mode, obIncome()); ob.cats = buildCats(ob.mode, obIncome() - sum(ob.commitments.map(c => c.amount)));
+    ob.step = 2; render(); window.scrollTo(0, 0); },
   obDone: () => {
-    obCollect();
-    if (!ob.payday || ob.payday <= today()) { toast('اختر تاريخ الإعانة القادمة (بعد اليوم)'); return; }
     const first = !state.cycles.length && !state.expenses.length && !state.vault.length;
+    if (!first){ state = normalize(state); }
+    Object.assign(state, {mode:ob.mode, nextPayday:ob.payday, commitments:ob.commitments, cats:ob.cats, onboarded:true});
     Object.assign(state.profile, {tier:ob.tier, allowance:ob.allowance, extra:ob.extra, name:ob.name});
-    state.nextPayday = ob.payday;
-    if (ob.applyPlan){
-      const items = planItems(TEMPLATES[0], r3(ob.allowance + ob.extra));
-      if (first) state.commitments = items;
-      else items.forEach(ni => { const it = state.commitments.find(x => x.id === ni.id); if (it && !(state.cycle.paid[it.id] && it.type === 'save')) { it.amount = ni.amount; it.active = ni.active; } });
-    }
-    if (first) state.cycle = {id:state.cycle.id, start:today(), paid:{}};
-    state.onboarded = true; ui.view = 'home'; location.hash = 'home';
-    commit(); toast('يلا! خلّ إعانتك تكفيك لآخر الشهر 💪');
+    state.cycle = {id:state.cycle.id, start:today(), paid:{}};
+    ui.view = 'home'; location.hash = 'home'; commit(); toast('يلا! خلّ فلوسك تكفيك لآخر الشهر 💪');
   }
 };
 document.addEventListener('click', e => {
-  const el = e.target.closest('[data-a]');
-  if (!el || el.tagName === 'INPUT') return;
-  const fn = ACT[el.dataset.a];
-  if (fn){ e.preventDefault(); fn(el.dataset, el, e); }
-});
-document.addEventListener('change', e => {
-  const el = e.target.closest('input[data-a]');
-  if (el && ACT[el.dataset.a]) ACT[el.dataset.a](el.dataset, el, e);
-  if (e.target.id === 'obPd' && $('#obDays')) $('#obDays').textContent = obDaysText(e.target.value);
+  const el = e.target.closest('[data-a]'); if (!el || el.tagName === 'INPUT') return;
+  const fn = ACT[el.dataset.a]; if (fn){ e.preventDefault(); fn(el.dataset, el, e); }
 });
 document.addEventListener('input', e => {
-  const t = e.target, w = t.dataset && t.dataset.in;
-  if (w === 'gcalc') $('#gcOut').innerHTML = gcText(parseNum($('#gcT').value), parseNum($('#gcM').value));
-  if (w === 'habit') $('#hbOut').innerHTML = habitOut(parseNum($('#hbA').value), parseNum($('#hbD').value));
-  if (w === 'savefirst') $('#svOut').innerHTML = saveOut(parseNum($('#svA').value), Math.round(parseNum($('#svM').value)));
-  if (w === 'gplan') gPlan(true);
+  const t = e.target;
+  if (t.dataset.boxLimit){ const b = state.cats.find(c => c.id === t.dataset.boxLimit); if (b){ b.limit = parseNum(t.value); save(); updAlloc(); } }
+  if (t.dataset.boxName){ const b = state.cats.find(c => c.id === t.dataset.boxName); if (b){ b.name = t.value; save(); } }
+  if (t.dataset.obLimit != null && ob.cats){ ob.cats[+t.dataset.obLimit].limit = parseNum(t.value);
+    const un = r3(obIncome() - sum(ob.commitments.map(c => c.amount)) - sum(ob.cats.map(c => parseNum(c.limit))));
+    $('#obAlloc').innerHTML = un < -0.0005 ? `<span class="neg">وزّعت أكثر من المتاح بـ ${KDt(-un)}</span>` : un > 0.0005 ? `باقي ${KDt(un)} بدون خانة (احتياط)` : '✅ كل فلوسك موزّعة'; }
+  if (t.dataset.in === 'gplan') gPlan(true);
   if (t.id === 'obPd' && $('#obDays')) $('#obDays').textContent = obDaysText(t.value);
 });
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeSheet();
   if ($('#ov').classList.contains('show') && $('#amtDisp')){
-    const typing = e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA';
     if (e.key === 'Enter'){ e.preventDefault(); saveExpense(); return; }
-    if (typing) return;
-    if (/^[0-9]$/.test(e.key)) pressKey(e.key);
-    else if (e.key === '.' || e.key === ',') pressKey('.');
-    else if (e.key === 'Backspace') pressKey('⌫');
+    if (e.target.tagName === 'INPUT') return;
+    if (/^[0-9]$/.test(e.key)) pressKey(e.key); else if (e.key === '.' || e.key === ',') pressKey('.'); else if (e.key === 'Backspace') pressKey('⌫');
   }
 });
 function routeFromHash(){ const h = location.hash.replace('#', ''); if (TABS.some(t => t.id === h)) ui.view = h; }
 window.addEventListener('hashchange', () => { routeFromHash(); if (state.onboarded) render(); });
-if (window.matchMedia) { try { matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { if (state.theme === 'auto') render(); }); } catch(e){} }
-// تحديث تلقائي عند تغيّر اليوم أو الرجوع للتطبيق
-let lastDay = today();
-document.addEventListener('visibilitychange', () => { if (!document.hidden){ state = load(); if (today() !== lastDay){ lastDay = today(); } render(); } });
-
-function LOGO_SVG(){ const t = document.getElementById('logoTpl'); return t ? t.innerHTML : '💸'; }
+try { matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { if (state.theme === 'auto') render(); }); } catch(e){}
+document.addEventListener('visibilitychange', () => { if (!document.hidden && !$('#ov').classList.contains('show') && !ui.editBoxes){ state = load(); render(); } });
 function countUp(){
   if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  document.querySelectorAll('[data-count]').forEach(el => {
-    const to = parseFloat(el.dataset.count); if (!(to > 0)) return;
-    const t0 = performance.now(), dur = 850;
-    const step = t => { const p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3); el.textContent = fmt(to * e); if (p < 1) requestAnimationFrame(step); else el.textContent = fmt(to); };
-    requestAnimationFrame(step);
-  });
+  document.querySelectorAll('[data-count]').forEach(el => { const to = parseFloat(el.dataset.count); if (!(to > 0)) return; const t0 = performance.now();
+    const step = t => { const p = Math.min(1, (t - t0) / 850); el.textContent = fmt(to * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(step); else el.textContent = fmt(to); }; requestAnimationFrame(step); });
 }
-// سحب النافذة للأسفل لإغلاقها
 (function(){
   const sh = $('#sheet'); let y0 = null, dy = 0;
-  sh.addEventListener('touchstart', e => { if (sh.scrollTop > 0 || e.target.closest('.keypad,input,select,textarea,.chips,.cat-row,.emojis')) return; y0 = e.touches[0].clientY; dy = 0; sh.style.transition = 'none'; }, {passive:true});
+  sh.addEventListener('touchstart', e => { if (sh.scrollTop > 0 || e.target.closest('.keypad,input,select,.chips,.cat-row,.emojis')) return; y0 = e.touches[0].clientY; dy = 0; sh.style.transition = 'none'; }, {passive:true});
   sh.addEventListener('touchmove', e => { if (y0 == null) return; dy = Math.max(0, e.touches[0].clientY - y0); sh.style.transform = `translateY(${dy}px)`; }, {passive:true});
   sh.addEventListener('touchend', () => { if (y0 == null) return; sh.style.transition = ''; sh.style.transform = ''; if (dy > 110) closeSheet(); y0 = null; });
 })();
 
 routeFromHash();
 render();
-
-// شاشة الدخول
 (function(){
   const sp = document.getElementById('splash'); if (!sp) return;
   let seen = false; try { seen = sessionStorage.getItem('e3-splash') === '1'; } catch(e){}
-  const hide = () => {
-    if (sp.classList.contains('out')) return;
-    sp.classList.add('out'); try { sessionStorage.setItem('e3-splash', '1'); } catch(e){}
-    setTimeout(() => { sp.remove(); if (state.onboarded) countUp(); }, 450);
-  };
+  const hide = () => { if (sp.classList.contains('out')) return; sp.classList.add('out'); try { sessionStorage.setItem('e3-splash', '1'); } catch(e){} setTimeout(() => { sp.remove(); if (state.onboarded) countUp(); }, 450); };
   if (seen){ sp.remove(); countUp(); return; }
-  sp.addEventListener('click', hide);
-  setTimeout(hide, 2000);
+  sp.addEventListener('click', hide); setTimeout(hide, 2100);
 })();
-
-if ('serviceWorker' in navigator && location.protocol === 'https:'){
-  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
-}
+if ('serviceWorker' in navigator && location.protocol === 'https:') window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
 </script>
 </body>
 </html>
