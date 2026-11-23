@@ -265,6 +265,47 @@ kbd{background:var(--card2);border:1px solid var(--line);border-radius:6px;paddi
 .sheet h3 .ico svg{width:22px;height:22px}
 .item .t .ico{margin-inline-end:4px}
 .who button .em{width:76px;height:76px;border-radius:24px;background:var(--org-soft);display:grid;place-items:center}
+/* شبكة الخانات */
+.grid-b{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tile-b{background:var(--card);border-radius:22px;box-shadow:var(--shadow);padding:14px 14px 18px;text-align:start;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:flex-start;gap:2px;min-height:150px;transition:transform .12s}
+.tile-b:active{transform:scale(.96)}
+.tile-b .em{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;margin-bottom:6px}
+.tile-b .nm{font-weight:700;font-size:14.5px;line-height:1.3}
+.tile-b .v{font-family:var(--fd);font-size:26px;font-weight:800;color:var(--navy);line-height:1.2;margin-top:auto}
+[data-theme="dark"] .tile-b .v{color:var(--text)}
+.tile-b .v small{font-size:13px;color:var(--org);font-weight:700}
+.tile-b .cap{font-size:12px;color:var(--muted)}
+.tile-b .ln{position:absolute;left:0;right:0;bottom:0;height:5px;background:var(--card2)}
+.tile-b .ln i{display:block;height:100%}
+.tile-b.new{align-items:center;justify-content:center;color:var(--link);border:2px dashed var(--line);box-shadow:none;background:transparent;font-weight:700;gap:6px}
+.tile-b.new .i svg{width:28px;height:28px}
+/* الإضافة بخطوتين */
+.step-h{text-align:center;font-family:var(--fd);font-weight:700;font-size:16px;color:var(--muted);margin-top:-4px}
+.btn:disabled{opacity:.35;pointer-events:none}
+.big-save .i svg{width:20px;height:20px}
+.amt-mini{text-align:center;font-family:var(--fd);font-size:30px;font-weight:800;margin:-6px 0 14px}
+.amt-mini small{font-size:15px;color:var(--org)}
+.dest-list{display:flex;flex-direction:column;gap:8px}
+.dest-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:18px;background:var(--card2);text-align:start;width:100%;transition:background .15s,transform .1s}
+.dest-row b{display:block;font-size:15.5px}
+.dest-row small{display:block;font-size:12.5px;color:var(--muted)}
+.dest-row > .i{color:var(--muted)}
+.dest-row:active{background:var(--org-soft);transform:scale(.98)}
+/* الإعداد */
+.ob-pre{justify-content:center;margin:10px 0 6px}
+.ob-pre .chip{font-family:var(--fd);font-size:15px;padding:9px 16px}
+.ob-nav{margin-top:16px}
+.ob-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ob-opts button{padding:16px 8px;border-radius:18px;background:var(--card);border:2px solid var(--line);font-weight:700;font-size:15px}
+.ob-opts button.on{border-color:var(--org);background:var(--org-soft);color:var(--link)}
+.ob-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);min-height:58px}
+.ob-row:last-of-type{border-bottom:0}
+.ob-row .grow{font-weight:600;cursor:pointer}
+.ob-row .lim,.box-edit .lim{width:96px}
+.ob-row:not(.on) .ico{opacity:.5}
+.ob-left{text-align:center;font-family:var(--fd);font-size:20px;font-weight:700;background:var(--navy);color:#fff;border-radius:18px;padding:14px;margin-bottom:12px}
+.ob-left b{font-size:28px;color:var(--org2)}
+.panel .row{padding:2px 0}
 </style>
 </head>
 <body>
@@ -299,6 +340,7 @@ const ICON = {
   check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>',
   x:'<path d="M6 6l12 12M18 6 6 18"/>',
   back:'<path d="M9 6l6 6-6 6"/>',
+  chev:'<path d="M15 6l-6 6 6 6"/>',
   del:'<path d="M20 6H9l-5 6 5 6h11a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1z"/><path d="M12 10l4 4M16 10l-4 4"/>'
 };
 const I = n => `<span class="i"><svg viewBox="0 0 24 24">${ICON[n]}</svg></span>`;
@@ -336,16 +378,12 @@ const Ico = (k, color, cls) => `<span class="ico ${cls || ''}" style="color:${co
 /* ============ ثوابت ============ */
 const KEY = 'e3anati.v1';
 const MODES = {
-  student:{label:'طالب جامعي', icon:'cap', inc:'الإعانة', next:'الإعانة القادمة', incAsk:'الإعانة الشهرية', has:'لدي إعانة شهرية', ask:'كم إعانتك؟',
-    commit:{tuition:30, subs:5, net:5, autosave:10},
-    cats:[['food','food','مطاعم وقهوة',35],['fun','star','طلعات ووناسة',25],['car','car','السيارة',40]]},
-  school:{label:'طالب مدرسة', icon:'school', inc:'المصروف', next:'المصروف القادم', incAsk:'مصروفك الشهري من أهلك', has:'مصروف من أهلي', ask:'كم يعطيك أهلك في الشهر؟',
-    commit:{autosave:20},
-    cats:[['food','food','المطاعم',40],['fun','star','طلعات ووناسة',35],['basics','bag','احتياجات أساسية',25]]}
-};
-const BASE_ITEMS = {
-  tuition:{icon:'cap', name:'أقساط الجامعة'}, subs:{icon:'gym', name:'الاشتراكات (نادي…)'}, net:{icon:'wifi', name:'الإنترنت والمكالمات'},
-  autosave:{icon:'safe', name:'الادخار الشهري', type:'save'}
+  student:{label:'طالب جامعي', icon:'cap', inc:'الإعانة', next:'الإعانة القادمة', incAsk:'الإعانة الشهرية', has:'لدي إعانة شهرية', ask:'كم إعانتك الشهرية؟', presets:[200, 350],
+    commits:[['tuition','cap','أقساط الجامعة أو المعهد'],['subs','gym','الاشتراكات (نادي، تطبيقات)'],['net','wifi','الإنترنت والمكالمات'],['autosave','safe','الادخار الشهري','save']],
+    cats:[['food','food','مطاعم وقهوة'],['fun','star','طلعات ووناسة'],['car','car','السيارة']]},
+  school:{label:'طالب مدرسة', icon:'school', inc:'المصروف', next:'المصروف القادم', incAsk:'مصروفك الشهري من أهلك', has:'مصروف من أهلي', ask:'كم يعطيك أهلك في الشهر؟', presets:[20, 30, 50],
+    commits:[['autosave','safe','الادخار الشهري','save']],
+    cats:[['food','food','المطاعم'],['fun','star','طلعات ووناسة'],['basics','bag','احتياجات أساسية']]}
 };
 const PALETTE = ['#ff7a1a','#2f6fe0','#14a38b','#e2483d','#8a5cf6','#c98a12','#0ea5c6','#d9468f','#5b6b8c'];
 const BOX_ICONS = ['food','coffee','star','car','bag','game','book','gift','phone','shirt','heart','tool','home','plane','cash','box'];
@@ -381,17 +419,11 @@ function monthsWord(n){ if (n === 1) return 'شهر واحد'; if (n === 2) retu
 const vib = (ms = 8) => { try { navigator.vibrate && navigator.vibrate(ms); } catch(e){} };
 
 /* ============ الحالة ============ */
-function buildCommitments(mode, income){
-  const m = MODES[mode];
-  return Object.keys(BASE_ITEMS).filter(id => m.commit[id] != null).map(id => ({id, icon:BASE_ITEMS[id].icon, name:BASE_ITEMS[id].name, type:BASE_ITEMS[id].type || 'normal', amount:r05(income * m.commit[id] / 100), active:true, goal:null}));
-}
-function buildCats(mode, spendable){
-  return MODES[mode].cats.map(([id, icon, name, w], i) => ({id, icon, name, color:PALETTE[i % PALETTE.length], limit:r05(spendable * w / 100)}));
-}
+function buildCats(mode){ return MODES[mode].cats.map(([id, icon, name], i) => ({id, icon, name, color:PALETTE[i % PALETTE.length], limit:0})); }
 function defaultState(){
-  const t = today(), commitments = buildCommitments('student', 200);
-  return {v:3, onboarded:false, mode:'student', theme:'light', profile:{name:'', tier:'basic', allowance:200, extra:0},
-    nextPayday:addMonths(t, 1), commitments, cats:buildCats('student', 200 - sum(commitments.map(c => c.amount))),
+  const t = today();
+  return {v:3, onboarded:false, mode:'student', theme:'light', profile:{name:'', tier:'custom', allowance:0, extra:0},
+    nextPayday:addMonths(t, 1), commitments:[], cats:buildCats('student'),
     cycle:{id:uid(), start:t, paid:{}}, cycles:[], expenses:[], incomes:[], vault:[], goals:[]};
 }
 function normalize(s){
@@ -402,7 +434,7 @@ function normalize(s){
   o.cycle = Object.assign({}, d.cycle, s.cycle || {}); o.cycle.paid = o.cycle.paid || {};
   for (const k of ['commitments','cycles','expenses','incomes','vault','goals']) if (!Array.isArray(o[k])) o[k] = d[k];
   if (!MODES[o.mode]) o.mode = 'student';
-  if (!Array.isArray(s.cats) || !s.cats.length){ const inc = parseNum(o.profile.allowance) + parseNum(o.profile.extra); o.cats = buildCats(o.mode, inc - sum(o.commitments.filter(c => c.active).map(c => c.amount))); }
+  if (!Array.isArray(s.cats) || !s.cats.length){ const inc = parseNum(o.profile.allowance) + parseNum(o.profile.extra); o.cats = buildCats(o.mode); }
   if (s.v !== 3 && o.theme !== 'dark') o.theme = 'light';
   o.cats.forEach(c => c.icon = icoKey(c.icon)); o.commitments.forEach(c => c.icon = icoKey(c.icon)); o.goals.forEach(g => g.emoji = icoKey(g.emoji));
   o.v = 3; return o;
@@ -432,7 +464,7 @@ function calc(){
   const todaySpent = sum(exps.filter(e => e.date === t).map(e => e.amount));
   const diff = daysBetween(t, S.nextPayday), daysLeft = Math.max(1, diff);
   const startToday = r3(free + todaySpent);
-  const safeDaily = r3(Math.max(0, startToday) / daysLeft);
+  const safeDaily = Math.floor(Math.max(0, startToday) / daysLeft * 4 + 1e-9) / 4;
   const leftToday = r3(safeDaily - todaySpent);
   const spendable = r3(income - commitTotal - manualSave);
   const ratio = spendable > 0 ? expTotal / spendable : (expTotal > 0 ? 1 : 0);
@@ -459,17 +491,17 @@ function render(){
   if (!state.onboarded){ renderOnboarding(); return; }
   $('#onb').innerHTML = '';
   const k = calc(), S = state, first = !lastRender; lastRender++;
-  const keepScroll = $('#cards') ? $('#cards').scrollLeft : 0;
   const name = S.profile.name ? `مرحبًا، ${esc(S.profile.name)}` : 'مرحبًا بك';
   const paidN = S.commitments.filter(x => x.active && S.cycle.paid[x.id]).length, actN = S.commitments.filter(x => x.active).length;
   const box = b => {
     const pct = b.limit > 0 ? clamp(b.ratio) * 100 : 0;
     const col = b.limit > 0 && b.ratio > 1 ? 'var(--red)' : b.limit > 0 && b.ratio >= .75 ? 'var(--yel)' : b.color;
-    return `<button class="bcard" data-a="boxOpen" data-id="${b.id}">
-      <div class="h"><span class="em" style="background:color-mix(in srgb,${b.color} 15%,transparent)">${Ico(b.icon, b.color)}</span><span class="nm">${esc(b.name)}</span></div>
-      <div class="v ${b.limit > 0 && b.left < 0 ? 'neg' : ''}"><span class="num">${fmt(b.limit > 0 ? b.left : b.spent)}</span> <small>د.ك</small></div>
-      <div class="cap">${b.limit > 0 ? (b.left >= 0 ? 'المتبقي' : 'تجاوزت الحد') : 'المصروف (بلا حد)'}</div>
-      <div class="ln"><i style="width:${pct}%;background:${col}"></i></div></button>`;
+    return `<button class="tile-b" data-a="boxOpen" data-id="${b.id}">
+      <span class="em" style="background:color-mix(in srgb,${b.color} 14%,transparent)">${Ico(b.icon, b.color)}</span>
+      <span class="nm">${esc(b.name)}</span>
+      <span class="v ${b.limit > 0 && b.left < 0 ? 'neg' : ''}"><span class="num">${fmt(b.limit > 0 ? Math.abs(b.left) : b.spent)}</span> <small>د.ك</small></span>
+      <span class="cap">${b.limit > 0 ? (b.left >= 0 ? `متبقٍ من ${fmt(b.limit)}` : 'تجاوزت الحد') : 'صُرف (بلا حد)'}</span>
+      <span class="ln"><i style="width:${pct}%;background:${col}"></i></span></button>`;
   };
   $('#app').innerHTML = `<div class="${first ? 'enter' : ''}">
     <header class="top"><span class="lg">${logoSVG()}</span><h1>الإدارة المالية<small>${name}</small></h1>
@@ -485,18 +517,13 @@ function render(){
     ${k.diff <= 0 ? `<div class="due"><span class="grow">حان موعد ${M().inc}</span><button class="btn sm" data-a="newCycle">ابدأ شهرًا جديدًا</button></div>` : ''}
     <div class="add-row"><button class="add-big" data-a="addExp">${I('minus')} إضافة مصروف</button><button class="add-inc" data-a="addInc">${I('plus')}<span>مبلغ وارد</span></button></div>
     <div class="sec-h"><b>خاناتك</b><button class="link" data-a="boxesEdit">${I('edit')} تعديل</button></div>
-    <div class="cards" id="cards">${k.boxes.map(box).join('')}<button class="bcard new" data-a="boxesEdit">${I('plus')}خانة جديدة</button></div>
-    <div class="pager" id="pager">${k.boxes.map((b, i) => `<i class="${i ? '' : 'on'}"></i>`).join('')}<i></i></div>
+    <div class="grid-b">${k.boxes.map(box).join('')}<button class="tile-b new" data-a="boxesEdit">${I('plus')}<span>خانة جديدة</span></button></div>
     <div class="links">
       <button data-a="commitments">${I('cal')}الالتزامات<small>${paidN}/${actN} مدفوع</small></button>
       <button data-a="savings">${I('target')}الادخار<small class="num">${fmt(k.totalSavings)}</small></button>
       <button data-a="log">${I('list')}السجل<small class="num">${fmt(k.expTotal)}</small></button>
     </div>
     <div class="foot">تم تصميم الموقع من قبل <b>المهندس بو عمر</b></div></div>`;
-  const cards = $('#cards');
-  const syncPager = () => { const r = cards.getBoundingClientRect(); let best = 0, bd = 1e9; [...cards.children].forEach((c, i) => { const d = Math.abs(c.getBoundingClientRect().right - (r.right - 18)); if (d < bd){ bd = d; best = i; } }); [...$('#pager').children].forEach((p, i) => p.classList.toggle('on', i === best)); };
-  cards.addEventListener('scroll', syncPager, {passive:true});
-  if (keepScroll){ cards.scrollLeft = keepScroll; syncPager(); }
   if (first && !document.getElementById('splash')) countUp();
 }
 
@@ -517,42 +544,66 @@ function askConfirm(title, msg, yes, onYes, danger){
   $('#cfYes').onclick = () => { closeSheet(); onYes(); };
 }
 
-/* ---- إضافة مصروف: المبلغ أولًا ثم الخانة ---- */
-let expAmt = '', expPre = null;
-function sheetAdd(pre){
-  if (!state.cats.length){ sheetBoxesEdit(); return; }
-  expAmt = ''; expPre = pre || null; incMode = false;
-  const k = calc();
-  openSheet(head('مصروف جديد') + `
-    <div class="amt-disp empty" id="amtDisp"><b>0</b> <span>د.ك</span></div>
-    <div class="keypad">${['1','2','3','4','5','6','7','8','9','.','0','⌫'].map(x => `<button data-a="key" data-k="${x}" aria-label="${x === '⌫' ? 'مسح' : x}">${x === '⌫' ? I('del') : x}</button>`).join('')}</div>
-    <div class="pick-wrap" id="pickWrap"><div class="pick-h" id="pickH">أدخل المبلغ، ثم اختر الخانة</div>
-    <div class="pick off" id="pick">${k.boxes.map(b => `<button class="${b.id === expPre ? 'pre' : ''}" data-a="saveTo" data-id="${b.id}"><span class="em">${Ico(b.icon, b.color)}</span>${esc(b.name)}${b.limit > 0 ? `<small>متبقٍ ${fmt(b.left)}</small>` : ''}</button>`).join('')}</div></div>
-    <button class="note-t" data-a="noteToggle" id="noteT">+ ملاحظة أو تاريخ آخر</button>
-    <div id="noteBox" hidden><div class="two" style="margin-top:10px"><div class="field"><label>ملاحظة</label><input class="inp" id="exNote" maxlength="60"></div>
-      <div class="field"><label>التاريخ</label><input class="inp" id="exDate" type="date" value="${today()}" max="${addDays(today(), 1)}"></div></div></div>`);
+/* ---- لوحة الأرقام ---- */
+let kp = '', kpOnChange = null;
+const padHTML = () => `<div class="keypad">${['1','2','3','4','5','6','7','8','9','.','0','⌫'].map(x => `<button data-a="key" data-k="${x}" aria-label="${x === '⌫' ? 'مسح' : x}">${x === '⌫' ? I('del') : x}</button>`).join('')}</div>`;
+const amtHTML = () => `<div class="amt-disp ${kp ? '' : 'empty'}" id="amtDisp"><b>${kp || '0'}</b> <span>د.ك</span></div>`;
+function pressKey(x){
+  if (x === '⌫') kp = kp.slice(0, -1);
+  else if (x === '.'){ if (kp.includes('.')) return; kp = (kp || '0') + '.'; }
+  else { const p = kp.split('.'); if (p.length > 1 && p[1].length >= 3) return; if (p.length === 1 && p[0].length >= 5) return; kp = kp === '0' ? x : kp + x; }
+  vib(5); refreshAmt(); kpOnChange && kpOnChange();
 }
-let incMode = false;
-function sheetIncome(){
-  expAmt = ''; incMode = true;
+function refreshAmt(){
+  const d = $('#amtDisp'); if (!d) return;
+  d.querySelector('b').textContent = kp || '0'; d.classList.toggle('empty', !kp);
+  d.classList.remove('bump'); void d.offsetWidth; d.classList.add('bump');
+  const n = $('#kpNext'); if (n) n.disabled = !(parseNum(kp) > 0);
+}
+function shake(){ const d = $('#amtDisp'); if (!d) return; d.classList.remove('shake'); void d.offsetWidth; d.classList.add('shake'); }
+
+/* ---- الإضافة بخطوتين: المبلغ ثم المكان ---- */
+let addCtx = {kind:'exp'};
+function sheetAdd(pre){ startAmount({kind:'exp', pre:pre || null}); }
+function sheetIncome(){ startAmount({kind:'inc'}); }
+function startAmount(ctx, keep){
+  if (ctx.kind === 'exp' && !state.cats.length){ sheetBoxesEdit(); return; }
+  addCtx = ctx; if (!keep) kp = ''; kpOnChange = null;
+  const pre = ctx.pre ? catOf(ctx.pre) : null;
+  openSheet(head(ctx.kind === 'inc' ? 'مبلغ وارد' : pre ? `${Ico(pre.icon, pre.color)} ${esc(pre.name)}` : 'مصروف جديد') + `
+    <div class="step-h">${ctx.kind === 'inc' ? 'كم المبلغ الذي وصلك؟' : 'كم صرفت؟'}</div>${amtHTML()}${padHTML()}
+    <button class="btn block big-save" id="kpNext" data-a="kpNext" ${parseNum(kp) > 0 ? '' : 'disabled'}>${pre ? 'حفظ' : 'التالي'} ${pre ? '' : I('chev')}</button>`);
+}
+const destRow = (act, id, icon, name, sub, color, extra) => `<button class="dest-row" data-a="${act}" data-id="${id}"><span class="ic" style="background:color-mix(in srgb,${color} 14%,transparent)">${icon}</span><span class="grow"><b>${name}</b><small>${sub}</small>${extra || ''}</span>${I('chev')}</button>`;
+function kpNext(){
+  const amt = parseNum(kp); if (!(amt > 0)){ shake(); return; }
+  if (addCtx.kind === 'exp' && addCtx.pre){ saveTo(addCtx.pre); return; }
   const k = calc();
-  openSheet(head('مبلغ وارد') + `<div class="hint" style="text-align:center;margin:-8px 0 4px">مكافأة، هدية، أو أي مبلغ إضافي وصلك</div>
-    <div class="amt-disp empty" id="amtDisp"><b>0</b> <span>د.ك</span></div>
-    <div class="keypad">${['1','2','3','4','5','6','7','8','9','.','0','⌫'].map(x => `<button data-a="key" data-k="${x}" aria-label="${x === '⌫' ? 'مسح' : x}">${x === '⌫' ? I('del') : x}</button>`).join('')}</div>
-    <div class="pick-wrap" id="pickWrap"><div class="pick-h" id="pickH">أدخل المبلغ، ثم اختر أين يذهب</div>
-    <div class="pick off" id="pick"><button class="dest" data-a="incTo" data-to="free"><span class="em">${Ico('cash', 'var(--grn)')}</span>رصيدي العام</button><button class="dest" data-a="incTo" data-to="save"><span class="em">${Ico('safe', 'var(--grn)')}</span>الادخار</button>
-      ${k.boxes.map(b => `<button data-a="incTo" data-to="${b.id}"><span class="em">${Ico(b.icon, b.color)}</span>${esc(b.name)}</button>`).join('')}</div></div>
-    <div class="field" style="margin-top:12px"><input class="inp" id="incNote" placeholder="مصدر المبلغ (اختياري)" maxlength="40"></div>`);
+  const rows = addCtx.kind === 'exp'
+    ? k.boxes.map(b => destRow('saveTo', b.id, Ico(b.icon, b.color), esc(b.name), b.limit > 0 ? `متبقٍ ${KD(b.left)}` : `صُرف ${KD(b.spent)}`, b.color, b.limit > 0 && b.left - amt < 0 ? '<small class="neg">ستتجاوز حد الخانة</small>' : ''))
+    : [destRow('incTo', 'free', Ico('cash', 'var(--grn)'), 'رصيدي العام', 'يُضاف إلى المتاح لك', '#15985a'), destRow('incTo', 'save', Ico('safe', 'var(--grn)'), 'الادخار', 'يُضاف إلى ادخارك', '#15985a'),
+       ...k.boxes.map(b => destRow('incTo', b.id, Ico(b.icon, b.color), esc(b.name), 'يزيد حد الخانة', b.color))];
+  openSheet(head(addCtx.kind === 'inc' ? 'أين يذهب المبلغ؟' : 'أين صرفته؟', 'kpBack') + `<div class="amt-mini"><span class="num">${fmt(amt)}</span> <small>د.ك</small></div>
+    <div class="dest-list">${rows.join('')}</div>
+    <button class="note-t" data-a="noteToggle" id="noteT">+ إضافة ملاحظة${addCtx.kind === 'exp' ? ' أو تاريخ آخر' : ''}</button>
+    <div id="noteBox" hidden><div class="${addCtx.kind === 'exp' ? 'two' : ''}" style="margin-top:10px"><div class="field"><label>ملاحظة</label><input class="inp" id="exNote" maxlength="60"></div>
+      ${addCtx.kind === 'exp' ? `<div class="field"><label>التاريخ</label><input class="inp" id="exDate" type="date" value="${today()}" max="${addDays(today(), 1)}"></div>` : ''}</div></div>`);
+}
+function saveTo(catId){
+  const amt = parseNum(kp); if (!(amt > 0)) return;
+  const e = {id:uid(), cat:catId, amount:amt, note:$('#exNote') ? $('#exNote').value.trim() : '', date:($('#exDate') && $('#exDate').value) || today(), ts:Date.now().toString(36), cycle:state.cycle.id};
+  state.expenses.push(e); closeSheet(); commit(); vib(15);
+  const b = calc().boxes.find(x => x.id === catId);
+  const msg = b && b.limit > 0 ? (b.left >= 0 ? `تم الحفظ · متبقٍ في ${b.name} ${KDt(b.left)}` : `تم الحفظ · تجاوزت حد ${b.name}`) : 'تم الحفظ';
+  toast(msg, 'تراجع', () => { state.expenses = state.expenses.filter(x => x.id !== e.id); commit(); toast('تم الإلغاء'); });
 }
 function incTo(to){
-  const amt = parseNum(expAmt);
-  if (!(amt > 0)){ const d = $('#amtDisp'); d.classList.remove('shake'); void d.offsetWidth; d.classList.add('shake'); toast('أدخل المبلغ أولًا'); return; }
-  const note = $('#incNote').value.trim(), x = {id:uid(), amount:amt, to, note, date:today(), ts:Date.now().toString(36), cycle:state.cycle.id};
+  const amt = parseNum(kp); if (!(amt > 0)) return;
+  const note = $('#exNote') ? $('#exNote').value.trim() : '', x = {id:uid(), amount:amt, to, note, date:today(), ts:Date.now().toString(36), cycle:state.cycle.id};
   state.incomes.push(x);
   if (to === 'save') state.vault.push({id:uid(), amount:amt, date:today(), ts:x.ts, goal:null, src:'manual', ref:x.id, cycle:state.cycle.id, note:note || 'مبلغ وارد'});
   closeSheet(); commit(); vib(15);
-  const where = to === 'free' ? 'رصيدك' : to === 'save' ? 'الادخار' : catOf(to).name;
-  toast(`أُضيف ${KDt(amt)} إلى ${where}`, 'تراجع', () => delIncome(x.id));
+  toast(`أُضيف ${KDt(amt)} إلى ${to === 'free' ? 'رصيدك' : to === 'save' ? 'الادخار' : catOf(to).name}`, 'تراجع', () => delIncome(x.id));
 }
 function delIncome(id){
   const x = state.incomes.find(i => i.id === id); if (!x) return;
@@ -560,29 +611,6 @@ function delIncome(id){
   if (v && bucketBal(v.goal) - v.amount < -0.0005){ toast('لا يمكن الحذف: سُحب المبلغ من الادخار'); return false; }
   state.incomes = state.incomes.filter(i => i.id !== id); if (v) state.vault = state.vault.filter(e => e !== v);
   commit(); return true;
-}
-function updAmt(){
-  const d = $('#amtDisp'); if (!d) return;
-  d.querySelector('b').textContent = expAmt || '0'; d.classList.toggle('empty', !expAmt);
-  d.classList.remove('bump'); void d.offsetWidth; d.classList.add('bump');
-  const ok = parseNum(expAmt) > 0;
-  $('#pick').classList.toggle('off', !ok); $('#pickWrap').classList.toggle('ready', ok);
-  $('#pickH').textContent = incMode ? (ok ? 'اختر أين يذهب المبلغ' : 'أدخل المبلغ، ثم اختر أين يذهب') : (ok ? 'اختر الخانة للحفظ' : 'أدخل المبلغ، ثم اختر الخانة');
-}
-function pressKey(x){
-  if (x === '⌫') expAmt = expAmt.slice(0, -1);
-  else if (x === '.'){ if (expAmt.includes('.')) return; expAmt = (expAmt || '0') + '.'; }
-  else { const p = expAmt.split('.'); if (p.length > 1 && p[1].length >= 3) return; if (p.length === 1 && p[0].length >= 5) return; expAmt = expAmt === '0' ? x : expAmt + x; }
-  vib(5); updAmt();
-}
-function saveTo(catId){
-  const amt = parseNum(expAmt);
-  if (!(amt > 0)){ const d = $('#amtDisp'); d.classList.remove('shake'); void d.offsetWidth; d.classList.add('shake'); toast('أدخل المبلغ أولًا'); return; }
-  const e = {id:uid(), cat:catId, amount:amt, note:$('#exNote') ? $('#exNote').value.trim() : '', date:($('#exDate') && $('#exDate').value) || today(), ts:Date.now().toString(36), cycle:state.cycle.id};
-  state.expenses.push(e); closeSheet(); commit(); vib(15);
-  const b = calc().boxes.find(x => x.id === catId);
-  const msg = b && b.limit > 0 ? (b.left >= 0 ? `تم الحفظ · متبقٍ في ${b.name} ${KDt(b.left)}` : `تم الحفظ · تجاوزت حد ${b.name}`) : 'تم الحفظ';
-  toast(msg, 'تراجع', () => { state.expenses = state.expenses.filter(x => x.id !== e.id); commit(); toast('تم الإلغاء'); });
 }
 
 /* ---- تفاصيل الخانة ---- */
@@ -790,38 +818,53 @@ function sheetInstall(){
     <div class="panel"><b>أندرويد (Chrome)</b><ol class="install-steps small"><li>اضغط القائمة <kbd>⋮</kbd>.</li><li>اختر «تثبيت التطبيق».</li></ol></div>`);
 }
 
-/* ============ الإعداد الأول ============ */
-const ob = {step:0, mode:'student', tier:'basic', allowance:200, extra:0, name:'', payday:'', cats:null, commitments:null};
-const obIncome = () => r3(ob.allowance + ob.extra);
-function obAllocText(){ const un = r3(obIncome() - sum(ob.commitments.map(c => c.amount)) - sum(ob.cats.map(c => parseNum(c.limit)))); return un < -0.0005 ? `<span class="neg">أكثر من المتاح بـ ${KDt(-un)}</span>` : un > 0.0005 ? `غير موزَّع: ${KDt(un)}` : 'تم توزيع المبلغ كاملًا'; }
+/* ============ الإعداد الأول: سؤال بكل شاشة ============ */
+const ob = {step:0, mode:'student', inc:'', payday:'', commits:[], cats:[]};
+function obInit(mode){
+  const m = MODES[mode];
+  Object.assign(ob, {mode, inc:'', payday:addMonths(today(), 1),
+    commits:m.commits.map(([id, icon, name, type]) => ({id, icon, name, type:type || 'normal', on:false, amount:''})),
+    cats:m.cats.map(([id, icon, name], i) => ({id, icon, name, color:PALETTE[i % PALETTE.length], limit:''}))});
+}
+const obIncome = () => parseNum(ob.inc);
+const obFixed = () => sum(ob.commits.filter(c => c.on).map(c => parseNum(c.amount)));
+const obLeft = () => r3(obIncome() - obFixed() - sum(ob.cats.map(c => parseNum(c.limit))));
+function obSumHTML(){ const f = obFixed(), rest = r3(obIncome() - f);
+  return `<div class="row"><span class="grow muted">${MODES[ob.mode].inc}</span><b class="num">${fmt(obIncome())}</b></div><div class="row"><span class="grow muted">البنود الثابتة</span><b class="num">-${fmt(f)}</b></div><div class="row" style="border-top:1px solid var(--line);margin-top:6px;padding-top:6px"><b class="grow">المتبقي للصرف</b><b class="num ${rest < 0 ? 'neg' : ''}" style="color:var(--link)">${fmt(rest)}</b></div>`; }
+function obLeftHTML(){ const l = obLeft(); return l < -0.0005 ? `<span class="neg">وزّعت أكثر من المتاح بـ <b class="num">${fmt(-l)}</b> د.ك</span>` : `باقي للتوزيع <b class="num">${fmt(l)}</b> <small>د.ك</small>`; }
 function renderOnboarding(){
   $('#app').innerHTML = '';
-  if (!ob.payday) ob.payday = addMonths(today(), 1);
-  const m = MODES[ob.mode]; let body;
-  if (ob.step === 0){
+  const m = MODES[ob.mode], st = ob.step, nav = (next, label) => `<div class="btns ob-nav"><button class="btn ghost" data-a="obBack">رجوع</button><button class="btn" id="${next === 'obNext1' ? 'kpNext' : next}" data-a="${next}" style="flex:2" ${next === 'obNext1' && !(obIncome() > 0) ? 'disabled' : ''}>${label}</button></div>`;
+  let body;
+  if (st === 0){
     body = `<div class="logo">${logoSVG()}</div><h1>مرحبًا بك</h1><p class="lead">نظّم أموالك في خانات واضحة.</p>
       <div class="who">${Object.entries(MODES).map(([id, x]) => `<button data-a="obMode" data-id="${id}"><span class="em">${Ico(x.icon, 'var(--org)')}</span><b>${x.label}</b><span>${x.has}</span></button>`).join('')}</div>`;
-  } else if (ob.step === 1){
-    body = `<h1>${m.ask}</h1><p class="lead">يمكنك تعديله لاحقًا.</p>
-      ${ob.mode === 'student' ? [['basic','cap','إعانة أساسية',200],['rare','star','تخصص نادر أو تفوق',350],['custom','edit','مبلغ آخر',null]].map(([id, em, n, a]) => `<button class="tier ${ob.tier === id ? 'on' : ''}" data-a="obTier" data-id="${id}"><span class="em">${Ico(em, 'var(--org)')}</span><b class="grow">${n}</b>${a ? `<b class="amt">${KD(a)}</b>` : ''}</button>`).join('') : ''}
-      <div class="two" style="margin-top:6px"><div class="field"><label>${m.incAsk}</label><input class="inp" id="obAl" inputmode="decimal" value="${ob.allowance || ''}" placeholder="${ob.mode === 'student' ? '200' : ob.mode === 'school' ? '30' : '900'}"></div>
-      <div class="field"><label>دخل إضافي</label><input class="inp" id="obEx" inputmode="decimal" value="${ob.extra || ''}" placeholder="0"></div></div>
-      <div class="field"><label>موعد ${m.next}</label><input class="inp" id="obPd" type="date" value="${ob.payday}" min="${addDays(today(), 1)}"></div>
-      <div class="field"><label>الاسم (اختياري)</label><input class="inp" id="obName" value="${esc(ob.name)}" maxlength="24"></div>
-      <div class="btns"><button class="btn ghost" data-a="obBack">رجوع</button><button class="btn" data-a="obNext" style="flex:2">التالي</button></div>`;
+  } else if (st === 1){
+    kp = ob.inc; kpOnChange = () => { ob.inc = kp; };
+    body = `<h1>${m.ask}</h1><div class="chips ob-pre">${m.presets.map(v => `<button class="chip" data-a="obPreset" data-v="${v}">${v} د.ك</button>`).join('')}</div>${amtHTML()}${padHTML()}${nav('obNext1', 'التالي')}`;
+  } else if (st === 2){
+    const d = daysBetween(today(), ob.payday);
+    body = `<h1>متى ${m.next}؟</h1><p class="lead">نحسب منها كم يحق لك أن تصرف كل يوم.</p>
+      <div class="ob-opts">${[[7,'بعد أسبوع'],[14,'بعد أسبوعين'],[21,'بعد 3 أسابيع'],[30,'بعد شهر']].map(([n, t]) => `<button class="${daysBetween(today(), ob.payday) === n ? 'on' : ''}" data-a="obDays" data-n="${n}">${t}</button>`).join('')}</div>
+      <div class="field" style="margin-top:14px"><label>أو اختر التاريخ</label><input class="inp" id="obPd" type="date" value="${ob.payday}" min="${addDays(today(), 1)}"></div>
+      <div class="panel" style="text-align:center" id="obDaysTxt">${d > 0 ? `${fmtDate(ob.payday, {weekday:'long', day:'numeric', month:'long'})} · بعد ${daysWord(d)}` : 'اختر تاريخًا بعد اليوم'}</div>${nav('obNext2', 'التالي')}`;
+  } else if (st === 3){
+    body = `<h1>${ob.mode === 'school' ? 'هل تريد أن تدخر كل شهر؟' : 'ما الذي تدفعه كل شهر؟'}</h1><p class="lead">اختر ما ينطبق عليك واكتب المبلغ. يمكنك التخطي.</p>
+      <div class="card">${ob.commits.map((c, i) => `<div class="ob-row ${c.on ? 'on' : ''}"><button class="check ${c.on ? 'on' : ''}" data-a="obToggle" data-i="${i}" aria-label="اختيار">${I('check')}</button>${Ico(c.icon, 'var(--org)')}
+        ${c.custom ? `<input class="inp nm" data-ob-cn="${i}" value="${esc(c.name)}" placeholder="اسم البند">` : `<span class="grow" data-a="obToggle" data-i="${i}">${c.name}</span>`}
+        ${c.on ? `<input class="inp lim" data-ob-c="${i}" value="${c.amount}" placeholder="المبلغ" inputmode="decimal">` : ''}</div>`).join('')}
+        <button class="link" style="margin-top:10px" data-a="obAddC">${I('plus')} بند آخر</button></div>
+      <div class="panel" id="obSum">${obSumHTML()}</div>${nav('obNext3', 'التالي')}`;
   } else {
-    const inc = obIncome(), ct = sum(ob.commitments.map(c => c.amount));
-    body = `<h1>وزّع أموالك</h1><p class="lead">اقتراح جاهز، عدّله كما تريد.</p>
-      <div class="card"><div class="row"><span class="grow">${m.inc}</span><b class="num">${fmt(inc)}</b></div>
-        <div class="row small muted" style="margin-top:6px"><span class="grow">الالتزامات والادخار</span><span class="num">-${fmt(ct)}</span></div>
-        <div class="row" style="margin-top:8px;border-top:1px solid var(--line);padding-top:8px"><b class="grow">للخانات</b><b class="num" style="color:var(--link)">${fmt(r3(inc - ct))}</b></div></div>
-      <div class="card">${ob.cats.map((c, i) => `<div class="box-edit"><span class="ic" style="background:color-mix(in srgb,${c.color} 14%,transparent)">${Ico(c.icon, c.color)}</span><b class="grow">${esc(c.name)}</b><input class="inp lim" data-ob-limit="${i}" value="${c.limit}" inputmode="decimal"></div>`).join('')}
-        <div class="alloc" id="obAlloc">${obAllocText()}</div></div>
-      <div class="btns"><button class="btn ghost" data-a="obBack">رجوع</button><button class="btn" data-a="obDone" style="flex:2">ابدأ</button></div>`;
+    body = `<h1>وزّع الباقي على خاناتك</h1><p class="lead">اكتب حدًا شهريًا لكل خانة.</p>
+      <div class="ob-left" id="obLeft">${obLeftHTML()}</div>
+      <div class="card">${ob.cats.map((c, i) => `<div class="box-edit"><span class="ic" style="background:color-mix(in srgb,${c.color} 14%,transparent)">${Ico(c.icon, c.color)}</span>
+        ${c.custom ? `<input class="inp nm" data-ob-kn="${i}" value="${esc(c.name)}" placeholder="اسم الخانة">` : `<b class="grow">${c.name}</b>`}
+        <input class="inp lim" data-ob-k="${i}" value="${c.limit}" placeholder="0" inputmode="decimal"><button class="del" data-a="obDelK" data-i="${i}" aria-label="حذف">${I('x')}</button></div>`).join('')}
+        <div class="btns" style="margin-top:12px"><button class="btn soft sm" data-a="obAddK">${I('plus')} خانة أخرى</button><button class="btn ghost sm" data-a="obEven">وزّع بالتساوي</button></div></div>${nav('obDone', 'ابدأ')}`;
   }
-  $('#onb').innerHTML = `<div class="onb"><div class="onb-in"><div class="dots">${[0,1,2].map(i => `<i class="${ob.step === i ? 'on' : ''}"></i>`).join('')}</div>${body}<div class="foot">تم تصميم الموقع من قبل <b>المهندس بو عمر</b></div></div></div>`;
+  $('#onb').innerHTML = `<div class="onb"><div class="onb-in"><div class="dots">${[0,1,2,3,4].map(i => `<i class="${st === i ? 'on' : ''}"></i>`).join('')}</div>${body}<div class="foot">تم تصميم الموقع من قبل <b>المهندس بو عمر</b></div></div></div>`;
 }
-function obCollect(){ if ($('#obAl')){ ob.allowance = parseNum($('#obAl').value); ob.extra = parseNum($('#obEx').value); ob.payday = $('#obPd').value; ob.name = $('#obName').value.trim(); } }
 
 /* ============ الأحداث ============ */
 const ACT = {
@@ -832,7 +875,7 @@ const ACT = {
   setMode: d => { state.mode = d.id; save(); render(); sheetSettings(); },
   addExp: d => sheetAdd(d.pre),
   addInc: () => sheetIncome(),
-  incTo: d => incTo(d.to),
+  incTo: d => incTo(d.id),
   delInc: d => { if (delIncome(d.id) !== false){ sheetLog(); toast('تم الحذف'); } },
   key: d => pressKey(d.k),
   saveTo: d => saveTo(d.id),
@@ -881,18 +924,29 @@ const ACT = {
   exportCSV,
   install: sheetInstall,
   promptInstall: async () => { if (!deferredPrompt) return; deferredPrompt.prompt(); try { await deferredPrompt.userChoice; } catch(e){} deferredPrompt = null; closeSheet(); },
-  resetAll: () => askConfirm('حذف جميع البيانات', 'لا يمكن استرجاعها إلا من نسخة احتياطية.', 'حذف', () => { state = defaultState(); try { localStorage.removeItem(KEY); } catch(e){} Object.assign(ob, {step:0, mode:'student', tier:'basic', allowance:200, extra:0, name:'', payday:''}); lastRender = 0; render(); }, true),
-  obMode: d => { ob.mode = d.id; if (d.id === 'student'){ ob.tier = 'basic'; ob.allowance = 200; } else { ob.allowance = 0; ob.tier = 'custom'; } ob.step = 1; render(); },
-  obTier: d => { obCollect(); ob.tier = d.id; if (d.id === 'basic') ob.allowance = 200; if (d.id === 'rare') ob.allowance = 350; render(); if (d.id === 'custom') setTimeout(() => { const i = $('#obAl'); i.focus(); i.select(); }, 50); },
-  obBack: () => { obCollect(); ob.step = Math.max(0, ob.step - 1); render(); },
-  obNext: () => { obCollect();
-    if (!(obIncome() > 0)){ toast('أدخل المبلغ'); return; }
-    if (!ob.payday || ob.payday <= today()){ toast('اختر موعدًا بعد اليوم'); return; }
-    ob.commitments = buildCommitments(ob.mode, obIncome()); ob.cats = buildCats(ob.mode, obIncome() - sum(ob.commitments.map(c => c.amount)));
-    ob.step = 2; render(); window.scrollTo(0, 0); },
+  resetAll: () => askConfirm('حذف جميع البيانات', 'لا يمكن استرجاعها إلا من نسخة احتياطية.', 'حذف', () => { state = defaultState(); try { localStorage.removeItem(KEY); } catch(e){} ob.step = 0; lastRender = 0; render(); }, true),
+  kpNext: kpNext,
+  kpBack: () => startAmount(addCtx, true),
+  obMode: d => { obInit(d.id); ob.step = 1; render(); },
+  obPreset: d => { kp = ob.inc = String(d.v); refreshAmt(); vib(5); },
+  obBack: () => { ob.step = Math.max(0, ob.step - 1); render(); },
+  obNext1: () => { if (!(obIncome() > 0)){ shake(); return; } ob.step = 2; render(); },
+  obDays: d => { ob.payday = addDays(today(), +d.n); render(); },
+  obNext2: () => { if (!ob.payday || ob.payday <= today()){ toast('اختر تاريخًا بعد اليوم'); return; } ob.step = 3; render(); },
+  obToggle: d => { const c = ob.commits[+d.i]; c.on = !c.on; render(); if (c.on) setTimeout(() => { const i = document.querySelector(`[data-ob-c="${d.i}"]`); i && i.focus(); }, 30); },
+  obAddC: () => { ob.commits.push({id:uid(), icon:'box', name:'', type:'normal', on:true, amount:'', custom:true}); render(); setTimeout(() => { const ins = document.querySelectorAll('[data-ob-cn]'); ins.length && ins[ins.length - 1].focus(); }, 30); },
+  obNext3: () => { const bad = ob.commits.find(c => c.on && (!c.name.trim() || !(parseNum(c.amount) > 0))); if (bad){ toast('اكتب اسم ومبلغ كل بند مختار، أو ألغِ اختياره'); return; } if (obFixed() > obIncome()){ toast('البنود الثابتة أكثر من دخلك'); return; } ob.step = 4; render(); },
+  obAddK: () => { ob.cats.push({id:uid(), icon:'box', name:'', color:PALETTE[ob.cats.length % PALETTE.length], limit:'', custom:true}); render(); setTimeout(() => { const ins = document.querySelectorAll('[data-ob-kn]'); ins.length && ins[ins.length - 1].focus(); }, 30); },
+  obDelK: d => { ob.cats.splice(+d.i, 1); render(); },
+  obEven: () => { const n = ob.cats.length; if (!n) return; const avail = r3(obIncome() - obFixed()); if (avail <= 0){ toast('لا يوجد مبلغ متبقٍ'); return; }
+    const per = Math.floor(avail / n * 2) / 2; ob.cats.forEach(c => c.limit = per); ob.cats[0].limit = r3(per + avail - per * n); render(); },
   obDone: () => {
-    Object.assign(state, {mode:ob.mode, nextPayday:ob.payday, commitments:ob.commitments, cats:ob.cats, onboarded:true});
-    Object.assign(state.profile, {tier:ob.tier, allowance:ob.allowance, extra:ob.extra, name:ob.name});
+    if (obLeft() < -0.0005){ toast('وزّعت أكثر من المتاح'); return; }
+    const cats = ob.cats.filter(c => c.name.trim()).map(c => ({id:c.id, icon:c.icon, name:c.name.trim(), color:c.color, limit:parseNum(c.limit)}));
+    if (!cats.length){ toast('أضف خانة واحدة على الأقل'); return; }
+    const commitments = ob.commits.filter(c => c.on && c.name.trim()).map(c => ({id:c.id, icon:c.icon, name:c.name.trim(), type:c.type, amount:parseNum(c.amount), active:true, goal:null}));
+    Object.assign(state, {mode:ob.mode, nextPayday:ob.payday, commitments, cats, onboarded:true});
+    Object.assign(state.profile, {tier:'custom', allowance:obIncome(), extra:0});
     state.cycle = {id:state.cycle.id, start:today(), paid:{}}; lastRender = 0; commit();
   }
 };
@@ -904,12 +958,17 @@ document.addEventListener('input', e => {
   const t = e.target;
   if (t.dataset.boxLimit){ const b = state.cats.find(c => c.id === t.dataset.boxLimit); if (b){ b.limit = parseNum(t.value); save(); $('#allocBox').innerHTML = allocText(calc()); } }
   if (t.dataset.boxName){ const b = state.cats.find(c => c.id === t.dataset.boxName); if (b){ b.name = t.value; save(); } }
-  if (t.dataset.obLimit != null && ob.cats){ ob.cats[+t.dataset.obLimit].limit = parseNum(t.value); $('#obAlloc').innerHTML = obAllocText(); }
+  if (t.dataset.obC != null){ ob.commits[+t.dataset.obC].amount = t.value; $('#obSum').innerHTML = obSumHTML(); }
+  if (t.dataset.obCn != null){ ob.commits[+t.dataset.obCn].name = t.value; }
+  if (t.dataset.obK != null){ ob.cats[+t.dataset.obK].limit = t.value; $('#obLeft').innerHTML = obLeftHTML(); }
+  if (t.dataset.obKn != null){ ob.cats[+t.dataset.obKn].name = t.value; }
+  if (t.id === 'obPd'){ ob.payday = t.value; const d = daysBetween(today(), t.value); $('#obDaysTxt').textContent = d > 0 ? `${fmtDate(t.value, {weekday:'long', day:'numeric', month:'long'})} · بعد ${daysWord(d)}` : 'اختر تاريخًا بعد اليوم'; document.querySelectorAll('.ob-opts button').forEach(b => b.classList.remove('on')); }
   if (t.dataset.in === 'gplan') gPlan(true);
 });
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeSheet();
-  if ($('#ov').classList.contains('show') && $('#amtDisp') && e.target.tagName !== 'INPUT'){
+  if (e.key === 'Enter' && $('#kpNext') && !$('#kpNext').disabled && e.target.tagName !== 'INPUT'){ e.preventDefault(); $('#kpNext').click(); return; }
+  if ($('#amtDisp') && e.target.tagName !== 'INPUT'){
     if (/^[0-9]$/.test(e.key)) pressKey(e.key); else if (e.key === '.' || e.key === ',') pressKey('.'); else if (e.key === 'Backspace') pressKey('⌫');
   }
 });
