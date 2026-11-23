@@ -106,7 +106,7 @@ button{cursor:pointer;border:0;background:none;padding:0}
 .pager i.on{width:18px;background:var(--org)}
 
 /* ===== الروابط السفلية ===== */
-.links{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}
+.links{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:18px}
 .links button{background:var(--card);border-radius:20px;box-shadow:var(--shadow);padding:14px 6px;display:flex;flex-direction:column;align-items:center;gap:6px;font-weight:600;font-size:13.5px;color:var(--text)}
 .links button .i{width:44px;height:44px;border-radius:14px;background:var(--card2);color:var(--navy)}
 [data-theme="dark"] .links button .i{color:var(--org)}
@@ -306,6 +306,7 @@ kbd{background:var(--card2);border:1px solid var(--line);border-radius:6px;paddi
 .ob-left{text-align:center;font-family:var(--fd);font-size:20px;font-weight:700;background:var(--navy);color:#fff;border-radius:18px;padding:14px;margin-bottom:12px}
 .ob-left b{font-size:28px;color:var(--org2)}
 .panel .row{padding:2px 0}
+.tile-b.fixed{background:linear-gradient(160deg,var(--card),color-mix(in srgb,var(--navy) 5%,var(--card)));border:1.5px solid color-mix(in srgb,var(--navy) 14%,transparent)}
 </style>
 </head>
 <body>
@@ -369,6 +370,7 @@ const ICO = {
   shield:'<path d="M12 3l7.5 3v5.5c0 4.8-3.3 8-7.5 9.5-4.2-1.5-7.5-4.7-7.5-9.5V6z"/>',
   target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.3"/>',
   edit:'<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/>',
+  cal:'<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18M9 15.5l2 2 4-4"/>',
   box:'<path d="M3.5 7.5 12 3.5l8.5 4v9L12 20.5l-8.5-4z"/><path d="M3.5 7.5 12 11.5l8.5-4M12 11.5v9"/>'
 };
 const EMOJI_MAP = {'☕':'coffee','🍔':'food','🍽️':'food','🍫':'food','📚':'book','⚽':'star','🚗':'car','⛽':'car','🚌':'car','🛍️':'bag','🧴':'bag','🎁':'gift','🏠':'home','📱':'phone','🎮':'game','🧳':'plane','🎓':'cap','🎒':'school','📶':'wifi','💻':'laptop','🤲':'heart','💊':'heart','👕':'shirt','🐷':'safe','🔧':'tool','🏋️':'gym','🛟':'shield','🎯':'target'};
@@ -436,7 +438,7 @@ function normalize(s){
   if (!MODES[o.mode]) o.mode = 'student';
   if (!Array.isArray(s.cats) || !s.cats.length){ const inc = parseNum(o.profile.allowance) + parseNum(o.profile.extra); o.cats = buildCats(o.mode); }
   if (s.v !== 3 && o.theme !== 'dark') o.theme = 'light';
-  o.cats.forEach(c => c.icon = icoKey(c.icon)); o.commitments.forEach(c => c.icon = icoKey(c.icon)); o.goals.forEach(g => g.emoji = icoKey(g.emoji));
+  o.cats.forEach(c => c.icon = icoKey(c.icon)); o.commitments.forEach(c => { c.icon = icoKey(c.icon); c.active = true; }); o.goals.forEach(g => g.emoji = icoKey(g.emoji));
   o.v = 3; return o;
 }
 function load(){ try { const raw = localStorage.getItem(KEY); return raw ? normalize(JSON.parse(raw)) : defaultState(); } catch(e){ return defaultState(); } }
@@ -517,14 +519,24 @@ function render(){
     ${k.diff <= 0 ? `<div class="due"><span class="grow">حان موعد ${M().inc}</span><button class="btn sm" data-a="newCycle">ابدأ شهرًا جديدًا</button></div>` : ''}
     <div class="add-row"><button class="add-big" data-a="addExp">${I('minus')} إضافة مصروف</button><button class="add-inc" data-a="addInc">${I('plus')}<span>مبلغ وارد</span></button></div>
     <div class="sec-h"><b>خاناتك</b><button class="link" data-a="boxesEdit">${I('edit')} تعديل</button></div>
-    <div class="grid-b">${k.boxes.map(box).join('')}<button class="tile-b new" data-a="boxesEdit">${I('plus')}<span>خانة جديدة</span></button></div>
+    <div class="grid-b">${commitTile(k)}${k.boxes.map(box).join('')}<button class="tile-b new" data-a="boxesEdit">${I('plus')}<span>خانة جديدة</span></button></div>
     <div class="links">
-      <button data-a="commitments">${I('cal')}الالتزامات<small>${paidN}/${actN} مدفوع</small></button>
       <button data-a="savings">${I('target')}الادخار<small class="num">${fmt(k.totalSavings)}</small></button>
       <button data-a="log">${I('list')}السجل<small class="num">${fmt(k.expTotal)}</small></button>
     </div>
     <div class="foot">تم تصميم الموقع من قبل <b>المهندس بو عمر</b></div></div>`;
   if (first && !document.getElementById('splash')) countUp();
+}
+
+function commitTile(k){
+  const S = state, act = S.commitments.filter(x => x.active), paid = act.filter(x => S.cycle.paid[x.id]);
+  const due = r3(k.commitTotal - sum(paid.map(x => x.amount))), pct = act.length ? paid.length / act.length * 100 : 0;
+  return `<button class="tile-b fixed" data-a="commitments">
+    <span class="em" style="background:color-mix(in srgb,var(--navy) 12%,transparent)">${Ico('cal', 'var(--navy)')}</span>
+    <span class="nm">الالتزامات الثابتة</span>
+    ${act.length ? `<span class="v"><span class="num">${fmt(due)}</span> <small>د.ك</small></span><span class="cap">${due > 0 ? `باقي للدفع · ${paid.length} من ${act.length}` : 'تم دفع الكل'}</span>`
+      : `<span class="v" style="font-size:18px">لا يوجد</span><span class="cap">اختياري · اضغط للإضافة</span>`}
+    <span class="ln"><i style="width:${pct}%;background:var(--navy)"></i></span></button>`;
 }
 
 /* ============ النوافذ ============ */
@@ -655,13 +667,15 @@ function boxIconSheet(id){
 /* ---- الالتزامات ---- */
 function sheetCommitments(){
   const k = calc(), S = state;
-  openSheet(head('الالتزامات الشهرية') + `
-    <div class="panel row"><div class="grow"><div class="small muted">المجموع</div><div class="bigv" style="font-size:28px"><span class="num">${fmt(k.commitTotal)}</span> <small>د.ك</small></div></div><div class="small muted">${Math.round(k.income ? k.commitTotal / k.income * 100 : 0)}% من دخلك</div></div>
-    <div class="hint" style="margin-bottom:4px">اضغط علامة الصح عند الدفع. «الادخار الشهري» يُضاف إلى ادخارك تلقائيًا.</div>
-    <div class="list">${S.commitments.map(it => { const paid = !!S.cycle.paid[it.id];
-      return `<div class="item ${it.active ? '' : 'off'}"><button class="check ${paid ? 'on' : ''}" data-a="paid" data-id="${it.id}" ${it.active ? '' : 'disabled'} aria-label="تم الدفع">${I('check')}</button>
-        <div class="grow" data-a="editCommit" data-id="${it.id}" style="cursor:pointer"><div class="t">${Ico(it.icon, 'var(--org)', 'sm')} ${esc(it.name)}</div><div class="s">${paid ? 'مدفوع' : it.active ? 'غير مدفوع' : 'متوقف'}</div></div>
-        <div class="amt">${KD(it.amount)}</div><button class="sw ${it.active ? 'on' : ''}" data-a="toggleActive" data-id="${it.id}" aria-label="تشغيل"></button></div>`; }).join('')}</div>
+  S.commitments.forEach(c => c.active = true);
+  openSheet(head('الالتزامات الثابتة') + `
+    <div class="panel row"><div class="grow"><div class="small muted">المجموع الشهري</div><div class="bigv" style="font-size:28px"><span class="num">${fmt(k.commitTotal)}</span> <small>د.ك</small></div></div><div class="small muted">${Math.round(k.income ? k.commitTotal / k.income * 100 : 0)}% من دخلك</div></div>
+    <div class="hint" style="margin-bottom:6px">كل البنود اختيارية: أضف ما يخصك واحذف ما لا تحتاجه. اضغط الدائرة عندما تدفع.</div>
+    ${S.commitments.length ? `<div class="list">${S.commitments.map(it => { const paid = !!S.cycle.paid[it.id];
+      return `<div class="item"><button class="check ${paid ? 'on' : ''}" data-a="paid" data-id="${it.id}" aria-label="تم الدفع">${I('check')}</button>
+        <div class="grow"><div class="t">${Ico(it.icon, 'var(--org)', 'sm')} ${esc(it.name)}</div><div class="s">${paid ? 'مدفوع' : 'غير مدفوع'}${it.type === 'save' ? ' · يُضاف إلى ادخارك' : ''}</div></div>
+        <div class="amt">${KD(it.amount)}</div><button class="del" data-a="editCommit" data-id="${it.id}" aria-label="تعديل">${I('edit')}</button></div>`; }).join('')}</div>`
+      : '<div class="empty">لا توجد بنود ثابتة. أضف بندًا إذا كان عندك مبلغ تدفعه كل شهر.</div>'}
     <div class="btns" style="margin-top:12px"><button class="btn soft" data-a="editCommit">${I('plus')} بند جديد</button><button class="btn navy" data-a="newCycle">شهر جديد</button></div>`);
 }
 let editIcon = 'box';
